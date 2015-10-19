@@ -1,6 +1,8 @@
-node_modules
-build
 *.log
-*.sublime-project
 *.sublime-workspace
-*.tmp
+.DS_Store
+.idea
+build
+coverage
+dist
+node_modules
