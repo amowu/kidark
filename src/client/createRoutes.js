@@ -2,7 +2,7 @@ import App from './app/App.react';
 import Auth from './auth/Page.react';
 import Home from './home/Page.react';
 import Me from './me/Page.react';
-import NotFound from './components/NotFound.react';
+import NotFound from './notfound/Page.react';
 import Profile from './me/Profile.react';
 import React from 'react';
 import Settings from './me/Settings.react';
