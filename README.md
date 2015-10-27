@@ -1,7 +1,7 @@
 <a href="https://este.herokuapp.com/"><img alt="Este.js" src="https://cloud.githubusercontent.com/assets/66249/6515265/b91f0fb8-c388-11e4-857e-c90902e0b7a1.png" width="200"></a>
 
+[![Join the chat at https://gitter.im/amowu/amowu.com](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/amowu/amowu.com)
 [![Circle CI](https://img.shields.io/circleci/project/amowu/amowu.com.svg)](https://circleci.com/gh/amowu/amowu.com)
-[![Join the chat at https://gitter.im/este/este](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/este/este)
 [![Dependency Status](https://david-dm.org/este/este.svg)](https://david-dm.org/este/este)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
