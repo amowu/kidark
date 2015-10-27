@@ -1,15 +1,15 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import autoprefixer from 'autoprefixer';
-import constants from './constants';
-import path from 'path';
-import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import autoprefixer from 'autoprefixer'
+import constants from './constants'
+import path from 'path'
+import webpack from 'webpack'
 
 const devtools = process.env.CONTINUOUS_INTEGRATION
   ? 'inline-source-map'
   // cheap-module-eval-source-map, because we want original source, but we don't
   // care about columns, which makes this devtool faster than eval-source-map.
   // http://webpack.github.io/docs/configuration.html#devtool
-  : 'cheap-module-eval-source-map';
+  : 'cheap-module-eval-source-map'
 
 const loaders = {
   'css': '',
@@ -17,22 +17,21 @@ const loaders = {
   'scss': '!sass-loader',
   'sass': '!sass-loader?indentedSyntax',
   'styl': '!stylus-loader'
-};
+}
 
-export default function makeConfig(isDevelopment) {
-
-  function stylesLoaders() {
+export default function makeConfig (isDevelopment) {
+  function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css-loader!postcss-loader';
-      const extLoaders = prefix + loaders[ext];
+      const prefix = 'css-loader!postcss-loader'
+      const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style-loader!${extLoaders}`
-        : ExtractTextPlugin.extract('style-loader', extLoaders);
+        : ExtractTextPlugin.extract('style-loader', extLoaders)
       return {
         loader: loader,
         test: new RegExp(`\\.(${ext})$`)
-      };
-    });
+      }
+    })
   }
 
   const config = {
@@ -97,28 +96,31 @@ export default function makeConfig(isDevelopment) {
             IS_BROWSER: true
           }
         })
-      ];
-      if (isDevelopment) plugins.push(
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
-      );
-      else plugins.push(
-        // Render styles into separate cacheable file to prevent FOUC and
-        // optimize for critical rendering path.
-        new ExtractTextPlugin('app.css', {
-          allChunks: true
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            screw_ie8: true, // eslint-disable-line camelcase
-            warnings: false // Because uglify reports irrelevant warnings.
-          }
-        })
-      );
-      return plugins;
+      ]
+      if (isDevelopment) {
+        plugins.push(
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.HotModuleReplacementPlugin(),
+          new webpack.NoErrorsPlugin()
+        )
+      } else {
+        plugins.push(
+          // Render styles into separate cacheable file to prevent FOUC and
+          // optimize for critical rendering path.
+          new ExtractTextPlugin('app.css', {
+            allChunks: true
+          }),
+          new webpack.optimize.DedupePlugin(),
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.UglifyJsPlugin({
+            compress: {
+              screw_ie8: true,
+              warnings: false // Because uglify reports irrelevant warnings.
+            }
+          })
+        )
+      }
+      return plugins
     })(),
     postcss: () => [autoprefixer({browsers: 'last 2 version'})],
     resolve: {
@@ -129,8 +131,7 @@ export default function makeConfig(isDevelopment) {
         'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
       }
     }
-  };
+  }
 
-  return config;
-
-};
+  return config
+}

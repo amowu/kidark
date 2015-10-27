@@ -1,11 +1,11 @@
-import './Page.styl';
-import AuthLogout from '../auth/Logout.react';
-import Component from 'react-pure-render/component';
-import DocumentTitle from 'react-document-title';
-import React, {PropTypes} from 'react';
-import RouterHandler from '../../common/components/RouterHandler.react';
-import {FormattedMessage} from 'react-intl';
-import {Link} from 'react-router';
+import './Page.styl'
+import AuthLogout from '../auth/Logout.react'
+import Component from 'react-pure-render/component'
+import DocumentTitle from 'react-document-title'
+import React, {PropTypes} from 'react'
+import RouterHandler from '../../common/components/RouterHandler.react'
+import {FormattedMessage} from 'react-intl'
+import {Link} from 'react-router'
 
 export default class Page extends Component {
 
@@ -15,15 +15,15 @@ export default class Page extends Component {
     users: PropTypes.object
   }
 
-  render() {
-    const {children, msg, users: {viewer: {email}}} = this.props;
+  render () {
+    const {children, msg, users: {viewer: {email}}} = this.props
 
     return (
       <DocumentTitle title={msg.me.title}>
-        <div className="me-page">
+        <div className='me-page'>
           <ul>
-            <li><Link activeClassName="active" to="/me/profile">{msg.profile.title}</Link></li>
-            <li><Link activeClassName="active" to="/me/settings">{msg.settings.title}</Link></li>
+            <li><Link activeClassName='active' to='/me/profile'>{msg.profile.title}</Link></li>
+            <li><Link activeClassName='active' to='/me/settings'>{msg.settings.title}</Link></li>
           </ul>
           {children
             ? <RouterHandler {...this.props} />
@@ -38,7 +38,7 @@ export default class Page extends Component {
           <AuthLogout msg={msg.auth.logout} />
         </div>
       </DocumentTitle>
-    );
+    )
   }
 
 }

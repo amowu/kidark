@@ -1,5 +1,5 @@
-import Component from 'react-pure-render/component';
-import React, {PropTypes} from 'react';
+import Component from 'react-pure-render/component'
+import React, {PropTypes} from 'react'
 
 export default class Logout extends Component {
 
@@ -7,19 +7,19 @@ export default class Logout extends Component {
     msg: PropTypes.object.isRequired
   }
 
-  logout() {
+  logout () {
     // Always reload app on logout for security reasons.
-    location.href = '/';
+    window.location.href = '/'
   }
 
-  render() {
-    const {msg} = this.props;
+  render () {
+    const {msg} = this.props
 
     return (
-      <div className="logout">
+      <div className='logout'>
         <button onClick={() => this.logout()}>{msg.button}</button>
       </div>
-    );
+    )
   }
 
 }

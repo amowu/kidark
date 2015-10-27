@@ -1,8 +1,8 @@
-import Component from 'react-pure-render/component';
-import DocumentTitle from 'react-document-title';
-import React, {PropTypes} from 'react';
-import {FormattedHTMLMessage} from 'react-intl';
-import {Link} from 'react-router';
+import Component from 'react-pure-render/component'
+import DocumentTitle from 'react-document-title'
+import React, {PropTypes} from 'react'
+import {FormattedHTMLMessage} from 'react-intl'
+import {Link} from 'react-router'
 
 export default class Page extends Component {
 
@@ -12,16 +12,16 @@ export default class Page extends Component {
     msg: PropTypes.object
   }
 
-  render() {
-    const {msg: {home: msg}} = this.props;
+  render () {
+    const {msg: {home: msg}} = this.props
 
     return (
       <DocumentTitle title={msg.title}>
-        <div className="home-page">
+        <div className='home-page'>
           <p>
             <FormattedHTMLMessage defaultMessage={msg.infoHtml} />
           </p>
-          <div className="tocheck">
+          <div className='tocheck'>
             <h2>{msg.toCheck.h2}</h2>
             <ul>
               {msg.toCheck.list.map(({key, text}) =>
@@ -31,7 +31,7 @@ export default class Page extends Component {
               )}
               <li>
                 {msg.toCheck.isomorphicPage}{' '}
-                <Link to="/this-is-not-the-web-page-you-are-looking-for">404</Link>
+                <Link to='/this-is-not-the-web-page-you-are-looking-for'>404</Link>
               </li>
               <li>
                 {msg.toCheck.andMuchMore}
@@ -40,7 +40,7 @@ export default class Page extends Component {
           </div>
         </div>
       </DocumentTitle>
-    );
+    )
   }
 
 }

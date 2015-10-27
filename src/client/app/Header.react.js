@@ -1,6 +1,6 @@
-import Component from 'react-pure-render/component';
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import Component from 'react-pure-render/component'
+import React, {PropTypes} from 'react'
+import {Link} from 'react-router'
 
 export default class Header extends Component {
 
@@ -10,23 +10,23 @@ export default class Header extends Component {
     viewer: PropTypes.object
   }
 
-  render() {
-    const {msg: {app: {links: msg}}, viewer} = this.props;
+  render () {
+    const {msg: {app: {links: msg}}, viewer} = this.props
 
     return (
       <header>
         <h1>
-          <Link to="/">{msg.home}</Link>
+          <Link to='/'>{msg.home}</Link>
         </h1>
         <ul>
-          <li><Link activeClassName="active" to="/todos">{msg.todos}</Link></li>
-          <li><Link activeClassName="active" to="/me">{msg.me}</Link></li>
+          <li><Link activeClassName='active' to='/todos'>{msg.todos}</Link></li>
+          <li><Link activeClassName='active' to='/me'>{msg.me}</Link></li>
           {!viewer &&
-            <li><Link activeClassName="active" to="/login">{msg.login}</Link></li>
+            <li><Link activeClassName='active' to='/login'>{msg.login}</Link></li>
           }
         </ul>
       </header>
-    );
+    )
   }
 
 }

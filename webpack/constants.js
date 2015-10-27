@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'path'
 
-const ABSOLUTE_BASE = path.normalize(path.join(__dirname, '..'));
+const ABSOLUTE_BASE = path.normalize(path.join(__dirname, '..'))
 
 const constants = Object.freeze({
   ABSOLUTE_BASE: ABSOLUTE_BASE,
@@ -10,6 +10,6 @@ const constants = Object.freeze({
   SRC_DIR: path.join(ABSOLUTE_BASE, 'src'),
   ASSETS_DIR: path.join(ABSOLUTE_BASE, 'assets'),
   HOT_RELOAD_PORT: 8080
-});
+})
 
-export default constants;
+export default constants

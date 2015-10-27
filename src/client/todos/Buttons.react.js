@@ -1,6 +1,6 @@
-import './Buttons.styl';
-import Component from 'react-pure-render/component';
-import React, {PropTypes} from 'react';
+import './Buttons.styl'
+import Component from 'react-pure-render/component'
+import React, {PropTypes} from 'react'
 
 export default class Buttons extends Component {
 
@@ -10,11 +10,11 @@ export default class Buttons extends Component {
     msg: PropTypes.object.isRequired
   }
 
-  render() {
-    const {actions, clearAllEnabled, msg} = this.props;
+  render () {
+    const {actions, clearAllEnabled, msg} = this.props
 
     return (
-      <div className="buttons">
+      <div className='buttons'>
         <button
           disabled={!clearAllEnabled}
           onClick={actions.clearAllTodos}
@@ -23,7 +23,7 @@ export default class Buttons extends Component {
           onClick={actions.addHundredTodos}
         >{msg.add100}</button>
       </div>
-    );
+    )
   }
 
 }
