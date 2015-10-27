@@ -1,15 +1,17 @@
 {
-  "name": "Este",
+  "name": "amowu.com",
   "authors": [
     "Daniel Steigerwald",
-    "Mike Grabowski"
+    "Mike Grabowski",
+    "Amo Wu"
   ],
   "description": "The best dev stack and starter kit for React universal web apps.",
   "private": true,
   "scripts": {
     "postinstall": "gulp build --production",
-    "start": "node_modules/react-native/packager/packager.sh",
-    "test": "gulp test"
+    "test": "gulp test",
+    "start": "gulp --production",
+    "start:dev": "gulp"
   },
   "engines": {
     "node": "4.2.1"
