@@ -1,6 +1,11 @@
 machine:
   node:
     version: 4.2.1
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: amowu
 notify:
   webhooks:
     # A list of hook hashes, containing the url field gitter hook
