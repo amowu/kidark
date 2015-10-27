@@ -3,10 +3,8 @@ import isomorphicFetch from 'isomorphic-fetch'
 const local = 'http://localhost:8000/'
 
 function ensureAbsoluteUrl (input) {
-  console.log(input)
   if (typeof input !== 'string') return input
   if (input.indexOf('http') !== -1) return input
-  console.log(local + input)
   return local + input
 }
 
