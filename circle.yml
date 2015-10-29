@@ -6,7 +6,3 @@ deployment:
     branch: master
     heroku:
       appname: amowu
-notify:
-  webhooks:
-    # A list of hook hashes, containing the url field gitter hook
-    - url: https://webhooks.gitter.im/e/73853c74c4b26e5e41e2
