@@ -1,6 +1,7 @@
 import bg from 'gulp-bg'
 import fs from 'fs'
 import gulp from 'gulp'
+import mocha from 'gulp-mocha'
 import standard from 'gulp-standard'
 import os from 'os'
 import path from 'path'
@@ -17,6 +18,7 @@ const runStandard = () => {
   return gulp.src([
     'gulpfile.babel.js',
     'src/**/*.js',
+    'test/**/*.js',
     'webpack/*.js'
   ])
   .pipe(standard())
@@ -40,9 +42,17 @@ gulp.task('standard-ci', () => {
     }))
 })
 
+gulp.task('mocha', () => {
+  return gulp.src('test/**/*.js', {read: false})
+    .pipe(mocha({
+      reporter: 'spec',
+      require: ['./test/setup.js']
+    }))
+})
+
 gulp.task('test', done => {
-  // TODO: Add tests.
-  runSequence('standard-ci', 'build-webpack', done)
+  // TODO: Add Flow static type checker
+  runSequence('standard-ci', 'mocha', 'build-webpack', done)
 })
 
 gulp.task('server-node', bg('node', './src/server'))
