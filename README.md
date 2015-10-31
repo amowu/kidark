@@ -2,9 +2,10 @@
 
 | Info | Badges |
 | --- | --- |
-| Version | [![node](https://img.shields.io/badge/node-4.2.1-brightgreen.svg?style=flat-square)](https://nodejs.org/) [![Dependency Status](https://img.shields.io/david/amowu/amowu.com.svg?style=flat-square)](https://david-dm.org/amowu/amowu.com) |
+| Version | [![node](https://img.shields.io/badge/node-4.2.1-brightgreen.svg?style=flat-square)](https://nodejs.org/) |
 | License | [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/amowu/amowu.com/blob/master/LICENSE) |
-| Quality | [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard) |
+| Standard | [![Semantic Versioning](https://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat-square)](http://semver.org/spec/v2.0.0.html) [![Contributing](https://img.shields.io/badge/git-flow-blue.svg?style=flat-square)](https://github.com/nvie/gitflow) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue.svg?style=flat-square)](https://github.com/feross/standard) |
+| Quality | [![Dependency Status](https://img.shields.io/david/amowu/amowu.com.svg?style=flat-square)](https://david-dm.org/amowu/amowu.com) [![Codecov](https://img.shields.io/codecov/c/github/amowu/amowu.com.svg?style=flat-square)](https://codecov.io/github/amowu/amowu.com?branch=master) |
 | Build | [![Circle CI](https://img.shields.io/circleci/project/amowu/amowu.com.svg?style=flat-square)](https://circleci.com/gh/amowu/amowu.com) |
 | Deployment | [![Deploy](https://img.shields.io/badge/Deploy_to-Heroku-7056BF.svg?style=flat-square)](https://heroku.com/deploy) |
 | Discussion | [![Join the chat at https://gitter.im/amowu/amowu.com](https://img.shields.io/badge/JOIN_CHAT-GITTER-1DCE73.svg?style=flat-square)](https://gitter.im/amowu/amowu.com) |
