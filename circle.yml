@@ -1,6 +1,9 @@
 machine:
   node:
     version: 4.2.1
+test:
+  post:
+    - cat ./coverage/lcov.info | codecov
 deployment:
   staging:
     branch: master
