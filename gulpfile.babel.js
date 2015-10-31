@@ -1,10 +1,8 @@
 import bg from 'gulp-bg'
-import fs from 'fs'
 import gulp from 'gulp'
 import istanbul from 'gulp-istanbul'
 import mocha from 'gulp-mocha'
 import standard from 'gulp-standard'
-import os from 'os'
 import { Instrumenter } from 'isparta'
 import path from 'path'
 import runSequence from 'run-sequence'
@@ -82,26 +80,3 @@ gulp.task('server', ['env'], done => {
 })
 
 gulp.task('default', ['server'])
-
-// React Native
-
-// Fix for custom .babelrc cache issue.
-// https://github.com/facebook/react-native/issues/1924#issuecomment-120170512
-gulp.task('clear-react-packager-cache', function () {
-  // Clear react-packager cache
-  const tempDir = os.tmpdir()
-
-  const cacheFiles = fs.readdirSync(tempDir).filter(function (fileName) {
-    return fileName.indexOf('react-packager-cache') === 0
-  })
-
-  cacheFiles.forEach(function (cacheFile) {
-    const cacheFilePath = path.join(tempDir, cacheFile)
-    fs.unlinkSync(cacheFilePath)
-    console.log('Deleted cache: ', cacheFilePath)
-  })
-
-  if (!cacheFiles.length) {
-    console.log('No cache files found!')
-  }
-})
