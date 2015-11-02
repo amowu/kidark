@@ -6,6 +6,6 @@ test:
     - cat ./coverage/lcov.info | codecov
 deployment:
   staging:
-    branch: master
+    branch: develop
     heroku:
       appname: amowu
