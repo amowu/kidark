@@ -8,6 +8,7 @@ import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import mapStateToProps from '../../common/app/mapStateToProps'
 import {connect} from 'react-redux'
 
+import Game from './Game.react'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
@@ -27,6 +28,7 @@ export default class App extends Component {
       <div className='page' data-pathname={pathname}>
         {/* Pathname enforces rerender so activeClassName is updated. */}
         <Header msg={msg} pathname={pathname} viewer={viewer} />
+        <Game />
         <RouterHandler {...this.props} />
         <Footer msg={msg.app.footer} />
       </div>
