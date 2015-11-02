@@ -8,7 +8,6 @@ import createRoutes from './createRoutes'
 import {IntlProvider} from 'react-intl'
 import {Provider} from 'react-redux'
 
-const app = document.getElementById('app')
 const engine = createEngine('este-app')
 const initialState = window.__INITIAL_STATE__
 const store = configureStore({engine, initialState})
@@ -22,7 +21,7 @@ ReactDOM.render(
       </Router>
     </IntlProvider>
   </Provider>,
-  app,
+  document.getElementById('app'),
   () => {
     // This is where state from local storage should be retrieved.
     // import storage from 'redux-storage'
