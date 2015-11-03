@@ -5,7 +5,7 @@ import injectDependencies from './lib/injectDependencies'
 import promiseMiddleware from 'redux-promise-middleware'
 import stateToJS from './lib/stateToJS'
 import validate from './validate'
-import {applyMiddleware, createStore} from 'redux'
+import { compose, applyMiddleware, createStore } from 'redux'
 
 // TODO: Add example for browser/native storage.
 // import storage from 'redux-storage'
@@ -32,10 +32,10 @@ export default function configureStore ({engine, initialState}) {
   //   middleware.push(storage.createMiddleware(engine))
   // }
 
-  const loggerEnabled =
+  const devToolsEnabled =
     process.env.NODE_ENV !== 'production' && process.env.IS_BROWSER
 
-  if (loggerEnabled) {
+  if (devToolsEnabled) {
     const logger = createLogger({
       collapsed: true,
       transformer: stateToJS
@@ -45,7 +45,17 @@ export default function configureStore ({engine, initialState}) {
   }
 
   const createStoreWithMiddleware = applyMiddleware(...middleware)
-  const store = createStoreWithMiddleware(createStore)(appReducer, initialState)
+
+  const finalCreateStore = devToolsEnabled
+    ? compose(
+      createStoreWithMiddleware,
+      // Redux DevTools Extension
+      // https://github.com/zalmoxisus/redux-devtools-extension
+      window.devToolsExtension || (f => f)
+    )(createStore)
+    : createStoreWithMiddleware(createStore)
+
+  const store = finalCreateStore(appReducer, initialState)
 
   // Enable hot reload where available.
   if (module.hot) {
