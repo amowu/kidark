@@ -11,7 +11,7 @@ export default class Header extends Component {
   }
 
   render () {
-    const {msg: {app: {links: msg}}, viewer} = this.props
+    const {msg: {app: {links: msg}}} = this.props
 
     return (
       <header>
@@ -20,10 +20,6 @@ export default class Header extends Component {
         </h1>
         <ul>
           <li><Link activeClassName='active' to='/todos'>{msg.todos}</Link></li>
-          <li><Link activeClassName='active' to='/me'>{msg.me}</Link></li>
-          {!viewer &&
-            <li><Link activeClassName='active' to='/login'>{msg.login}</Link></li>
-          }
         </ul>
       </header>
     )
