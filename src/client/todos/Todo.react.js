@@ -1,5 +1,5 @@
-import Component from 'react-pure-render/component'
 import React, {PropTypes} from 'react'
+import Component from 'react-pure-render/component'
 
 export default class Todo extends Component {
 
