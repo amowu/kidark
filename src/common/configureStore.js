@@ -7,7 +7,7 @@ import stateToJS from './lib/stateToJS'
 import validate from './validate'
 import { compose, applyMiddleware, createStore } from 'redux'
 
-export default function configureStore ({engine, initialState}) {
+export default function configureStore ({initialState}) {
   // Inject services for actions.
   const dependenciesMiddleware = injectDependencies(
     {fetch},
