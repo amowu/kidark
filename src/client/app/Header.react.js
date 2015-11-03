@@ -19,6 +19,7 @@ export default class Header extends Component {
           <Link to='/'>{msg.home}</Link>
         </h1>
         <ul>
+          <li><Link to='/user/amowu'>Resume</Link></li>
           <li><Link activeClassName='active' to='/todos'>{msg.todos}</Link></li>
         </ul>
       </header>
