@@ -7,9 +7,6 @@ import stateToJS from './lib/stateToJS'
 import validate from './validate'
 import { compose, applyMiddleware, createStore } from 'redux'
 
-// TODO: Add example for browser/native storage.
-// import storage from 'redux-storage'
-
 export default function configureStore ({engine, initialState}) {
   // Inject services for actions.
   const dependenciesMiddleware = injectDependencies(
@@ -21,16 +18,6 @@ export default function configureStore ({engine, initialState}) {
     dependenciesMiddleware,
     promiseMiddleware
   ]
-
-  // TODO: Add storage example.
-  // if (engine) {
-  //   // The order is important.
-  //   engine = storage.decorators.filter(engine, [
-  //     ['todos', 'list']
-  //   ])
-  //   engine = storage.decorators.debounce(engine, 1500)
-  //   middleware.push(storage.createMiddleware(engine))
-  // }
 
   const devToolsEnabled =
     process.env.NODE_ENV !== 'production' && process.env.IS_BROWSER
