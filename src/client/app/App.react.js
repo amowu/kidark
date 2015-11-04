@@ -20,13 +20,12 @@ export default class App extends Component {
   render () {
     const {
       location: { pathname },
-      msg,
-      users: { viewer }
+      msg
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
-        <Header msg={msg} pathname={pathname} viewer={viewer} />
+        <Header msg={msg} pathname={pathname} />
         <Game />
         <RouterHandler {...this.props} />
       </div>
