@@ -14,7 +14,7 @@ export default class App extends Component {
     children: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     msg: PropTypes.object.isRequired,
-    users: PropTypes.object.isRequired
+    users: PropTypes.object
   }
 
   render () {
