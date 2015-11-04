@@ -6,14 +6,12 @@ import {combineReducers} from 'redux'
 import auth from '../auth/reducer'
 import intl from '../intl/reducer'
 import todos from '../todos/reducer'
-import ui from '../ui/reducer'
 import users from '../users/reducer'
 
 const appReducer = combineReducers({
   auth,
   intl,
   todos,
-  ui,
   users
 })
 
