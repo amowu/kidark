@@ -11,7 +11,8 @@
     "postinstall": "gulp build --production",
     "test": "gulp test",
     "start": "gulp --production",
-    "start:dev": "gulp"
+    "start:dev": "gulp",
+    "test:mocha": "gulp mocha"
   },
   "engines": {
     "node": "4.2.1"
