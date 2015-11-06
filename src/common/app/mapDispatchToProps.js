@@ -1,9 +1,7 @@
-import * as uiActions from '../ui/actions'
 import {Map} from 'immutable'
 import {bindActionCreators} from 'redux'
 
 const actions = [
-  uiActions
 ]
 
 export default function mapDispatchToProps (dispatch) {
