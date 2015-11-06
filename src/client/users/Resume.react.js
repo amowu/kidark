@@ -1,14 +1,13 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import Component from 'react-pure-render/component'
 
 import fetch from '../../common/components/fetch'
-// TODO: Can get it by props.actions?
 import {fetchUser} from '../../common/users/users.actions.js'
 
 @fetch(fetchUser)
 export default class Resume extends Component {
   static propTypes = {
-    users: React.PropTypes.object
+    users: PropTypes.object.isRequired
   }
 
   render () {
