@@ -8,7 +8,6 @@ import {fetchUser} from '../../common/users/users.actions.js'
 @fetch(fetchUser)
 export default class Resume extends Component {
   static propTypes = {
-    msg: React.PropTypes.object,
     users: React.PropTypes.object
   }
 

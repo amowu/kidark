@@ -13,19 +13,19 @@ export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    msg: PropTypes.object.isRequired,
     users: PropTypes.object
+    messages: PropTypes.object.isRequired,
   }
 
   render () {
     const {
       location: { pathname },
-      msg
+      messages
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
-        <Header msg={msg} pathname={pathname} />
+        <Header msg={messages} pathname={pathname} />
         <Game />
         <RouterHandler {...this.props} />
       </div>

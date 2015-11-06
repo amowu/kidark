@@ -6,18 +6,18 @@ import {Link} from 'react-router'
 export default class NotFound extends Component {
 
   static propTypes = {
-    msg: PropTypes.object
+    messages: PropTypes.object
   }
 
   render () {
-    const {msg: {notFound: msg}} = this.props
+    const {messages: {notFound: messages}} = this.props
 
     return (
-      <DocumentTitle title={msg.title}>
+      <DocumentTitle title={messages.title}>
         <div className='notfound-page'>
-          <h1>{msg.header}</h1>
-          <p>{msg.message}</p>
-          <Link to='/'>{msg.continueMessage}</Link>
+          <h1>{messages.header}</h1>
+          <p>{messages.message}</p>
+          <Link to='/'>{messages.continueMessage}</Link>
         </div>
       </DocumentTitle>
     )

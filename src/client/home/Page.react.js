@@ -9,32 +9,32 @@ export default class Page extends Component {
   static propTypes = {
     // Why not PropTypes.object.isRequired? Because:
     // https://github.com/rackt/react-router/issues/1505
-    msg: PropTypes.object
+    messages: PropTypes.object
   }
 
   render () {
-    const {msg: {home: msg}} = this.props
+    const {messages: {home: messages}} = this.props
 
     return (
-      <DocumentTitle title={msg.title}>
+      <DocumentTitle title={messages.title}>
         <div className='home-page'>
           <p>
-            <FormattedHTMLMessage defaultMessage={msg.infoHtml} />
+            <FormattedHTMLMessage defaultMessage={messages.infoHtml} />
           </p>
           <div className='tocheck'>
-            <h2>{msg.toCheck.h2}</h2>
+            <h2>{messages.toCheck.h2}</h2>
             <ul>
-              {msg.toCheck.list.map(({key, text}) =>
+              {messages.toCheck.list.map(({key, text}) =>
                 <li key={key}>
                   <FormattedHTMLMessage defaultMessage={text} />
                 </li>
               )}
               <li>
-                {msg.toCheck.isomorphicPage}{' '}
+                {messages.toCheck.isomorphicPage}{' '}
                 <Link to='/this-is-not-the-web-page-you-are-looking-for'>404</Link>
               </li>
               <li>
-                {msg.toCheck.andMuchMore}
+                {messages.toCheck.andMuchMore}
               </li>
             </ul>
           </div>
