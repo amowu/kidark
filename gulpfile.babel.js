@@ -36,7 +36,8 @@ gulp.task('standard', () => {
 gulp.task('mocha', () => {
   return gulp.src('test/**/*.js', {read: false})
     .pipe(mocha({
-      require: ['./test/setup.js']
+      require: ['./test/setup.js'],
+      reporter: 'spec'
     }))
 })
 

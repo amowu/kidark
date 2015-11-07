@@ -6,8 +6,7 @@ export default class Header extends Component {
 
   static propTypes = {
     msg: PropTypes.object.isRequired,
-    pathname: PropTypes.string.isRequired,
-    viewer: PropTypes.object
+    pathname: PropTypes.string.isRequired
   }
 
   render () {
@@ -20,7 +19,6 @@ export default class Header extends Component {
         </h1>
         <ul>
           <li><Link to='/user/amowu'>Resume</Link></li>
-          <li><Link activeClassName='active' to='/todos'>{msg.todos}</Link></li>
         </ul>
       </header>
     )

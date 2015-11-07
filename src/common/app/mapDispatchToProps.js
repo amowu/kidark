@@ -1,13 +1,10 @@
-import * as authActions from '../auth/actions'
-import * as todosActions from '../todos/actions'
-import * as uiActions from '../ui/actions'
 import {Map} from 'immutable'
 import {bindActionCreators} from 'redux'
 
+import * as usersActions from '../users/users.actions'
+
 const actions = [
-  authActions,
-  todosActions,
-  uiActions
+  usersActions
 ]
 
 export default function mapDispatchToProps (dispatch) {
