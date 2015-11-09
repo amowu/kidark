@@ -20,15 +20,12 @@ describe('users actions', () => {
         user: expectedUserDate
       })
     const expectedActions = [{
-      type: usersActions.FETCH_USER,
-      payload: undefined,
-      meta: undefined
+      type: usersActions.FETCH_USER_START
     }, {
       type: usersActions.FETCH_USER_SUCCESS,
       payload: {
         user: expectedUserDate
-      },
-      meta: undefined
+      }
     }]
     const store = createMockStore({}, expectedActions, done)
     store.dispatch(usersActions.fetchUser())

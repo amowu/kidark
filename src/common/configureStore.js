@@ -16,7 +16,9 @@ export default function configureStore ({initialState}) {
 
   const middleware = [
     dependenciesMiddleware,
-    promiseMiddleware
+    promiseMiddleware({
+      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+    })
   ]
 
   const devToolsEnabled =
