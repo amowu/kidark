@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import Component from 'react-pure-render/component'
 
-import fetch from '../../common/components/fetch'
 import {fetchUser} from '../../common/users/users.actions.js'
+import fetch from '../components/fetch'
 
 @fetch(fetchUser)
 export default class Resume extends Component {
