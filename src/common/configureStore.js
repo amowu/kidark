@@ -16,7 +16,9 @@ export default function configureStore ({initialState}) {
 
   const middleware = [
     dependenciesMiddleware,
-    promiseMiddleware
+    promiseMiddleware({
+      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+    })
   ]
 
   const devToolsEnabled =
@@ -38,7 +40,7 @@ export default function configureStore ({initialState}) {
       createStoreWithMiddleware,
       // Redux DevTools Extension
       // https://github.com/zalmoxisus/redux-devtools-extension
-      window.devToolsExtension || (f => f)
+      window.devToolsExtension() || (f => f)
     )(createStore)
     : createStoreWithMiddleware(createStore)
 

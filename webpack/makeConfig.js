@@ -46,9 +46,9 @@ export default function makeConfig (isDevelopment) {
     entry: {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
-        path.join(constants.SRC_DIR, 'client/main.js')
+        path.join(constants.SRC_DIR, 'browser/main.js')
       ] : [
-        path.join(constants.SRC_DIR, 'client/main.js')
+        path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
     module: {
@@ -60,6 +60,7 @@ export default function makeConfig (isDevelopment) {
         loader: 'babel',
         query: {
           stage: 0,
+          cacheDirectory: true,
           env: {
             development: {
               // react-transform belongs to webpack config only, not to .babelrc

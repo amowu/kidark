@@ -10,7 +10,9 @@ const dependenciesMiddleware = injectDependencies(
 )
 const middleware = [
   dependenciesMiddleware,
-  promiseMiddleware
+  promiseMiddleware({
+    promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+  })
 ]
 export const createMockStore = (getState, expectedActions, done) => {
   if (!Array.isArray(expectedActions)) {
