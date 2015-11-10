@@ -14,6 +14,7 @@ import Header from './Header.react'
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired
@@ -22,13 +23,14 @@ export default class App extends Component {
   render () {
     const {
       location: {pathname},
-      messages
+      messages,
+      history
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
         <Header msg={messages} pathname={pathname} />
-        <Game />
+        <Game history={history} />
         <RouterHandler {...this.props} />
       </div>
     )
