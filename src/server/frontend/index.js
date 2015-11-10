@@ -1,7 +1,8 @@
 import compression from 'compression'
-import device from 'express-device'
-import esteMiddleware from '../lib/esteMiddleware'
 import express from 'express'
+import device from 'express-device'
+
+import esteMiddleware from '../lib/esteMiddleware'
 import render from './render'
 
 const app = express()
