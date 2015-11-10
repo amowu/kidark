@@ -20,6 +20,9 @@ app.use('/_assets', express.static('build', {maxAge: '200d'}))
 app.use('/node_modules/intl/dist', express.static('node_modules/intl/dist'))
 app.use('/node_modules/intl/locale-data', express.static('node_modules/intl/locale-data'))
 
+// Phaser
+app.use('/node_modules/phaser/build', express.static('node_modules/phaser/build'))
+
 app.use(device.capture())
 app.get('*', render)
 
