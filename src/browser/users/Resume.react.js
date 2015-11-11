@@ -7,11 +7,11 @@ import fetch from '../components/fetch'
 @fetch(fetchUser)
 export default class Resume extends Component {
   static propTypes = {
-    users: PropTypes.object.isRequired
+    $$users: PropTypes.object.isRequired
   }
 
   render () {
-    const {users: {entities}} = this.props
+    const {$$users: {entities}} = this.props
 
     if (!entities.has('26')) return <p>loading...</p>
 
