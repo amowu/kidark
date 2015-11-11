@@ -104,7 +104,7 @@ function getScriptHtml (clientState, headers, hostname) {
       <script src="/node_modules/intl/locale-data/jsonp/en-US.js"></script>
     `
   }
-  scriptHtml += `<script src="/node_modules/phaser/build/phaser.js"></script>`
+  scriptHtml += `<script src="/node_modules/phaser/build/phaser.min.js"></script>`
 
   const appScriptSrc = config.isProduction
     ? '/_assets/app.js?' + config.assetsHashes.appJs

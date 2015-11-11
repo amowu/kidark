@@ -5,7 +5,7 @@ import usersReducer from '../users/users.reducer'
 
 const appReducer = combineReducers({
   intl,
-  users: usersReducer
+  $$users: usersReducer
 })
 
 export default appReducer
