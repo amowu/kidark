@@ -11,7 +11,7 @@ app.use(esteMiddleware())
 app.use(compression())
 
 // Serve the static assets. We can cache them as they include hashes.
-app.use('/assets/img', express.static('assets/img', {maxAge: '200d'}))
+app.use('/assets/images', express.static('assets/images', {maxAge: '200d'}))
 app.use('/_assets', express.static('build', {maxAge: '200d'}))
 
 // Intl.

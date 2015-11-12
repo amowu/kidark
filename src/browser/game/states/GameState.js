@@ -1,7 +1,7 @@
 export default class GameState extends Phaser.State {
   preload () {
-    this.game.load.spritesheet('dude', '/assets/img/dude.png', 32, 48)
-    this.game.load.image('star', '/assets/img/star.png')
+    this.game.load.spritesheet('dude', '/assets/images/dude.png', 32, 48)
+    this.game.load.image('star', '/assets/images/star.png')
   }
 
   create () {
