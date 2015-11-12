@@ -1,8 +1,9 @@
-import api from './api'
-import config from './config'
-import errorHandler from './lib/errorHandler'
 import express from 'express'
+
+import api from './api'
 import frontend from './frontend'
+import errorHandler from './lib/errorHandler'
+import config from './config'
 
 const app = express()
 

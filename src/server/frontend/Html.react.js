@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
 export default class Html extends Component {
-
   static propTypes = {
     appCssHash: PropTypes.string.isRequired,
     bodyHtml: PropTypes.string.isRequired,
@@ -45,5 +44,4 @@ ga('create', '${googleAnalyticsId}', 'auto') ga('send', 'pageview')`}}
       </html>
     )
   }
-
 }

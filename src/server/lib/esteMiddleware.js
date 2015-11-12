@@ -1,4 +1,4 @@
-// X-Powered-By: Este.js
+// X-Powered-By: amowu.com
 // http://expressjs.com/4x/api.html#res.set
 export default function esteMiddleware () {
   return (req, res, next) => {
@@ -7,7 +7,7 @@ export default function esteMiddleware () {
     // Set X-Powered-By only if it has not been disabled by the user previously.
     if (app.get('x-powered-by')) {
       res.set({
-        'X-Powered-By': 'Este.js'
+        'X-Powered-By': 'amowu.com'
       })
     }
 

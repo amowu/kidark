@@ -3,7 +3,7 @@ import config from '../config'
 export default function errorHandler (err, req, res, next) {
   const errorDetails = err.stack || err
 
-  console.error('Yay', errorDetails)
+  console.error(errorDetails)
 
   res.status(500).format({
     json () {
