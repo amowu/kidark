@@ -1,5 +1,5 @@
-import Component from 'react-pure-render/component'
 import React, {PropTypes} from 'react'
+import Component from 'react-pure-render/component'
 
 // RouterHandler is back since suggested solution via React.cloneElement sucks.
 // https://github.com/rackt/react-router/blob/master/UPGRADE_GUIDE.md#routehandler
@@ -9,13 +9,15 @@ import React, {PropTypes} from 'react'
 // It is recommended to make such propTypes optional.
 // https://github.com/facebook/react/issues/4494#issuecomment-125068868
 export default class RouterHandler extends Component {
-
   static propTypes = {
     children: PropTypes.object
   }
 
   render () {
-    const {children} = this.props
+    const {
+      children
+    } = this.props
+
     // No children means nothing to render.
     if (!children) return null
 
@@ -25,5 +27,4 @@ export default class RouterHandler extends Component {
 
     return React.cloneElement(children, propsWithoutChildren)
   }
-
 }

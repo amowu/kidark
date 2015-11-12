@@ -1,7 +1,7 @@
 import nock from 'nock'
 
-import * as usersActions from '../src/common/users/users.actions'
-import {createMockStore} from './helper'
+import * as usersActions from '../../src/common/users/users.actions'
+import {createMockStore} from '../helper'
 
 describe('users actions', () => {
   afterEach(() => {

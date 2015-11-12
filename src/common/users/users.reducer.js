@@ -6,7 +6,7 @@ import {Users, User} from './user.immutable'
 const initialState = new Users()
 
 const revive = ({entities}) => {
-  // TODO: refactor
+  // TODO: Refactor
   Object.keys(entities).map((value, index) => entities[value] = new User(entities[value]))
   return initialState.merge({
     entities: Map(entities)

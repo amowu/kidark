@@ -11,7 +11,11 @@ export default class Resume extends Component {
   }
 
   render () {
-    const {$$users: {entities}} = this.props
+    const {
+      $$users: {
+        entities
+      }
+    } = this.props
 
     if (!entities.has('26')) return <p>loading...</p>
 

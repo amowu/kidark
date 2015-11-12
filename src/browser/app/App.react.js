@@ -6,8 +6,6 @@ import mapStateToProps from '../../common/app/mapStateToProps'
 import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
 import Game from './Game.react'
-
-// TODO: Remove it
 import Header from './Header.react'
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -22,14 +20,16 @@ export default class App extends Component {
 
   render () {
     const {
-      location: {pathname},
+      location: {
+        pathname
+      },
       messages,
       history
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
-        <Header msg={messages} pathname={pathname} />
+        <Header messages={messages} pathname={pathname} />
         <Game history={history} />
         <RouterHandler {...this.props} />
       </div>

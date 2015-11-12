@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 
-import * as usersAction from '../src/common/users/users.actions'
-import {Users, User} from '../src/common/users/user.immutable'
-import usersReducer from '../src/common/users/users.reducer'
+import * as usersAction from '../../src/common/users/users.actions'
+import {Users, User} from '../../src/common/users/user.immutable'
+import usersReducer from '../../src/common/users/users.reducer'
 
 describe('users reducer', () => {
   const userId = '26'

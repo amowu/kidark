@@ -1,25 +1,26 @@
-import DocumentTitle from 'react-document-title'
-import Html from './Html.react'
 import Promise from 'bluebird'
+import {createMemoryHistory} from 'history'
 import React from 'react'
+import DocumentTitle from 'react-document-title'
 import ReactDOMServer from 'react-dom/server'
-import config from '../config'
-import configureStore from '../../common/configureStore'
-import createRoutes from '../../browser/createRoutes'
-import serialize from 'serialize-javascript'
-import useragent from 'useragent'
-import {HOT_RELOAD_PORT} from '../../../webpack/constants'
 import {IntlProvider} from 'react-intl'
 import {Provider} from 'react-redux'
 import {RoutingContext, match} from 'react-router'
-import {createMemoryHistory} from 'history'
+import serialize from 'serialize-javascript'
+import useragent from 'useragent'
+
+import {HOT_RELOAD_PORT} from '../../../webpack/constants'
+import createRoutes from '../../browser/createRoutes'
+import configureStore from '../../common/configureStore'
+import config from '../config'
+import Html from './Html.react'
 
 export default function render (req, res, next) {
   const initialState = {}
   const store = configureStore({initialState})
 
-  // Fetch logged in user here because routes may need it. Remember we can use
-  // store.dispatch method.
+  // Fetch logged in user here because routes may need it.
+  // Remember we can use store.dispatch method.
 
   const routes = createRoutes(() => store.getState())
   const location = createMemoryHistory().createLocation(req.url)
@@ -34,12 +35,6 @@ export default function render (req, res, next) {
       next(error)
       return
     }
-
-    // // Not possible with * route.
-    // if (renderProps == null) {
-    //   res.send(404, 'Not found')
-    //   return
-    // }
 
     fetchComponentData(store.dispatch, req, renderProps)
       .then(() => renderPage(store, renderProps, req))
