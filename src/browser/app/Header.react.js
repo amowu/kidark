@@ -1,21 +1,26 @@
-import Component from 'react-pure-render/component'
 import React, {PropTypes} from 'react'
+import Component from 'react-pure-render/component'
 import {Link} from 'react-router'
 
 export default class Header extends Component {
-
   static propTypes = {
-    msg: PropTypes.object.isRequired,
+    messages: PropTypes.object.isRequired,
     pathname: PropTypes.string.isRequired
   }
 
   render () {
-    const {msg: {app: {links: msg}}} = this.props
+    const {
+      messages: {
+        app: {
+          links: messages
+        }
+      }
+    } = this.props
 
     return (
       <header>
         <h1>
-          <Link to='/'>{msg.home}</Link>
+          <Link to='/'>{messages.home}</Link>
         </h1>
         <ul>
           <li><Link to='/user/amowu'>Resume</Link></li>
@@ -23,5 +28,4 @@ export default class Header extends Component {
       </header>
     )
   }
-
 }

@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
 
-import intl from '../intl/reducer'
+import intlReducer from '../intl/intl.reducer'
 import usersReducer from '../users/users.reducer'
 
 const appReducer = combineReducers({
-  intl,
+  $$intl: intlReducer,
   $$users: usersReducer
 })
 

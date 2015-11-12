@@ -15,10 +15,17 @@ export default function createFetch (React, Component) {
       componentDidMount () {
         // Dispatch is injected by react-redux.
         // React router injects location and params for every routed component.
-        const {dispatch, location, params} = this.props
+        const {
+          dispatch,
+          location,
+          params
+        } = this.props
 
         actions.forEach(action =>
-          dispatch(action({location, params}))
+          dispatch(action({
+            location,
+            params
+          }))
         )
       }
 

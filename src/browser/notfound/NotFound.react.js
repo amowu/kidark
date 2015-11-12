@@ -1,16 +1,19 @@
-import Component from 'react-pure-render/component'
-import DocumentTitle from 'react-document-title'
 import React, {PropTypes} from 'react'
+import DocumentTitle from 'react-document-title'
+import Component from 'react-pure-render/component'
 import {Link} from 'react-router'
 
 export default class NotFound extends Component {
-
   static propTypes = {
     messages: PropTypes.object
   }
 
   render () {
-    const {messages: {notFound: messages}} = this.props
+    const {
+      messages: {
+        notFound: messages
+      }
+    } = this.props
 
     return (
       <DocumentTitle title={messages.title}>
@@ -22,5 +25,4 @@ export default class NotFound extends Component {
       </DocumentTitle>
     )
   }
-
 }

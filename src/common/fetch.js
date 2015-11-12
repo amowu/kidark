@@ -3,6 +3,8 @@ import URI from 'urijs'
 
 const local = 'http://localhost:8000/'
 
+// FIXME: Fetch URL problem.
+// https://github.com/amowu/amowu.com/issues/1
 function ensureAbsoluteUrl (input) {
   if (typeof input !== 'string') return input
   if (URI(input).is('absolute')) return input

@@ -8,13 +8,18 @@ export default class Game extends Component {
 
   componentDidMount () {
     const {
-      history: {pushState}
+      history: {
+        pushState
+      }
     } = this.props
 
+    // TODO: Use import
     const PhaserGame = require('../game/Game')
     const game = new PhaserGame(320, 240, document.getElementById('game'))
+    // TODO: Use better solution
     game.setPushState(pushState)
   }
+
   render () {
     return (
       <div id='game'></div>

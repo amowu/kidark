@@ -1,17 +1,16 @@
-import appReducer from './app/reducer'
+import {compose, applyMiddleware, createStore} from 'redux'
 import createLogger from 'redux-logger'
-import fetch from './fetch'
-import injectDependencies from './lib/injectDependencies'
 import promiseMiddleware from 'redux-promise-middleware'
+
+import appReducer from './app/app.reducer'
+import injectDependencies from './lib/injectDependencies'
 import stateToJS from './lib/stateToJS'
-import validate from './validate'
-import { compose, applyMiddleware, createStore } from 'redux'
+import fetch from './fetch'
 
 export default function configureStore ({initialState}) {
   // Inject services for actions.
   const dependenciesMiddleware = injectDependencies(
-    {fetch},
-    {validate}
+    {fetch}
   )
 
   const middleware = [
@@ -49,8 +48,8 @@ export default function configureStore ({initialState}) {
   // Enable hot reload where available.
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers.
-    module.hot.accept('./app/reducer', () => {
-      const nextAppReducer = require('./app/reducer')
+    module.hot.accept('./app/app.reducer', () => {
+      const nextAppReducer = require('./app/app.reducer')
       store.replaceReducer(nextAppReducer)
     })
   }
