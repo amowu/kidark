@@ -60,7 +60,6 @@ gulp.task('coverage', done => {
 })
 
 gulp.task('test', done => {
-  // TODO: Add Flow static type checker
   runSequence('standard', 'coverage', 'build-webpack', done)
 })
 

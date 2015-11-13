@@ -16,7 +16,7 @@ export default class Game extends Component {
     // TODO: Use import
     const PhaserGame = require('../game/Game')
     const game = new PhaserGame(320, 240, document.getElementById('game'))
-    // TODO: Use better solution
+    // TODO: Use better invoke solution
     game.setPushState(pushState)
   }
 

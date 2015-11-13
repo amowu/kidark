@@ -13,7 +13,7 @@ import {HOT_RELOAD_PORT} from '../../../webpack/constants'
 import createRoutes from '../../browser/createRoutes'
 import configureStore from '../../common/configureStore'
 import config from '../config'
-import Html from './Html.react'
+import HTML from './HTML.react'
 
 export default function render (req, res, next) {
   const initialState = {}
@@ -64,13 +64,13 @@ function fetchComponentData (dispatch, req, {components, location, params}) {
 function renderPage (store, renderProps, req) {
   const clientState = store.getState()
   const {headers, hostname} = req
-  const appHtml = getAppHtml(store, renderProps)
-  const scriptHtml = getScriptHtml(clientState, headers, hostname)
+  const appHTML = getAppHTML(store, renderProps)
+  const scriptHTML = getScriptHTML(clientState, headers, hostname)
 
   return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
-    <Html
+    <HTML
       appCssHash={config.assetsHashes.appCss}
-      bodyHtml={`<div id="app">${appHtml}</div>${scriptHtml}`}
+      bodyHTML={`<div id="app">${appHTML}</div>${scriptHTML}`}
       googleAnalyticsId={config.googleAnalyticsId}
       isProduction={config.isProduction}
       title={DocumentTitle.rewind()}
@@ -78,7 +78,7 @@ function renderPage (store, renderProps, req) {
   )
 }
 
-function getAppHtml (store, renderProps) {
+function getAppHTML (store, renderProps) {
   return ReactDOMServer.renderToString(
     <Provider store={store}>
       <IntlProvider>
@@ -88,18 +88,18 @@ function getAppHtml (store, renderProps) {
   )
 }
 
-function getScriptHtml (clientState, headers, hostname) {
-  let scriptHtml = ''
+function getScriptHTML (clientState, headers, hostname) {
+  let scriptHTML = ''
 
   const ua = useragent.is(headers['user-agent'])
   const needIntlPolyfill = ua.safari || (ua.ie && ua.version < '11')
   if (needIntlPolyfill) {
-    scriptHtml += `
+    scriptHTML += `
       <script src="/node_modules/intl/dist/Intl.min.js"></script>
       <script src="/node_modules/intl/locale-data/jsonp/en-US.js"></script>
     `
   }
-  scriptHtml += `<script src="/node_modules/phaser/build/phaser.min.js"></script>`
+  scriptHTML += `<script src="/node_modules/phaser/build/phaser.min.js"></script>`
 
   const appScriptSrc = config.isProduction
     ? '/_assets/app.js?' + config.assetsHashes.appJs
@@ -107,7 +107,7 @@ function getScriptHtml (clientState, headers, hostname) {
 
   // Note how clientState is serialized. JSON.stringify is anti-pattern.
   // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
-  return scriptHtml + `
+  return scriptHTML + `
     <script>
       window.__INITIAL_STATE__ = ${serialize(clientState)}
     </script>

@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 
-export default class Html extends Component {
+export default class HTML extends Component {
   static propTypes = {
     appCssHash: PropTypes.string.isRequired,
-    bodyHtml: PropTypes.string.isRequired,
+    bodyHTML: PropTypes.string.isRequired,
     googleAnalyticsId: PropTypes.string.isRequired,
     isProduction: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired
@@ -11,7 +11,7 @@ export default class Html extends Component {
 
   render () {
     const {
-      appCssHash, bodyHtml, googleAnalyticsId, isProduction, title
+      appCssHash, bodyHTML, googleAnalyticsId, isProduction, title
     } = this.props
 
     // Only for production. For dev, it's handled by webpack with livereload.
@@ -40,7 +40,7 @@ ga('create', '${googleAnalyticsId}', 'auto') ga('send', 'pageview')`}}
           {linkStyles}
           {analytics}
         </head>
-        <body dangerouslySetInnerHTML={{__html: bodyHtml}} />
+        <body dangerouslySetInnerHTML={{__html: bodyHTML}} />
       </html>
     )
   }
