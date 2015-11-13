@@ -1,38 +1,78 @@
 export default class GameState extends Phaser.State {
+  init () {
+    this.map = null
+    this.layer = null
+    this.player = null
+    this.npc = null
+    this.cursors = null
+
+    this.world.setBounds(0, 0, 448, 496)
+  }
+
   preload () {
-    this.game.load.spritesheet('dude', '/assets/images/dude.png', 32, 48)
-    this.game.load.image('star', '/assets/images/star.png')
+    this.load.baseURL = '/'
+
+    this.load.image('star', 'assets/images/star.png')
+    this.load.spritesheet('pacman', 'assets/images/pacman.png', 32, 32)
+    this.load.image('tiles', 'assets/images/pacman-tiles.png')
+    this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON)
   }
 
   create () {
-    this.star = this.game.add.sprite(0, 5 * 22, 'star')
-    this.game.physics.arcade.enable(this.star)
+    this.map = this.add.tilemap('map')
+    this.map.addTilesetImage('pacman-tiles', 'tiles')
+    this.layer = this.map.createLayer('Pacman')
+    this.map.setCollisionByExclusion([14], true, this.layer)
 
-    this.player = this.game.add.sprite(32, this.game.world.height - 150, 'dude')
-    this.player.animations.add('left', [0, 1, 2, 3], 10, true)
-    this.player.animations.add('right', [5, 6, 7, 8], 10, true)
-    this.game.physics.arcade.enable(this.player)
+    this.npc = this.add.sprite((14 * 16), (17 * 14), 'star')
+    this.npc.anchor.set(0.5)
+    this.physics.arcade.enable(this.npc)
+
+    this.player = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0)
+    this.player.anchor.set(0.5)
+    this.player.animations.add('munch', [0, 1, 2, 1], 20, true)
+    this.player.animations.play('munch')
+    this.physics.arcade.enable(this.player)
+    this.player.body.setSize(16, 16, 0, 0)
     this.player.body.collideWorldBounds = true
+    this.camera.follow(this.player)
 
-    this.cursors = this.game.input.keyboard.createCursorKeys()
+    this.cursors = this.input.keyboard.createCursorKeys()
   }
 
   update () {
-    this.player.body.velocity.x = 0
-    if (this.cursors.left.isDown) {
-      this.player.body.velocity.x = -150
-      this.player.animations.play('left')
-    } else if (this.cursors.right.isDown) {
-      this.player.body.velocity.x = 150
-      this.player.animations.play('right')
-    } else {
-      this.player.animations.stop()
-      this.player.frame = 4
-    }
+    this.physics.arcade.collide(this.player, this.layer)
 
-    this.game.physics.arcade.overlap(this.player, this.star, (player, star) => {
-      star.kill()
+    this.physics.arcade.overlap(this.player, this.npc, (player, npc) => {
+      npc.kill()
+      this.npc = null
+      // TODO: Use better invoke solution
       this.game.pushState(null, '/user/amowu')
     })
+
+    if (this.cursors.left.isDown) {
+      this.player.scale.x = -1
+      this.player.angle = 0
+      this.player.body.velocity.x = -150
+      this.player.body.velocity.y = 0
+    } else if (this.cursors.right.isDown) {
+      this.player.scale.x = 1
+      this.player.angle = 0
+      this.player.body.velocity.x = 150
+      this.player.body.velocity.y = 0
+    } else if (this.cursors.up.isDown) {
+      this.player.scale.x = 1
+      this.player.angle = 270
+      this.player.body.velocity.x = 0
+      this.player.body.velocity.y = -150
+    } else if (this.cursors.down.isDown) {
+      this.player.scale.x = 1
+      this.player.angle = 90
+      this.player.body.velocity.x = 0
+      this.player.body.velocity.y = 150
+    } else {
+      this.player.body.velocity.x = 0
+      this.player.body.velocity.y = 0
+    }
   }
 }
