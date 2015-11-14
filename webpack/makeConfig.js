@@ -81,6 +81,12 @@ export default function makeConfig (isDevelopment) {
           }
         },
         test: /\.js$/
+      }, {
+        loader: 'script',
+        test: /pixi.js/
+      }, {
+        loader: 'script',
+        test: /phaser.js/
       }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
@@ -133,7 +139,9 @@ export default function makeConfig (isDevelopment) {
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {
-        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
+        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react')),
+        'pixi': require.resolve(path.join(constants.NODE_MODULES_DIR, 'phaser/dist/pixi.js')),
+        'phaser': require.resolve(path.join(constants.NODE_MODULES_DIR, 'phaser/dist/phaser.js'))
       }
     }
   }

@@ -8,7 +8,7 @@
   "description": "The best dev stack and starter kit for React universal web apps.",
   "private": true,
   "scripts": {
-    "postinstall": "gulp build --production",
+    "postinstall": "cd node_modules/phaser && npm install && grunt custom --exclude p2,creature,ninja --split true && gulp build --production",
     "test": "gulp test",
     "start": "gulp --production",
     "start:dev": "gulp",
@@ -89,6 +89,7 @@
     "redux-promise-middleware": "^2.1.1",
     "run-sequence": "^1.0.2",
     "sass-loader": "^3.0.0",
+    "script-loader": "^0.6.1",
     "serialize-javascript": "^1.1.2",
     "serve-favicon": "^2.2.0",
     "style-loader": "^0.13.0",

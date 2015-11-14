@@ -13,7 +13,6 @@ export default class Game extends Component {
       }
     } = this.props
 
-    // TODO: Use import
     const PhaserGame = require('../game/Game')
     const game = new PhaserGame(320, 240, document.getElementById('game'))
     // TODO: Use better invoke solution

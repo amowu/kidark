@@ -1,3 +1,6 @@
+import 'pixi'
+import 'phaser'
+
 import GameState from './states/GameState'
 
 export default class Game extends Phaser.Game {
