@@ -56,7 +56,7 @@
     "intl": "^1.0.0",
     "intl-messageformat": "^1.1.0",
     "intl-relativeformat": "^1.1.0",
-    "invariant": "^2.1.0",
+    "invariant": "^2.1.2",
     "ip": "^1.0.2",
     "isomorphic-fetch": "^2.1.1",
     "isparta": "^3.1.0",
