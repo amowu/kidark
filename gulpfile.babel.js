@@ -18,8 +18,19 @@ gulp.task('env', () => {
   process.env.NODE_ENV = args.production ? 'production' : 'development'
 })
 
-gulp.task('build-webpack', ['env'], webpackBuild)
-gulp.task('build', ['build-webpack'])
+// Phaser issue: Webpack bundle and import module problem
+// https://github.com/photonstorm/phaser/issues/1974#issuecomment-134222165
+gulp.task('build:phaser', shell.task([
+  'cd node_modules/phaser && ' +
+  'npm install && ' +
+  'grunt custom --exclude p2,creature,ninja --split true'
+]))
+
+gulp.task('build:webpack', ['env'], webpackBuild)
+
+gulp.task('build', done => {
+  runSequence('build:phaser','build:webpack', done)
+})
 
 gulp.task('standard', () => {
   return gulp.src([
@@ -60,7 +71,7 @@ gulp.task('coverage', done => {
 })
 
 gulp.task('test', done => {
-  runSequence('standard', 'coverage', 'build-webpack', done)
+  runSequence('standard', 'coverage', 'build:webpack', done)
 })
 
 gulp.task('server-node', bg('node', './src/server'))
@@ -73,7 +84,7 @@ gulp.task('server-nodemon', shell.task(
 
 gulp.task('server', ['env'], done => {
   if (args.production) {
-    runSequence('build', 'server-node', done)
+    runSequence('build:webpack', 'server-node', done)
   } else {
     runSequence('server-hot', 'server-nodemon', done)
   }
