@@ -35,7 +35,7 @@ gulp.task('p1', done1 => {
   })
 })
 gulp.task('p2', done2 => {
-  exec('pwd && ls node_modules/phaser/node_modules/.bin && cd node_modules/phaser && pwd && npm install', (error, stdout, stderr) => {
+  exec('npm install node_modules/phaser', (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
     if (error !== null) {
