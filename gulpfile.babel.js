@@ -29,7 +29,7 @@ gulp.task('build:phaser', shell.task([
 gulp.task('build:webpack', ['env'], webpackBuild)
 
 gulp.task('build', done => {
-  runSequence('build:phaser','build:webpack', done)
+  runSequence('build:phaser', 'build:webpack', done)
 })
 
 gulp.task('standard', () => {
