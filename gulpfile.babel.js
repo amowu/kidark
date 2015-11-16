@@ -47,7 +47,7 @@ gulp.task('p2', done2 => {
   })
 })
 gulp.task('p3', done3 => {
-  exec('pwd && ls node_modules/phaser/node_modules/.bin && cd node_modules/phaser && pwd && node_modules/.bin/grunt custom --exclude p2,creature,ninja --split true', (error, stdout, stderr) => {
+  exec('pwd && ls node_modules/phaser/node_modules && cd node_modules/phaser && pwd && node_modules/.bin/grunt custom --exclude p2,creature,ninja --split true', (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
     if (error !== null) {
