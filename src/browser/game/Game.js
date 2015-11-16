@@ -1,3 +1,5 @@
+// WARNING: PIXI and Phaser module sequence can NOT change.
+// otherwise it will show `PIXI not found or defined error`
 import 'pixi'
 import 'phaser'
 
