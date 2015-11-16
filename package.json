@@ -43,7 +43,6 @@
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.1",
     "glob": "^5.0.13",
-    "grunt-cli": "^0.1.13",
     "gulp": "^3.9.0",
     "gulp-bg": "0.0.7",
     "gulp-istanbul": "^0.10.2",
