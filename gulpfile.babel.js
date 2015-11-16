@@ -23,7 +23,7 @@ gulp.task('env', () => {
 // Phaser issue: Webpack bundle and import module problem
 // https://github.com/photonstorm/phaser/issues/1974#issuecomment-134222165
 gulp.task('p1', done1 => {
-  exec('cd node_modules/phaser && npm install grunt-cli --save', (error, stdout, stderr) => {
+  exec('cd node_modules/phaser && pwd && npm install grunt-cli --save', (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
     if (error !== null) {
@@ -35,7 +35,7 @@ gulp.task('p1', done1 => {
   })
 })
 gulp.task('p2', done2 => {
-  exec('cd node_modules/phaser && npm install', (error, stdout, stderr) => {
+  exec('cd node_modules/phaser && pwd && npm install', (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
     if (error !== null) {
@@ -47,7 +47,7 @@ gulp.task('p2', done2 => {
   })
 })
 gulp.task('p3', done3 => {
-  exec('cd node_modules/phaser && node_modules/.bin/grunt custom --exclude p2,creature,ninja --split true', (error, stdout, stderr) => {
+  exec('cd node_modules/phaser && pwd && node_modules/.bin/grunt custom --exclude p2,creature,ninja --split true', (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
     if (error !== null) {
