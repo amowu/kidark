@@ -4,8 +4,3 @@ machine:
 test:
   post:
     - cat ./coverage/lcov.info | codecov
-deployment:
-  staging:
-    branch: develop
-    heroku:
-      appname: amowu
