@@ -24,7 +24,7 @@ gulp.task('env', () => {
 // https://github.com/photonstorm/phaser/issues/1974#issuecomment-134222165
 gulp.task('build:phaser', done => {
   exec(
-    'cd node_modules/phaser && npm install && grunt custom --exclude p2,creature,ninja --split true'
+    'cd node_modules/phaser && npm install && ../../node_modules/grunt custom --exclude p2,creature,ninja --split true'
   , (error, stdout, stderr) => {
     gutil.log(stdout)
     gutil.log(stderr)
