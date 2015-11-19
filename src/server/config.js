@@ -1,5 +1,5 @@
-import hashFile from 'hash-file'
-import nconf from 'nconf'
+const hashFile = require('hash-file')
+const nconf = require('nconf')
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -32,4 +32,4 @@ const config = {
 // like loading config from json and more. Check out nconf docs.
 nconf.defaults(config)
 
-export default nconf.get()
+module.exports = nconf.get()
