@@ -9,13 +9,14 @@ describe('users actions', () => {
   })
   it('should create FETCH_USER_SUCCESS action when fetchUser has been done', done => {
     const expectedUserDate = {
-      id: '26',
       firstName: 'Amo',
-      lastName: 'Wu'
+      lastName: 'Wu',
+      objectId: 'XSGP2D0eAj',
+      username: 'amowu'
     }
     // Intercept HTTP call
-    nock('http://localhost:8000')
-      .get('/api/v1/user/amowu')
+    nock('https://iogtezo43j.execute-api.ap-northeast-1.amazonaws.com')
+      .get('/develop/users/amowu')
       .reply(200, {
         user: expectedUserDate
       })

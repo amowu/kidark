@@ -13,16 +13,18 @@ export default class Resume extends Component {
   render () {
     const {
       $$users: {
-        entities
+        $$entities
       }
     } = this.props
 
-    if (!entities.has('26')) return <p>loading...</p>
+    // TODO: Use :username replace 'amowu'
+    if (!$$entities.has('amowu')) return <p>loading...</p>
 
+    // TODO: Use :username replace 'amowu'
     return (
       <div>
         <h1>Resume</h1>
-        <span>{entities.getIn(['26', 'firstName'])}</span>
+        <span>{$$entities.getIn(['amowu', 'firstName'])}</span>
       </div>
     )
   }
