@@ -1,3 +1,4 @@
+import del from 'del'
 import gulp from 'gulp'
 import bg from 'gulp-bg'
 import istanbul from 'gulp-istanbul'
@@ -17,6 +18,8 @@ const args = yargs
 gulp.task('env', () => {
   process.env.NODE_ENV = args.production ? 'production' : 'development'
 })
+
+gulp.task('clean', done => del('build/*', done))
 
 gulp.task('build:webpack', ['env'], webpackBuild)
 
@@ -76,7 +79,7 @@ gulp.task('server-nodemon', shell.task(
 
 gulp.task('server', ['env'], done => {
   if (args.production) {
-    runSequence('build:webpack', 'server-node', done)
+    runSequence('clean', 'build:webpack', 'server-node', done)
   } else {
     runSequence('server-hot', 'server-nodemon', done)
   }

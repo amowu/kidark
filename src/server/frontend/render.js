@@ -13,6 +13,7 @@ import {HOT_RELOAD_PORT} from '../../../webpack/constants'
 import createRoutes from '../../browser/createRoutes'
 import configureStore from '../../common/configureStore'
 import config from '../config'
+import getAppAssetFilenamesAsync from './assets'
 import HTML from './HTML.react'
 
 export default function render (req, res, next) {
@@ -25,7 +26,7 @@ export default function render (req, res, next) {
   const routes = createRoutes(() => store.getState())
   const location = createMemoryHistory().createLocation(req.url)
 
-  match({routes, location}, (error, redirectLocation, renderProps) => {
+  match({routes, location}, async (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(301, redirectLocation.pathname + redirectLocation.search)
       return
@@ -36,14 +37,17 @@ export default function render (req, res, next) {
       return
     }
 
-    fetchComponentData(store.dispatch, req, renderProps)
-      .then(() => renderPage(store, renderProps, req))
-      .then(html => res.send(html))
-      .catch(next)
+    try {
+      await fetchComponentDataAsync(store.dispatch, renderProps)
+      const html = await renderPageAsync(store, renderProps, req)
+      res.send(html)
+    } catch (e) {
+      next(e)
+    }
   })
 }
 
-function fetchComponentData (dispatch, req, {components, location, params}) {
+async function fetchComponentDataAsync (dispatch, {components, location, params}) {
   const fetchActions = components.reduce((actions, component) => {
     return actions.concat(component.fetchActions || [])
   }, [])
@@ -54,22 +58,22 @@ function fetchComponentData (dispatch, req, {components, location, params}) {
   // Because redux-promise-middleware always returns fulfilled promise, we have
   // to detect errors manually.
   // https://github.com/pburtchaell/redux-promise-middleware#usage
-  return Promise.all(promises).then(results => {
-    results.forEach(result => {
-      if (result.error) throw result.payload
-    })
+  const results = await Promise.all(promises)
+  results.forEach(result => {
+    if (result.error) throw result.payload
   })
 }
 
-function renderPage (store, renderProps, req) {
+async function renderPageAsync (store, renderProps, req) {
   const clientState = store.getState()
   const {headers, hostname} = req
   const appHTML = getAppHTML(store, renderProps)
-  const scriptHTML = getScriptHTML(clientState, headers, hostname)
+  const {js: appJsFilename, css: appCssFilename} = await getAppAssetFilenamesCachedAsync()
+  const scriptHTML = getScriptHTML(clientState, headers, hostname, appJsFilename)
 
   return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
     <HTML
-      appCssHash={config.assetsHashes.appCss}
+      appCssFilename={appCssFilename}
       bodyHTML={`<div id="app">${appHTML}</div>${scriptHTML}`}
       googleAnalyticsId={config.googleAnalyticsId}
       isProduction={config.isProduction}
@@ -88,7 +92,17 @@ function getAppHTML (store, renderProps) {
   )
 }
 
-function getScriptHTML (clientState, headers, hostname) {
+let appAssetFilenameCache = null
+
+async function getAppAssetFilenamesCachedAsync () {
+  if (appAssetFilenameCache) return appAssetFilenameCache
+
+  appAssetFilenameCache = await getAppAssetFilenamesAsync()
+
+  return appAssetFilenameCache
+}
+
+function getScriptHTML (clientState, headers, hostname, appJsFilename) {
   let scriptHTML = ''
 
   const ua = useragent.is(headers['user-agent'])
@@ -101,7 +115,7 @@ function getScriptHTML (clientState, headers, hostname) {
   }
 
   const appScriptSrc = config.isProduction
-    ? '/_assets/app.js?' + config.assetsHashes.appJs
+    ? `/_assets/${appJsFilename}`
     : `//${hostname}:${HOT_RELOAD_PORT}/build/app.js`
 
   // Note how clientState is serialized. JSON.stringify is anti-pattern.
