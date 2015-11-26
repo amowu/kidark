@@ -7,10 +7,10 @@ import injectDependencies from './lib/injectDependencies'
 import stateToJS from './lib/stateToJS'
 import fetch from './fetch'
 
-export default function configureStore ({initialState}) {
+export default function configureStore ({deps, initialState}) {
   // Inject services for actions.
   const dependenciesMiddleware = injectDependencies(
-    {fetch}
+    {...deps, fetch}
   )
 
   const middleware = [
