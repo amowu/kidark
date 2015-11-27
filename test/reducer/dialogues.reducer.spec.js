@@ -41,6 +41,7 @@ describe('dialogues reducer', () => {
   })
 
   const expectedCurrentDialogueId = '10001'
+  const expectedStateAfterSetCurrentDialogue = immutableState.set('current', expectedCurrentDialogueId)
   it('should handle SET_CURRENT_DIALOGUE', () => {
     expect(
       dialoguesReducer(immutableState, {
@@ -48,7 +49,18 @@ describe('dialogues reducer', () => {
         payload: expectedCurrentDialogueId
       })
     ).to.deep.equal(
-      immutableState.set('current', expectedCurrentDialogueId)
+      expectedStateAfterSetCurrentDialogue
+    )
+  })
+
+  const expectedStateAfterClearCurrentDialogue = immutableState.set('current', null)
+  it('should handle CLEAR_CURRENT_DIALOGUE', () => {
+    expect(
+      dialoguesReducer(expectedStateAfterSetCurrentDialogue, {
+        type: dialoguesActions.CLEAR_CURRENT_DIALOGUE
+      })
+    ).to.deep.equal(
+      expectedStateAfterClearCurrentDialogue
     )
   })
 })
