@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import mapStateToProps from '../../common/app/mapStateToProps'
 import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
+import Dialogue from './Dialogue.react'
 import Game from './Game.react'
 import Header from './Header.react'
 
@@ -20,17 +21,17 @@ export default class App extends Component {
 
   render () {
     const {
+      history,
       location: {
         pathname
       },
-      messages,
-      history
+      messages
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
         <Header messages={messages} pathname={pathname} />
-        <Game history={history} />
+        <Dialogue />
         <RouterHandler {...this.props} />
       </div>
     )
