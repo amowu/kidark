@@ -12,6 +12,7 @@ import Header from './Header.react'
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
   static propTypes = {
+    actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -21,6 +22,7 @@ export default class App extends Component {
 
   render () {
     const {
+      actions,
       history,
       location: {
         pathname
@@ -31,6 +33,7 @@ export default class App extends Component {
     return (
       <div className='page' data-pathname={pathname}>
         <Header messages={messages} pathname={pathname} />
+        <Game actions={actions} history={history} />
         <Dialogue />
         <RouterHandler {...this.props} />
       </div>

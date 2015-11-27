@@ -10,7 +10,11 @@ export default class Game extends Phaser.Game {
     this.state.start('GameState')
   }
 
+  // TODO: Use better invoke solution
   setPushState (pushState) {
     this.pushState = pushState
+  }
+  setCurrentDialogue (func) {
+    this.setCurrentDialogue = func
   }
 }

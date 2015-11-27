@@ -47,7 +47,7 @@ export default class GameState extends Phaser.State {
       npc.kill()
       this.npc = null
       // TODO: Use better invoke solution
-      this.game.pushState(null, '/user/amowu')
+      this.game.setCurrentDialogue('10001')
     })
 
     if (this.cursors.left.isDown) {
