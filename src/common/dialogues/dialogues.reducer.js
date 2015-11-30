@@ -5,7 +5,6 @@ import dialogues from './dialogues'
 import * as dialoguesActions from './dialogues.actions'
 
 const initialState = fromJS({
-  current: null,
   entities: indexBy(dialogues, 'id')
 })
 
@@ -18,7 +17,7 @@ export default function dialoguesReducer (state = initialState, action) {
 
   switch (action.type) {
     case dialoguesActions.CLEAR_CURRENT_DIALOGUE:
-      return state.set('current', null)
+      return state.delete('current')
     case dialoguesActions.SET_CURRENT_DIALOGUE:
       // TODO: check payload's dialogueId
       return state.set('current', action.payload)

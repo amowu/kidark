@@ -10,7 +10,6 @@ import dialoguesReducer from '../../src/common/dialogues/dialogues.reducer'
 describe('dialogues reducer', () => {
   const normalizedDialogues = indexBy(dialogues, 'id')
   const initialStateData = {
-    current: null,
     entities: normalizedDialogues
   }
   const expectedInitialState = fromJS(initialStateData)
@@ -53,7 +52,7 @@ describe('dialogues reducer', () => {
     )
   })
 
-  const expectedStateAfterClearCurrentDialogue = immutableState.set('current', null)
+  const expectedStateAfterClearCurrentDialogue = immutableState.delete('current')
   it('should handle CLEAR_CURRENT_DIALOGUE', () => {
     expect(
       dialoguesReducer(expectedStateAfterSetCurrentDialogue, {
