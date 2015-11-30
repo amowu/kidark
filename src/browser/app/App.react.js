@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import mapStateToProps from '../../common/app/mapStateToProps'
 import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
-import Dialogue from './Dialogue.react'
+import DialogueBox from '../dialogues/DialogueBox.react'
 import Game from './Game.react'
 import Header from './Header.react'
 
@@ -14,6 +14,7 @@ export default class App extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
+    dialogues: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
@@ -23,6 +24,7 @@ export default class App extends Component {
   render () {
     const {
       actions,
+      dialogues,
       history,
       location: {
         pathname
@@ -33,8 +35,8 @@ export default class App extends Component {
     return (
       <div className='page' data-pathname={pathname}>
         <Header messages={messages} pathname={pathname} />
-        <Game actions={actions} history={history} />
-        <Dialogue />
+        <Game {...{actions, history}} />
+        <DialogueBox {...{actions, dialogues}} />
         <RouterHandler {...this.props} />
       </div>
     )
