@@ -13,11 +13,11 @@ describe('dialogues actions', () => {
     })
   })
 
-  it('should create CLEAR_CURRENT_DIALOGUE action when clearCurrentDialogue', () => {
+  it('should create DELETE_CURRENT_DIALOGUE action when deleteCurrentDialogue', () => {
     expect(
-      dialoguesActions.clearCurrentDialogue()
+      dialoguesActions.deleteCurrentDialogue()
     ).to.deep.equal({
-      type: dialoguesActions.CLEAR_CURRENT_DIALOGUE
+      type: dialoguesActions.DELETE_CURRENT_DIALOGUE
     })
   })
 })

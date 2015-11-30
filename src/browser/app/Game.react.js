@@ -4,7 +4,7 @@ import Component from 'react-pure-render/component'
 export default class Game extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    pushState: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -12,9 +12,7 @@ export default class Game extends Component {
       actions: {
         setCurrentDialogue
       },
-      history: {
-        pushState
-      }
+      pushState
     } = this.props
 
     const PhaserGame = require('../game/Game')

@@ -52,14 +52,14 @@ describe('dialogues reducer', () => {
     )
   })
 
-  const expectedStateAfterClearCurrentDialogue = immutableState.delete('current')
-  it('should handle CLEAR_CURRENT_DIALOGUE', () => {
+  const expectedStateAfterDeleteCurrentDialogue = immutableState.delete('current')
+  it('should handle DELETE_CURRENT_DIALOGUE', () => {
     expect(
       dialoguesReducer(expectedStateAfterSetCurrentDialogue, {
-        type: dialoguesActions.CLEAR_CURRENT_DIALOGUE
+        type: dialoguesActions.DELETE_CURRENT_DIALOGUE
       })
     ).to.deep.equal(
-      expectedStateAfterClearCurrentDialogue
+      expectedStateAfterDeleteCurrentDialogue
     )
   })
 })

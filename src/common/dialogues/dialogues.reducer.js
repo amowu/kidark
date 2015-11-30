@@ -16,7 +16,7 @@ export default function dialoguesReducer (state = initialState, action) {
   if (!(state instanceof Map)) return revive(state)
 
   switch (action.type) {
-    case dialoguesActions.CLEAR_CURRENT_DIALOGUE:
+    case dialoguesActions.DELETE_CURRENT_DIALOGUE:
       return state.delete('current')
     case dialoguesActions.SET_CURRENT_DIALOGUE:
       // TODO: check payload's dialogueId

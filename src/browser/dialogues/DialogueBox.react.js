@@ -4,28 +4,36 @@ import Component from 'react-pure-render/component'
 export default class DialogueBox extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    dialogues: PropTypes.object.isRequired
+    dialogue: PropTypes.object.isRequired,
+    pushState: PropTypes.func.isRequired
   }
 
   render () {
-    // TODO: Use pure js object or immutable object in props?
     const {
-      actions,
-      dialogues
+      dialogue
     } = this.props
 
-    const enabled = dialogues.has('current')
+    const text = dialogue.get('text')
 
-    const dialogueId = dialogues.get('current')
-    const dialoguesKeyPath = ['entities', dialogueId, 'text']
-    const hasDialogue = (dialogueId) => dialogues.hasIn(dialoguesKeyPath)
-
-    const elements = (enabled && hasDialogue(dialogueId)) ? (
+    return (
       <section>
-        <p>{dialogues.getIn(dialoguesKeyPath)}</p>
-        <button onClick={actions.clearCurrentDialogue}>next</button>
+        <p onClick={this.onNextClick.bind(this)}>{text}</p>
       </section>
-    ) : null// TODO: Exception a Error
-    return (elements)
+    )
+  }
+
+  onNextClick () {
+    const {
+      actions,
+      dialogue,
+      pushState
+    } = this.props
+
+    if (dialogue.has('pushState')) {
+      const state = dialogue.get('pushState')
+      pushState(null, state)
+    }
+
+    actions.deleteCurrentDialogue()
   }
 }
