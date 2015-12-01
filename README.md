@@ -45,6 +45,9 @@ npm start
 
 ## History
 
+This project adheres to [Semantic Versioning](http://semver.org/).  
+Every release, along with the migration instructions, is documented on the Github [Releases](https://github.com/amowu/amowu.com/releases) page.
+
 ## Support
 
 Please [open an issue](https://github.com/amowu/amowu.com/issues/new) for support.
