@@ -5,13 +5,15 @@ import {connect} from 'react-redux'
 import mapStateToProps from '../../common/app/mapStateToProps'
 import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
+import Dialogue from '../dialogues/Dialogue.react'
 import Game from './Game.react'
-import Header from './Header.react'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
   static propTypes = {
+    actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
+    dialogues: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
@@ -20,17 +22,20 @@ export default class App extends Component {
 
   render () {
     const {
+      actions,
+      dialogues,
+      history: {
+        pushState
+      },
       location: {
         pathname
-      },
-      messages,
-      history
+      }
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
-        <Header messages={messages} pathname={pathname} />
-        <Game history={history} />
+        <Game {...{actions, pushState}} />
+        <Dialogue {...{actions, dialogues, pushState}} />
         <RouterHandler {...this.props} />
       </div>
     )

@@ -38,6 +38,7 @@ npm start
 
 - `npm test` run test and build
 - `npm start` run web app in production mode
+- `npm run test:mocha` only run unit test
 - `npm run start:dev` run web app in development mode
 
 ## Documentation

@@ -1,7 +1,6 @@
 import Promise from 'bluebird'
 import {createMemoryHistory} from 'history'
 import React from 'react'
-import DocumentTitle from 'react-document-title'
 import ReactDOMServer from 'react-dom/server'
 import {IntlProvider} from 'react-intl'
 import {Provider} from 'react-redux'
@@ -77,7 +76,6 @@ async function renderPageAsync (store, renderProps, req) {
       bodyHTML={`<div id="app">${appHTML}</div>${scriptHTML}`}
       googleAnalyticsId={config.googleAnalyticsId}
       isProduction={config.isProduction}
-      title={DocumentTitle.rewind()}
     />
   )
 }

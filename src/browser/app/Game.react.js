@@ -3,20 +3,23 @@ import Component from 'react-pure-render/component'
 
 export default class Game extends Component {
   static propTypes = {
-    history: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    pushState: PropTypes.func.isRequired
   }
 
   componentDidMount () {
     const {
-      history: {
-        pushState
-      }
+      actions: {
+        setCurrentDialogue
+      },
+      pushState
     } = this.props
 
     const PhaserGame = require('../game/Game')
     const game = new PhaserGame(320, 240, document.getElementById('game'))
     // TODO: Use better invoke solution
     game.setPushState(pushState)
+    game.setCurrentDialogue(setCurrentDialogue)
   }
 
   render () {
