@@ -5,6 +5,7 @@
 | Version | [![node](https://img.shields.io/badge/node-4.2.1-brightgreen.svg?style=flat-square)](https://nodejs.org/) |
 | License | [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/amowu/amowu.com/blob/master/LICENSE) |
 | Standard | [![Semantic Versioning](https://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat-square)](http://semver.org/spec/v2.0.0.html) [![Contributing](https://img.shields.io/badge/git-flow-blue.svg?style=flat-square)](https://github.com/nvie/gitflow) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue.svg?style=flat-square)](https://github.com/feross/standard) |
+| Tool | [![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat-square)](http://stackshare.io/amowu/amowu-com) |
 | Quality | [![Dependency Status](https://img.shields.io/david/amowu/amowu.com.svg?style=flat-square)](https://david-dm.org/amowu/amowu.com) [![Codecov](https://img.shields.io/codecov/c/github/amowu/amowu.com.svg?style=flat-square)](https://codecov.io/github/amowu/amowu.com?branch=master) |
 | Build | [![Circle CI](https://img.shields.io/circleci/project/amowu/amowu.com.svg?style=flat-square)](https://circleci.com/gh/amowu/amowu.com) |
 | Deployment | [![Deploy](https://img.shields.io/badge/Deploy_to-Heroku-7056BF.svg?style=flat-square)](https://heroku.com/deploy) |
@@ -14,7 +15,7 @@
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/), If you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
+- [Node.js](https://nodejs.org/) v4.2.1, if you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
 
 ### Installation
 
@@ -30,18 +31,22 @@ npm start
 ### Start Development
 
 - Run `npm run start:dev`
-- Point your browser to [localhost:8000](http://localhost:8000)
+- Point your browser to [http://localhost:8000](http://localhost:8000)
 - Build something beautiful for you...
 
 ### Dev Tasks
 
 - `npm test` run test and build
 - `npm start` run web app in production mode
+- `npm run test:mocha` only run unit test
 - `npm run start:dev` run web app in development mode
 
 ## Documentation
 
 ## History
+
+This project adheres to [Semantic Versioning](http://semver.org/).  
+Every release, along with the migration instructions, is documented on the Github [Releases](https://github.com/amowu/amowu.com/releases) page.
 
 ## Support
 
@@ -55,32 +60,16 @@ Please contribute using [Github Flow](https://guides.github.com/introduction/flo
 
 [![Este.js](https://cloud.githubusercontent.com/assets/66249/6515265/b91f0fb8-c388-11e4-857e-c90902e0b7a1.png)](https://github.com/este/este)
 
-[Este.js](https://github.com/este/este) is a dev stack and starter kit for [Universal/Isomorphic JavaScript applications](http://isomorphic.net/javascript), made by [Daniel Steigerwald](https://twitter.com/steida), [@grabbou](https://twitter.com/grabbou) and the community.
+[Este.js](https://github.com/este/este) is a dev stack and starter kit for universal React JavaScript applications, made by [Daniel Steigerwald](https://twitter.com/steida), [@grabbou](https://twitter.com/grabbou) and the community.
 
-### Features
+[![Phaser](http://phaser.io/images/logo/logo-download.png)](https://github.com/photonstorm/phaser)
 
-- Universal JavaScript dev stack for browser, server, mobile.
-- Functional works: App state snapshots, time travel, hot reload everything.
-- [React](http://facebook.github.io/react/) with server side rendering on [Express](http://expressjs.com/) backend.
-- [React Native](https://facebook.github.io/react-native/) for iOS and Android (WIP).
-- [Redux](http://rackt.github.io/redux/) [Flux](https://facebook.github.io/flux/) with atomic [immutable.js](http://facebook.github.io/immutable-js) app state.
-- [react-router](https://github.com/rackt/react-router) for isomorphic routing.
-- Universal/Isomorphic data fetching example.
-- ECMAScript 2015+ with [Babel](https://babeljs.io/). [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) and [Flow](http://flowtype.org/) type syntax supported. Sourcemaps enabled by default.
-- Well tuned [webpack](http://webpack.github.io/) dev stack.
-- [JavaScript Standard Style](http://standardjs.com/) and [ESlint](http://eslint.org/).
-- Localization via [FormatJS](http://formatjs.io/).
-- Simple yet powerfull sync/async validation based on [validator.js](https://github.com/chriso/validator.js).
-- LESS, SASS, Stylus, or plain CSS with [Autoprefixer](https://github.com/postcss/autoprefixer).
-- Long Term Caching.
-- And much more...
+[Phaser](https://github.com/photonstorm/phaser) is a fast, free and fun open source HTML5 game framework. It uses Pixi.js for WebGL and Canvas rendering across desktop and mobile web browsers.
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Daniel Steigerwald
-Copyright (c) 2015 Mike Grabowski
 Copyright (c) 2015 Amo Wu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

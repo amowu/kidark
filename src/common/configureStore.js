@@ -1,41 +1,29 @@
-import appReducer from './app/reducer'
+import {applyMiddleware, compose, createStore} from 'redux'
 import createLogger from 'redux-logger'
-import fetch from './fetch'
-import injectDependencies from './lib/injectDependencies'
 import promiseMiddleware from 'redux-promise-middleware'
+
+import appReducer from './app/app.reducer'
+import injectDependencies from './lib/injectDependencies'
 import stateToJS from './lib/stateToJS'
-import validate from './validate'
-import {applyMiddleware, createStore} from 'redux'
+import fetch from './fetch'
 
-// TODO: Add example for browser/native storage.
-// import storage from 'redux-storage'
-
-export default function configureStore ({engine, initialState}) {
+export default function configureStore ({deps, initialState}) {
   // Inject services for actions.
   const dependenciesMiddleware = injectDependencies(
-    {fetch},
-    {validate}
+    {...deps, fetch}
   )
 
   const middleware = [
     dependenciesMiddleware,
-    promiseMiddleware
+    promiseMiddleware({
+      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+    })
   ]
 
-  // TODO: Add storage example.
-  // if (engine) {
-  //   // The order is important.
-  //   engine = storage.decorators.filter(engine, [
-  //     ['todos', 'list']
-  //   ])
-  //   engine = storage.decorators.debounce(engine, 1500)
-  //   middleware.push(storage.createMiddleware(engine))
-  // }
-
-  const loggerEnabled =
+  const devToolsEnabled =
     process.env.NODE_ENV !== 'production' && process.env.IS_BROWSER
 
-  if (loggerEnabled) {
+  if (devToolsEnabled) {
     const logger = createLogger({
       collapsed: true,
       transformer: stateToJS
@@ -45,13 +33,23 @@ export default function configureStore ({engine, initialState}) {
   }
 
   const createStoreWithMiddleware = applyMiddleware(...middleware)
-  const store = createStoreWithMiddleware(createStore)(appReducer, initialState)
+
+  const finalCreateStore = devToolsEnabled
+    ? compose(
+      createStoreWithMiddleware,
+      // Redux DevTools Extension
+      // https://github.com/zalmoxisus/redux-devtools-extension
+      window.devToolsExtension() || (f => f)
+    )(createStore)
+    : createStoreWithMiddleware(createStore)
+
+  const store = finalCreateStore(appReducer, initialState)
 
   // Enable hot reload where available.
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers.
-    module.hot.accept('./app/reducer', () => {
-      const nextAppReducer = require('./app/reducer')
+    module.hot.accept('./app/app.reducer', () => {
+      const nextAppReducer = require('./app/app.reducer')
       store.replaceReducer(nextAppReducer)
     })
   }

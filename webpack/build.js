@@ -7,12 +7,6 @@ export default function build (callback) {
   webpack(config, (fatalError, stats) => {
     const jsonStats = stats.toJson()
 
-    // We can save jsonStats to be analyzed with
-    // http://webpack.github.io/analyse or
-    // https://github.com/robertknight/webpack-bundle-size-analyzer.
-    // import fs from 'fs'
-    // fs.writeFileSync('./bundle-stats.json', JSON.stringify(jsonStats))
-
     const buildError = fatalError || jsonStats.errors[0] || jsonStats.warnings[0]
 
     if (buildError) throw new gutil.PluginError('webpack', buildError)

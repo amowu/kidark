@@ -1,8 +1,10 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import autoprefixer from 'autoprefixer'
-import constants from './constants'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ip from 'ip'
 import path from 'path'
 import webpack from 'webpack'
+
+import constants from './constants'
 
 const devtools = process.env.CONTINUOUS_INTEGRATION
   ? 'inline-source-map'
@@ -18,6 +20,8 @@ const loaders = {
   'sass': '!sass-loader?indentedSyntax',
   'styl': '!stylus-loader'
 }
+
+const serverIp = ip.address()
 
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
@@ -41,10 +45,10 @@ export default function makeConfig (isDevelopment) {
     devtool: isDevelopment ? devtools : '',
     entry: {
       app: isDevelopment ? [
-        `webpack-hot-middleware/client?path=http://localhost:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
-        path.join(constants.SRC_DIR, 'client/main.js')
+        `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
+        path.join(constants.SRC_DIR, 'browser/main.js')
       ] : [
-        path.join(constants.SRC_DIR, 'client/main.js')
+        path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
     module: {
@@ -76,16 +80,19 @@ export default function makeConfig (isDevelopment) {
           }
         },
         test: /\.js$/
+      }, {
+        loader: 'script',
+        test: /(pixi|phaser).js/
       }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
       path: constants.BUILD_DIR,
       filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
-      publicPath: `http://localhost:${constants.HOT_RELOAD_PORT}/build/`
+      publicPath: `http://${serverIp}:${constants.HOT_RELOAD_PORT}/build/`
     } : {
       path: constants.BUILD_DIR,
-      filename: '[name].js',
+      filename: '[name]-[hash].js',
       chunkFilename: '[name]-[chunkhash].js'
     },
     plugins: (() => {
@@ -107,7 +114,7 @@ export default function makeConfig (isDevelopment) {
         plugins.push(
           // Render styles into separate cacheable file to prevent FOUC and
           // optimize for critical rendering path.
-          new ExtractTextPlugin('app.css', {
+          new ExtractTextPlugin('app-[hash].css', {
             allChunks: true
           }),
           new webpack.optimize.DedupePlugin(),

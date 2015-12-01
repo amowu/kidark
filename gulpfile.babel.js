@@ -1,9 +1,10 @@
-import bg from 'gulp-bg'
+import del from 'del'
 import gulp from 'gulp'
+import bg from 'gulp-bg'
 import istanbul from 'gulp-istanbul'
 import mocha from 'gulp-mocha'
 import standard from 'gulp-standard'
-import { Instrumenter } from 'isparta'
+import {Instrumenter} from 'isparta'
 import path from 'path'
 import runSequence from 'run-sequence'
 import shell from 'gulp-shell'
@@ -18,8 +19,13 @@ gulp.task('env', () => {
   process.env.NODE_ENV = args.production ? 'production' : 'development'
 })
 
-gulp.task('build-webpack', ['env'], webpackBuild)
-gulp.task('build', ['build-webpack'])
+gulp.task('clean', done => del('build/*', done))
+
+gulp.task('build:webpack', ['env'], webpackBuild)
+
+gulp.task('build', done => {
+  runSequence('build:webpack', done)
+})
 
 gulp.task('standard', () => {
   return gulp.src([
@@ -36,7 +42,8 @@ gulp.task('standard', () => {
 gulp.task('mocha', () => {
   return gulp.src('test/**/*.js', {read: false})
     .pipe(mocha({
-      require: ['./test/setup.js']
+      require: ['./test/setup.js'],
+      reporter: 'spec'
     }))
 })
 
@@ -59,8 +66,7 @@ gulp.task('coverage', done => {
 })
 
 gulp.task('test', done => {
-  // TODO: Add Flow static type checker
-  runSequence('standard', 'coverage', 'build-webpack', done)
+  runSequence('standard', 'coverage', 'build:webpack', done)
 })
 
 gulp.task('server-node', bg('node', './src/server'))
@@ -73,7 +79,7 @@ gulp.task('server-nodemon', shell.task(
 
 gulp.task('server', ['env'], done => {
   if (args.production) {
-    runSequence('build', 'server-node', done)
+    runSequence('clean', 'build:webpack', 'server-node', done)
   } else {
     runSequence('server-hot', 'server-nodemon', done)
   }

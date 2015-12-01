@@ -1,6 +1,6 @@
 export default function mapStateToProps (state) {
   return {
     ...state,
-    msg: state.intl.messages[state.intl.selectedLanguage]
+    messages: state.$$intl.messages[state.$$intl.selectedLanguage]
   }
 }
