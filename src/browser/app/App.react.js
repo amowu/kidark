@@ -7,7 +7,6 @@ import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
 import Dialogue from '../dialogues/Dialogue.react'
 import Game from './Game.react'
-import Header from './Header.react'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
@@ -30,13 +29,11 @@ export default class App extends Component {
       },
       location: {
         pathname
-      },
-      messages
+      }
     } = this.props
 
     return (
       <div className='page' data-pathname={pathname}>
-        <Header messages={messages} pathname={pathname} />
         <Game {...{actions, pushState}} />
         <Dialogue {...{actions, dialogues, pushState}} />
         <RouterHandler {...this.props} />

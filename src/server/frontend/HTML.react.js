@@ -5,13 +5,12 @@ export default class HTML extends Component {
     appCssFilename: PropTypes.string.isRequired,
     bodyHTML: PropTypes.string.isRequired,
     googleAnalyticsId: PropTypes.string.isRequired,
-    isProduction: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired
+    isProduction: PropTypes.bool.isRequired
   }
 
   render () {
     const {
-      appCssFilename, bodyHTML, googleAnalyticsId, isProduction, title
+      appCssFilename, bodyHTML, googleAnalyticsId, isProduction
     } = this.props
 
     // Only for production. For dev, it's handled by webpack with livereload.
@@ -36,7 +35,7 @@ ga('create', '${googleAnalyticsId}', 'auto') ga('send', 'pageview')`}}
         <head>
           <meta charSet='utf-8' />
           <meta content='width=device-width, initial-scale=1' name='viewport' />
-          <title>{title}</title>
+          <title>KidArk</title>
           {linkStyles}
           {analytics}
         </head>
