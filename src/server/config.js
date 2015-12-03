@@ -10,8 +10,7 @@ nconf.env('__')
 const config = {
   isProduction: isProduction,
   googleAnalyticsId: 'UA-XXXXXXX-X',
-  port: process.env.PORT || 8000,
-  webpackStylesExtensions: ['css', 'less', 'sass', 'scss', 'styl']
+  port: process.env.PORT || 8000
 }
 
 // Use above config as a default one. Multiple other providers are available

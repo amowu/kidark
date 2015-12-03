@@ -1,0 +1,8 @@
+:root {
+  --mainColor: red;
+}
+
+.app {
+  color: var(--mainColor);
+  display: flex;
+}

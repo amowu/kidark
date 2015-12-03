@@ -1,4 +1,3 @@
-import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import ip from 'ip'
 import path from 'path'
@@ -26,7 +25,7 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css-loader!postcss-loader'
+      const prefix = 'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]!cssnext-loader'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style-loader!${extLoaders}`
@@ -129,7 +128,6 @@ export default function makeConfig (isDevelopment) {
       }
       return plugins
     })(),
-    postcss: () => [autoprefixer({browsers: 'last 2 version'})],
     resolve: {
       extensions: ['', '.js', '.json'],
       modulesDirectories: ['src', 'node_modules'],

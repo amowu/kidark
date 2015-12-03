@@ -21,6 +21,8 @@ export default class App extends Component {
   }
 
   render () {
+    const styles = require('./App.css')
+
     const {
       actions,
       dialogues,
@@ -33,7 +35,7 @@ export default class App extends Component {
     } = this.props
 
     return (
-      <div className='page' data-pathname={pathname}>
+      <div className={styles.app} data-pathname={pathname}>
         <Game {...{actions, pushState}} />
         <Dialogue {...{actions, dialogues, pushState}} />
         <RouterHandler {...this.props} />
