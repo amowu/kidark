@@ -55,8 +55,9 @@ export default function makeConfig (isDevelopment) {
         test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url?limit=100000'
       }, {
-        exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
         loader: 'babel',
+        exclude: /node_modules/,
         query: {
           stage: 0,
           env: {
@@ -77,8 +78,7 @@ export default function makeConfig (isDevelopment) {
               }
             }
           }
-        },
-        test: /\.js$/
+        }
       }, {
         test: /(pixi|phaser).js/,
         loader: 'script'
@@ -129,7 +129,7 @@ export default function makeConfig (isDevelopment) {
       return plugins
     })(),
     resolve: {
-      extensions: ['', '.js', '.json'],
+      extensions: ['', '.js', '.json', '.jsx'],
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {
