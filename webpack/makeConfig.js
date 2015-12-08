@@ -14,10 +14,10 @@ const devtools = process.env.CONTINUOUS_INTEGRATION
 
 const loaders = {
   'css': '',
-  'less': '!less-loader',
-  'scss': '!sass-loader',
-  'sass': '!sass-loader?indentedSyntax',
-  'styl': '!stylus-loader'
+  'less': '!less',
+  'scss': '!sass',
+  'sass': '!sass?indentedSyntax',
+  'styl': '!stylus'
 }
 
 const serverIp = ip.address()
@@ -25,11 +25,11 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]!cssnext-loader'
+      const prefix = 'css?modules&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
-        ? `style-loader!${extLoaders}`
-        : ExtractTextPlugin.extract('style-loader', extLoaders)
+        ? `style!${extLoaders}`
+        : ExtractTextPlugin.extract('style', extLoaders)
       return {
         loader: loader,
         test: new RegExp(`\\.(${ext})$`)
@@ -52,7 +52,7 @@ export default function makeConfig (isDevelopment) {
     },
     module: {
       loaders: [{
-        loader: 'url-loader?limit=100000',
+        loader: 'url?limit=100000',
         test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/
       }, {
         exclude: /node_modules/,
