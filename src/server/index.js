@@ -1,8 +1,6 @@
-require('css-modules-require-hook')({
-  // This path should match the css-loader localIdentName in your webpack config.
-  generateScopedName: '[name]__[local]___[hash:base64:5]'
-})
 require('babel/register')({optional: ['es7']})
+
+const serverConfig = require('./config')
 
 if (!process.env.NODE_ENV) {
   throw new Error('Environment variable NODE_ENV isn\'t set. Remember it\'s up your production enviroment to set NODE_ENV and maybe other variables.')
@@ -18,5 +16,10 @@ if (global.Intl) {
 } else {
   global.Intl = require('intl')
 }
+
+// To ignore webpack custom loaders on server.
+serverConfig.webpackStylesExtensions.forEach(ext => {
+  require.extensions['.' + ext] = () => {}
+})
 
 require('./main')

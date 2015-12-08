@@ -33,7 +33,6 @@
     "compression": "^1.4.0",
     "cors": "^2.6.0",
     "css-loader": "^0.22.0",
-    "css-modules-require-hook": "^2.1.0",
     "cssnext": "^1.8.4",
     "cssnext-loader": "^1.0.1",
     "del": "^2.1.0",
