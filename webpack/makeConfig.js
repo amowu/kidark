@@ -31,8 +31,8 @@ export default function makeConfig (isDevelopment) {
         ? `style!${extLoaders}`
         : ExtractTextPlugin.extract('style', extLoaders)
       return {
-        loader: loader,
-        test: new RegExp(`\\.(${ext})$`)
+        test: new RegExp(`\\.(${ext})$`),
+        loader: loader
       }
     })
   }
@@ -52,8 +52,8 @@ export default function makeConfig (isDevelopment) {
     },
     module: {
       loaders: [{
-        loader: 'url?limit=100000',
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/
+        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url?limit=100000'
       }, {
         exclude: /node_modules/,
         loader: 'babel',
@@ -80,8 +80,8 @@ export default function makeConfig (isDevelopment) {
         },
         test: /\.js$/
       }, {
-        loader: 'script',
-        test: /(pixi|phaser).js/
+        test: /(pixi|phaser).js/,
+        loader: 'script'
       }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
