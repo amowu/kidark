@@ -129,7 +129,7 @@ export default function makeConfig (isDevelopment) {
       return plugins
     })(),
     resolve: {
-      extensions: ['', '.js', '.json', '.jsx'],
+      extensions: ['', '.js', '.json', '.jsx', '.scss'],
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {
