@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import {IntlProvider} from 'react-intl'
 import {Provider} from 'react-redux'
 import Router from 'react-router'
+import ToolboxApp from 'react-toolbox/lib/app'
 
 import configureStore from '../common/configureStore'
 import createRoutes from './createRoutes'
@@ -18,9 +19,11 @@ const routes = createRoutes(store.getState)
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider>
-      <Router history={createBrowserHistory()}>
-        {routes}
-      </Router>
+      <ToolboxApp>
+        <Router history={createBrowserHistory()}>
+          {routes}
+        </Router>
+      </ToolboxApp>
     </IntlProvider>
   </Provider>,
   document.getElementById('app')

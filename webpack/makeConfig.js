@@ -25,7 +25,7 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css?modules&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
+      const prefix = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style!${extLoaders}`
