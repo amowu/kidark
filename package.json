@@ -78,7 +78,7 @@
     "postcss-modules-local-by-default": "^1.0.0",
     "postcss-modules-scope": "^1.0.0",
     "postcss-modules-values": "^1.1.1",
-    "react": "^0.14.2",
+    "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
     "react-addons-test-utils": "^0.14.1",
     "react-dom": "^0.14.0",
