@@ -17,7 +17,7 @@ export default class App extends Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
-    $$users: PropTypes.object.isRequired
+    users: PropTypes.object.isRequired
   }
 
   render () {

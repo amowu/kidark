@@ -5,11 +5,11 @@ import {Users, User} from './user.immutable'
 
 const initialState = new Users()
 
-const revive = ({$$entities: entities}) => {
+const revive = ({entities: entities}) => {
   // TODO: Refactor
   Object.keys(entities).map((value, index) => entities[value] = new User(entities[value]))
   return initialState.merge({
-    $$entities: Map(entities)
+    entities: Map(entities)
   })
 }
 
@@ -19,7 +19,7 @@ export default function usersReducer (state = initialState, action) {
   switch (action.type) {
     case usersActions.FETCH_USER_SUCCESS:
       const user = new User(action.payload)
-      return state.updateIn(['$$entities'], map => map.set(user.get('username'), user))
+      return state.updateIn(['entities'], map => map.set(user.get('username'), user))
   }
 
   return state
