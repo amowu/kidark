@@ -1,5 +1,3 @@
-import 'phaser-shim'
-
 import GameState from './states/GameState'
 
 export default class Game extends Phaser.Game {

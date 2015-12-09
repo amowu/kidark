@@ -79,9 +79,6 @@ export default function makeConfig (isDevelopment) {
           }
         },
         test: /\.js$/
-      }, {
-        loader: 'script',
-        test: /(pixi|phaser).js/
       }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
@@ -101,6 +98,10 @@ export default function makeConfig (isDevelopment) {
             NODE_ENV: JSON.stringify(isDevelopment ? 'development' : 'production'),
             IS_BROWSER: true
           }
+        }),
+        new webpack.ProvidePlugin({
+          PIXI: 'phaser-shim/dist/pixi.js',
+          Phaser: 'phaser-shim/dist/phaser.js'
         })
       ]
       if (isDevelopment) {
