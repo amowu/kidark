@@ -25,14 +25,14 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css?modules&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
+      const prefix = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style!${extLoaders}`
         : ExtractTextPlugin.extract('style', extLoaders)
       return {
-        loader: loader,
-        test: new RegExp(`\\.(${ext})$`)
+        test: new RegExp(`\\.(${ext})$`),
+        loader: loader
       }
     })
   }
@@ -52,11 +52,12 @@ export default function makeConfig (isDevelopment) {
     },
     module: {
       loaders: [{
-        loader: 'url?limit=100000',
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/
+        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url?limit=100000'
       }, {
-        exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
         loader: 'babel',
+        exclude: /node_modules/,
         query: {
           stage: 0,
           env: {
@@ -77,8 +78,7 @@ export default function makeConfig (isDevelopment) {
               }
             }
           }
-        },
-        test: /\.js$/
+        }
       }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
@@ -130,7 +130,7 @@ export default function makeConfig (isDevelopment) {
       return plugins
     })(),
     resolve: {
-      extensions: ['', '.js', '.json'],
+      extensions: ['', '.js', '.json', '.jsx', '.scss'],
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {

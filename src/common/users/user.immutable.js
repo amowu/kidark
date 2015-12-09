@@ -1,7 +1,7 @@
 import {Map, Record} from 'immutable'
 
 export const Users = Record({
-  $$entities: Map()
+  entities: Map()
 })
 
 export const User = Record({

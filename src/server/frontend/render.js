@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server'
 import {IntlProvider} from 'react-intl'
 import {Provider} from 'react-redux'
 import {RoutingContext, match} from 'react-router'
+import ToolboxApp from 'react-toolbox/lib/app'
 import serialize from 'serialize-javascript'
 import useragent from 'useragent'
 
@@ -84,7 +85,9 @@ function getAppHTML (store, renderProps) {
   return ReactDOMServer.renderToString(
     <Provider store={store}>
       <IntlProvider>
-        <RoutingContext {...renderProps} />
+        <ToolboxApp>
+          <RoutingContext {...renderProps} />
+        </ToolboxApp>
       </IntlProvider>
     </Provider>
   )

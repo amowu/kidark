@@ -6,8 +6,8 @@ import usersReducer from '../users/users.reducer'
 
 const appReducer = combineReducers({
   dialogues: dialoguesReducer,
-  $$intl: intlReducer,
-  $$users: usersReducer
+  intl: intlReducer,
+  users: usersReducer
 })
 
 export default appReducer

@@ -1,6 +1,13 @@
+// Universal CSS Modules
 require('css-modules-require-hook')({
   // This path should match the css-loader localIdentName in your webpack config.
-  generateScopedName: '[name]__[local]___[hash:base64:5]'
+  generateScopedName: '[name]__[local]___[hash:base64:5]',
+  // This configuration is used for react-toolbox sass modules.
+  extensions: ['.scss'],
+  preprocessCss: (css, filename) =>
+    require('node-sass').renderSync({
+      file: filename
+    }).css
 })
 require('babel/register')({optional: ['es7']})
 
