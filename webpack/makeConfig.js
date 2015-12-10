@@ -15,7 +15,7 @@ const devtools = process.env.CONTINUOUS_INTEGRATION
 const loaders = {
   'css': '',
   'less': '!less',
-  'scss': '!sass',
+  'scss': '!sass?outputStyle=expanded&sourceMap',
   'sass': '!sass?indentedSyntax',
   'styl': '!stylus'
 }
@@ -25,7 +25,7 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
+      const prefix = 'css?modules&importLoaders=2&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style!${extLoaders}`
@@ -45,8 +45,10 @@ export default function makeConfig (isDevelopment) {
     entry: {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ] : [
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.prod.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
