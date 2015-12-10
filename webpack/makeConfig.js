@@ -51,35 +51,40 @@ export default function makeConfig (isDevelopment) {
       ]
     },
     module: {
-      loaders: [{
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url?limit=100000'
-      }, {
-        test: /\.(js|jsx)$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          stage: 0,
-          env: {
-            development: {
-              // react-transform belongs to webpack config only, not to .babelrc
-              plugins: ['react-transform'],
-              extra: {
-                'react-transform': {
-                  transforms: [{
-                    transform: 'react-transform-hmr',
-                    imports: ['react'],
-                    locals: ['module']
-                  }, {
-                    transform: 'react-transform-catch-errors',
-                    imports: ['react', 'redbox-react']
-                  }]
+      loaders: [
+        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/octet-stream' },
+        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+        { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=image/svg+xml' },
+        { test: /\.(gif|jpg|png)$/, loader: 'url?limit=100000' },
+        {
+          test: /\.(js|jsx)$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+          query: {
+            stage: 0,
+            env: {
+              development: {
+                // react-transform belongs to webpack config only, not to .babelrc
+                plugins: ['react-transform'],
+                extra: {
+                  'react-transform': {
+                    transforms: [{
+                      transform: 'react-transform-hmr',
+                      imports: ['react'],
+                      locals: ['module']
+                    }, {
+                      transform: 'react-transform-catch-errors',
+                      imports: ['react', 'redbox-react']
+                    }]
+                  }
                 }
               }
             }
           }
         }
-      }].concat(stylesLoaders())
+      ].concat(stylesLoaders())
     },
     output: isDevelopment ? {
       path: constants.BUILD_DIR,
