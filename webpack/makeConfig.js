@@ -130,7 +130,8 @@ export default function makeConfig (isDevelopment) {
             compress: {
               screw_ie8: true,
               warnings: false // Because uglify reports irrelevant warnings.
-            }
+            },
+            output: { comments: false }
           })
         )
       }
