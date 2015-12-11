@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { Button } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
 
 import { fetchUser } from '../../common/users/users.actions.js'
@@ -21,7 +22,10 @@ export default class Resume extends Component {
     if (!entities.has('amowu')) return <p>fetching user...</p>
 
     return (
-      <div>{entities.getIn(['amowu', 'firstName'])}</div>
+      <div>
+        <div>{entities.getIn(['amowu', 'firstName'])}</div>
+        <Button bsStyle='primary'>Primary</Button>
+      </div>
     )
   }
 }

@@ -15,7 +15,7 @@ const devtools = process.env.CONTINUOUS_INTEGRATION
 const loaders = {
   'css': '',
   'less': '!less',
-  'scss': '!sass',
+  'scss': '!sass?outputStyle=expanded&sourceMap',
   'sass': '!sass?indentedSyntax',
   'styl': '!stylus'
 }
@@ -25,7 +25,7 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
+      const prefix = 'css?modules&importLoaders=2&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style!${extLoaders}`
@@ -45,41 +45,48 @@ export default function makeConfig (isDevelopment) {
     entry: {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ] : [
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.prod.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
     module: {
-      loaders: [{
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url?limit=100000'
-      }, {
-        test: /\.(js|jsx)$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          stage: 0,
-          env: {
-            development: {
-              // react-transform belongs to webpack config only, not to .babelrc
-              plugins: ['react-transform'],
-              extra: {
-                'react-transform': {
-                  transforms: [{
-                    transform: 'react-transform-hmr',
-                    imports: ['react'],
-                    locals: ['module']
-                  }, {
-                    transform: 'react-transform-catch-errors',
-                    imports: ['react', 'redbox-react']
-                  }]
+      loaders: [
+        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/octet-stream' },
+        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+        { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=image/svg+xml' },
+        { test: /\.(gif|jpg|png)$/, loader: 'url?limit=100000' },
+        {
+          test: /\.(js|jsx)$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+          query: {
+            stage: 0,
+            env: {
+              development: {
+                // react-transform belongs to webpack config only, not to .babelrc
+                plugins: ['react-transform'],
+                extra: {
+                  'react-transform': {
+                    transforms: [{
+                      transform: 'react-transform-hmr',
+                      imports: ['react'],
+                      locals: ['module']
+                    }, {
+                      transform: 'react-transform-catch-errors',
+                      imports: ['react', 'redbox-react']
+                    }]
+                  }
                 }
               }
             }
           }
         }
-      }].concat(stylesLoaders())
+      ].concat(stylesLoaders())
     },
     output: isDevelopment ? {
       path: constants.BUILD_DIR,
@@ -123,7 +130,8 @@ export default function makeConfig (isDevelopment) {
             compress: {
               screw_ie8: true,
               warnings: false // Because uglify reports irrelevant warnings.
-            }
+            },
+            output: { comments: false }
           })
         )
       }
