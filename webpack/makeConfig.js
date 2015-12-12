@@ -52,6 +52,16 @@ export default function makeConfig (isDevelopment) {
         path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
+    output: isDevelopment ? {
+      path: constants.BUILD_DIR,
+      filename: '[name].js',
+      chunkFilename: '[name]-[chunkhash].js',
+      publicPath: `http://${serverIp}:${constants.HOT_RELOAD_PORT}/build/`
+    } : {
+      path: constants.BUILD_DIR,
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[chunkhash].js'
+    },
     module: {
       loaders: [
         { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
@@ -88,15 +98,13 @@ export default function makeConfig (isDevelopment) {
         }
       ].concat(stylesLoaders())
     },
-    output: isDevelopment ? {
-      path: constants.BUILD_DIR,
-      filename: '[name].js',
-      chunkFilename: '[name]-[chunkhash].js',
-      publicPath: `http://${serverIp}:${constants.HOT_RELOAD_PORT}/build/`
-    } : {
-      path: constants.BUILD_DIR,
-      filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[chunkhash].js'
+    resolve: {
+      extensions: ['', '.js', '.json', '.jsx', '.scss'],
+      modulesDirectories: ['src', 'node_modules'],
+      root: constants.ABSOLUTE_BASE,
+      alias: {
+        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
+      }
     },
     plugins: (() => {
       const plugins = [
@@ -136,15 +144,7 @@ export default function makeConfig (isDevelopment) {
         )
       }
       return plugins
-    })(),
-    resolve: {
-      extensions: ['', '.js', '.json', '.jsx', '.scss'],
-      modulesDirectories: ['src', 'node_modules'],
-      root: constants.ABSOLUTE_BASE,
-      alias: {
-        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
-      }
-    }
+    })()
   }
 
   return config
