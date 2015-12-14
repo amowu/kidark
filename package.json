@@ -48,6 +48,8 @@
     "express-device": "^0.4.1",
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.1",
+    "font-awesome": "^4.5.0",
+    "font-awesome-webpack": "0.0.4",
     "glob": "^5.0.13",
     "gulp": "^3.9.0",
     "gulp-bg": "0.0.7",

@@ -46,19 +46,28 @@ export default function makeConfig (isDevelopment) {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
         'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.js'),
+        'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ] : [
         'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.prod.js'),
+        'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.prod.js'),
         path.join(constants.SRC_DIR, 'browser/main.js')
       ]
     },
+    output: isDevelopment ? {
+      path: constants.BUILD_DIR,
+      filename: '[name].js',
+      chunkFilename: '[name]-[chunkhash].js',
+      publicPath: `http://${serverIp}:${constants.HOT_RELOAD_PORT}/build/`
+    } : {
+      path: constants.BUILD_DIR,
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[chunkhash].js'
+    },
     module: {
       loaders: [
-        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-        { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-        { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/octet-stream' },
-        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-        { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=image/svg+xml' },
+        { test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.(ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
         { test: /\.(gif|jpg|png)$/, loader: 'url?limit=100000' },
         {
           test: /\.(js|jsx)$/,
@@ -88,15 +97,13 @@ export default function makeConfig (isDevelopment) {
         }
       ].concat(stylesLoaders())
     },
-    output: isDevelopment ? {
-      path: constants.BUILD_DIR,
-      filename: '[name].js',
-      chunkFilename: '[name]-[chunkhash].js',
-      publicPath: `http://${serverIp}:${constants.HOT_RELOAD_PORT}/build/`
-    } : {
-      path: constants.BUILD_DIR,
-      filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[chunkhash].js'
+    resolve: {
+      extensions: ['', '.css', '.js', '.json', '.jsx', '.scss'],
+      modulesDirectories: ['src', 'node_modules'],
+      root: constants.ABSOLUTE_BASE,
+      alias: {
+        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
+      }
     },
     plugins: (() => {
       const plugins = [
@@ -136,15 +143,7 @@ export default function makeConfig (isDevelopment) {
         )
       }
       return plugins
-    })(),
-    resolve: {
-      extensions: ['', '.js', '.json', '.jsx', '.scss'],
-      modulesDirectories: ['src', 'node_modules'],
-      root: constants.ABSOLUTE_BASE,
-      alias: {
-        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
-      }
-    }
+    })()
   }
 
   return config
