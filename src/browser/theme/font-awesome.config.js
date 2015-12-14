@@ -13,6 +13,8 @@ module.exports = {
     'icons': true,
 
     'larger': true,
-    'path': true
+    'path': true,
+
+    'animated': true
   }
 }
