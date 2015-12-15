@@ -10,22 +10,6 @@ export default class Dialogue extends Component {
     dialogues: PropTypes.object.isRequired,
     pushState: PropTypes.func.isRequired
   }
-
-  render () {
-    const {
-      dialogues
-    } = this.props
-
-    const dialogueId = dialogues.get('current')
-
-    return dialogues.has('current') ? (
-      <div>
-        {this.renderDialogueBox(dialogueId)}
-        {this.renderDialogueItemBox(dialogueId)}
-      </div>
-    ) : null
-  }
-
   renderDialogueBox (dialogueId) {
     const {
       actions,
@@ -40,7 +24,6 @@ export default class Dialogue extends Component {
       <DialogueBox {...{actions, dialogue, pushState}} />
     )
   }
-
   renderDialogueItemBox (dialogueId) {
     const {
       actions,
@@ -51,6 +34,19 @@ export default class Dialogue extends Component {
 
     return dialogues.hasIn(itemsKeyPath) ? (
       <DialogueItemBox items={dialogues.getIn(itemsKeyPath)} {...{actions}} />
+    ) : null
+  }
+  render () {
+    const {
+      dialogues
+    } = this.props
+
+    const dialogueId = dialogues.get('current')
+
+    return dialogues.has('current') ? (
+      <div>
+        {this.renderDialogueBox(dialogueId)}
+      </div>
     ) : null
   }
 }
