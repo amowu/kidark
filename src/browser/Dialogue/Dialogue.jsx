@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import Component from 'react-pure-render/component'
 
-import DialogueBox from './DialogueBox.react'
-import DialogueItemBox from './DialogueItemBox.react'
+import DialogueBox from './DialogueBox'
+import DialogueItemBox from './DialogueItemBox'
 
 export default class Dialogue extends Component {
   static propTypes = {
