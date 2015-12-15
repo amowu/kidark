@@ -1,5 +1,8 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
+import { Panel } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
+
+import Typewriter from '../common/Typewriter'
 
 export default class DialogueBox extends Component {
   static propTypes = {
@@ -7,7 +10,6 @@ export default class DialogueBox extends Component {
     dialogue: PropTypes.object.isRequired,
     pushState: PropTypes.func.isRequired
   }
-
   render () {
     const {
       dialogue
@@ -15,10 +17,11 @@ export default class DialogueBox extends Component {
 
     const text = dialogue.get('text')
 
+    // <p onClick={this.onNextClick.bind(this)}>{text}</p>
     return (
-      <section>
-        <p onClick={this.onNextClick.bind(this)}>{text}</p>
-      </section>
+      <Panel>
+        <Typewriter>{text}</Typewriter>
+      </Panel>
     )
   }
 
