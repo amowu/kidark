@@ -10,21 +10,6 @@ export default class DialogueBox extends Component {
     dialogue: PropTypes.object.isRequired,
     pushState: PropTypes.func.isRequired
   }
-  render () {
-    const {
-      dialogue
-    } = this.props
-
-    const text = dialogue.get('text')
-
-    // <p onClick={this.onNextClick.bind(this)}>{text}</p>
-    return (
-      <Panel>
-        <Typewriter>{text}</Typewriter>
-      </Panel>
-    )
-  }
-
   onNextClick () {
     const {
       actions,
@@ -38,5 +23,19 @@ export default class DialogueBox extends Component {
     }
 
     actions.deleteCurrentDialogue()
+  }
+  render () {
+    const {
+      dialogue
+    } = this.props
+
+    const text = dialogue.get('text')
+
+    // <p onClick={this.onNextClick.bind(this)}>{text}</p>
+    return (
+      <Panel>
+        <Typewriter>{text}</Typewriter>
+      </Panel>
+    )
   }
 }

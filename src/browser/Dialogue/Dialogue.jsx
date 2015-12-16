@@ -1,4 +1,7 @@
+import styles from './dialogue.css'
+
 import React, {PropTypes} from 'react'
+import { Col, Grid, Row } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
 
 import DialogueBox from './DialogueBox'
@@ -44,8 +47,15 @@ export default class Dialogue extends Component {
     const dialogueId = dialogues.get('current')
 
     return dialogues.has('current') ? (
-      <div>
-        {this.renderDialogueBox(dialogueId)}
+      <div className={styles['dialogue-box']}>
+        <Grid>
+          <Row>
+            <Col xs={12}>
+              {this.renderDialogueBox(dialogueId)}
+              {this.renderDialogueItemBox(dialogueId)}
+            </Col>
+          </Row>
+        </Grid>
       </div>
     ) : null
   }
