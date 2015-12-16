@@ -21,6 +21,12 @@ export default class Typewriter extends Component {
     typeSpeed: 50
   }
   componentDidMount () {
+    this.triggerTypewriter()
+  }
+  componentDidUpdate (prevProps, prevState) {
+    this.triggerTypewriter()
+  }
+  triggerTypewriter () {
     const {
       call,
       children,
@@ -34,10 +40,8 @@ export default class Typewriter extends Component {
 
     const element = this.refs.typewriter
     const options = { deleteSpeed, loop, pauseDelay, postfix, typeSpeed }
-    const text = children
 
-    const m = malarkey(element, options)
-    m.type(text, speed)
+    const m = malarkey(element, options).clear().type(children, speed)
     if (typeof call === 'function') m.call(call)
   }
   render () {
