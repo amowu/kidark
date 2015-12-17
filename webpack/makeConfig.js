@@ -98,7 +98,7 @@ export default function makeConfig (isDevelopment) {
       ].concat(stylesLoaders())
     },
     resolve: {
-      extensions: ['', '.css', '.js', '.json', '.jsx', '.scss'],
+      extensions: ['', '.js', '.json', '.jsx'],
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {
