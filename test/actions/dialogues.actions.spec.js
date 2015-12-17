@@ -20,4 +20,22 @@ describe('dialogues actions', () => {
       type: dialoguesActions.DELETE_CURRENT_DIALOGUE
     })
   })
+
+  it('should create SET_ITEMS_MENU_VISIBLE action when openItemsMenu', () => {
+    expect(
+      dialoguesActions.openItemsMenu()
+    ).to.deep.equal({
+      type: dialoguesActions.SET_ITEMS_MENU_VISIBLE,
+      payload: true
+    })
+  })
+
+  it('should create SET_ITEMS_MENU_VISIBLE action when closeItemsMenu', () => {
+    expect(
+      dialoguesActions.closeItemsMenu()
+    ).to.deep.equal({
+      type: dialoguesActions.SET_ITEMS_MENU_VISIBLE,
+      payload: false
+    })
+  })
 })

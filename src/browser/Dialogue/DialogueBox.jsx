@@ -5,9 +5,14 @@ import Component from 'react-pure-render/component'
 import Typewriter from '../common/Typewriter'
 
 export default class DialogueBox extends Component {
+  constructor (props) {
+    super(props)
+    this.onFinish = this.onFinish.bind(this)
+  }
   static propTypes = {
     actions: PropTypes.object.isRequired,
     dialogue: PropTypes.object.isRequired,
+    onFinish: PropTypes.func,
     pushState: PropTypes.func.isRequired
   }
   onNextClick () {
@@ -24,6 +29,9 @@ export default class DialogueBox extends Component {
 
     actions.deleteCurrentDialogue()
   }
+  onFinish () {
+    if (typeof this.props.onFinish === 'function') this.props.onFinish()
+  }
   render () {
     const {
       dialogue
@@ -34,7 +42,7 @@ export default class DialogueBox extends Component {
     // <p onClick={this.onNextClick.bind(this)}>{text}</p>
     return (
       <Panel>
-        <Typewriter>{text}</Typewriter>
+        <Typewriter call={this.onFinish}>{text}</Typewriter>
       </Panel>
     )
   }

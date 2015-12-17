@@ -32,7 +32,9 @@ export default class Dialogue extends Component {
     const keyPath = ['entities', dialogueId]
     const dialogue = dialogues.getIn(keyPath)
 
-    return <DialogueBox {...{actions, dialogue, pushState}} />
+    const onFinish = () => actions.openItemsMenu()
+
+    return <DialogueBox {...{actions, dialogue, onFinish, pushState}} />
   }
   renderDialogueItemBox (dialogueId) {
     const {
@@ -40,6 +42,7 @@ export default class Dialogue extends Component {
     } = this.props
 
     const onItemSelect = (event, dialogueId) => {
+      actions.closeItemsMenu()
       if (dialogueId) {
         actions.setCurrentDialogue(dialogueId)
       } else {
@@ -61,10 +64,16 @@ export default class Dialogue extends Component {
     ) : null
   }
   renderDialogue (dialogueId) {
+    const {
+      dialogues
+    } = this.props
+
     return this.hasItems(dialogueId) ? (
       <Dropdown
         id='required-dialogue-dropdown'
         className={styles['dropdown']}
+        open={dialogues.getIn(['items', 'open'])}
+        onToggle={(isOpen) => {}}
         dropup
         pullRight>
         <div bsRole='toggle'>{this.renderDialogueBox(dialogueId)}</div>
