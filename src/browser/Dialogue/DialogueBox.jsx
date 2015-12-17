@@ -7,41 +7,27 @@ import Typewriter from '../common/Typewriter'
 export default class DialogueBox extends Component {
   constructor (props) {
     super(props)
+    this.onClick = this.onClick.bind(this)
     this.onFinish = this.onFinish.bind(this)
   }
   static propTypes = {
-    actions: PropTypes.object.isRequired,
-    dialogue: PropTypes.object.isRequired,
+    onClick: PropTypes.func,
     onFinish: PropTypes.func,
-    pushState: PropTypes.func.isRequired
+    text: PropTypes.string
   }
-  onNextClick () {
-    const {
-      actions,
-      dialogue,
-      pushState
-    } = this.props
-
-    if (dialogue.has('pushState')) {
-      const state = dialogue.get('pushState')
-      pushState(null, state)
-    }
-
-    actions.deleteCurrentDialogue()
+  onClick () {
+    if (typeof this.props.onClick === 'function') this.props.onClick()
   }
   onFinish () {
     if (typeof this.props.onFinish === 'function') this.props.onFinish()
   }
   render () {
     const {
-      dialogue
+      text
     } = this.props
 
-    const text = dialogue.get('text')
-
-    // <p onClick={this.onNextClick.bind(this)}>{text}</p>
     return (
-      <Panel>
+      <Panel onClick={this.onClick}>
         <Typewriter call={this.onFinish}>{text}</Typewriter>
       </Panel>
     )

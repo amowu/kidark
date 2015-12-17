@@ -31,10 +31,18 @@ export default class Dialogue extends Component {
 
     const keyPath = ['entities', dialogueId]
     const dialogue = dialogues.getIn(keyPath)
+    const text = dialogue.get('text')
 
+    const onClick = () => {
+      if (this.hasItems(dialogueId)) return
+      if (dialogue.has('pushState')) {
+        pushState(null, dialogue.get('pushState'))
+      }
+      actions.deleteCurrentDialogue()
+    }
     const onFinish = () => actions.openItemsMenu()
 
-    return <DialogueBox {...{actions, dialogue, onFinish, pushState}} />
+    return <DialogueBox {...{onClick, onFinish, text}} />
   }
   renderDialogueItemBox (dialogueId) {
     const {
