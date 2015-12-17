@@ -1,12 +1,16 @@
-.dialogue-box {
-  /* TODO: Move fixed fullscreen to common css and import it */
+.dropdown {
+  display: block;
+}
+
+/* TODO: Move fixed fullscreen to common css and import it */
+.fullscreen-flex {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
   align-items: center;
 }

@@ -1,17 +1,26 @@
 import styles from './dialogue.css'
 
 import React, {PropTypes} from 'react'
-import { Col, Grid, Row } from 'react-bootstrap'
+import { Col, Dropdown, Grid, MenuItem, Row } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
 
 import DialogueBox from './DialogueBox'
-import DialogueItemBox from './DialogueItemBox'
 
 export default class Dialogue extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     dialogues: PropTypes.object.isRequired,
     pushState: PropTypes.func.isRequired
+  }
+  hasItems (dialogueId) {
+    const { dialogues } = this.props
+    const itemsKeyPath = ['entities', dialogueId, 'items']
+    return dialogues.hasIn(itemsKeyPath)
+  }
+  getItems (dialogueId) {
+    const { dialogues } = this.props
+    const itemsKeyPath = ['entities', dialogueId, 'items']
+    return dialogues.getIn(itemsKeyPath)
   }
   renderDialogueBox (dialogueId) {
     const {
@@ -23,37 +32,55 @@ export default class Dialogue extends Component {
     const keyPath = ['entities', dialogueId]
     const dialogue = dialogues.getIn(keyPath)
 
-    return (
-      <DialogueBox {...{actions, dialogue, pushState}} />
-    )
+    return <DialogueBox {...{actions, dialogue, pushState}} />
   }
   renderDialogueItemBox (dialogueId) {
     const {
-      actions,
-      dialogues
+      actions
     } = this.props
 
-    const itemsKeyPath = ['entities', dialogueId, 'items']
+    const onItemSelect = (event, dialogueId) => {
+      if (dialogueId) {
+        actions.setCurrentDialogue(dialogueId)
+      } else {
+        actions.deleteCurrentDialogue(dialogueId)
+      }
+    }
 
-    return dialogues.hasIn(itemsKeyPath) ? (
-      <DialogueItemBox items={dialogues.getIn(itemsKeyPath)} {...{actions}} />
+    return this.hasItems(dialogueId) ? (
+      <Dropdown.Menu>
+        {this.getItems(dialogueId).map((item, index) =>
+          <MenuItem
+            key={index}
+            eventKey={item.get('dialogue')}
+            onSelect={onItemSelect}>
+            {item.get('text')}
+          </MenuItem>
+        )}
+      </Dropdown.Menu>
     ) : null
   }
+  renderDialogue (dialogueId) {
+    return this.hasItems(dialogueId) ? (
+      <Dropdown
+        id='required-dialogue-dropdown'
+        className={styles['dropdown']}
+        dropup
+        pullRight>
+        <div bsRole='toggle'>{this.renderDialogueBox(dialogueId)}</div>
+        {this.renderDialogueItemBox(dialogueId)}
+      </Dropdown>
+    ) : this.renderDialogueBox(dialogueId)
+  }
   render () {
-    const {
-      dialogues
-    } = this.props
-
+    const { dialogues } = this.props
     const dialogueId = dialogues.get('current')
 
     return dialogues.has('current') ? (
-      <div className={styles['dialogue-box']}>
+      <div className={styles['fullscreen-flex']}>
         <Grid>
           <Row>
-            <Col xs={12}>
-              {this.renderDialogueBox(dialogueId)}
-              {this.renderDialogueItemBox(dialogueId)}
-            </Col>
+            <Col md={12}>{this.renderDialogue(dialogueId)}</Col>
           </Row>
         </Grid>
       </div>
