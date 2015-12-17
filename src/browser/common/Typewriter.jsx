@@ -14,6 +14,7 @@ export default class Typewriter extends Component {
     typeSpeed: PropTypes.number
   }
   static defaultProps = {
+    children: '',
     deleteSpeed: 50,
     loop: false,
     pauseDelay: 2000,
