@@ -32,6 +32,7 @@ export default class Dialogue extends Component {
     const keyPath = ['entities', dialogueId]
     const dialogue = dialogues.getIn(keyPath)
     const text = dialogue.get('text')
+    const caret = !this.hasItems(dialogueId)
 
     const onClick = () => {
       if (this.hasItems(dialogueId)) return
@@ -42,7 +43,7 @@ export default class Dialogue extends Component {
     }
     const onFinish = () => actions.openItemsMenu()
 
-    return <DialogueBox {...{onClick, onFinish, text}} />
+    return <DialogueBox {...{onClick, onFinish, caret, text}} />
   }
   renderDialogueItemBox (dialogueId) {
     const {

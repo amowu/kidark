@@ -1,7 +1,3 @@
-.dropdown {
-  display: block;
-}
-
 /* TODO: Move fixed fullscreen to common css and import it */
 .fullscreen-flex {
   position: fixed;
@@ -13,4 +9,13 @@
   flex-direction: column-reverse;
   justify-content: flex-start;
   align-items: center;
+}
+
+.dropdown {
+  display: block;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
 }
