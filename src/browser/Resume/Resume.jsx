@@ -1,4 +1,4 @@
-import styles from './resume'
+import styles from './resume.css'
 
 import React, { PropTypes } from 'react'
 import { Image, Modal, Tab, Tabs } from 'react-bootstrap'
@@ -50,7 +50,11 @@ export default class Resume extends Component {
         <div className={'media-body ' + styles['profile-media-body']}>
           <h2 className={styles['formatted-name']}>{firstName} {lastName}</h2>
           <h4 className={styles['headline']}>Front-end Engineer at KidArk</h4>
-          <address className={styles['location']}><i className='fa fa-map-marker'></i> New Taipei City, Taiwan</address>
+          <address className={styles['location']}>
+            <span className='fa fa-map-marker' aria-hidden='true'></span>
+            <span className='sr-only'>Location:</span>
+            New Taipei City, Taiwan
+          </address>
         </div>
       </div>
     )
@@ -67,9 +71,7 @@ export default class Resume extends Component {
             <h4 className={styles['background-media-body-heading']}>Gamania Digital Entertainment Co., Ltd.</h4>
             <h5 className={styles['background-media-body-subheading']}>
               Senior Programmer
-              <small>
-                <time>April 2011</time> – <time>August 2014</time> (3 years 5 months)
-              </small>
+              <small>April 2011 – August 2014 (3 years 5 months)</small>
             </h5>
           </div>
         </div>
@@ -88,9 +90,7 @@ export default class Resume extends Component {
             <h4 className={styles['background-media-body-heading']}>National Taipei University of Technology</h4>
             <h5 className={styles['background-media-body-subheading']}>
               Bachelor's degree, Computer Science and Information Engineering
-              <small>
-                <time>2005</time> – <time>2009</time>
-              </small>
+              <small>2005 – 2009</small>
             </h5>
           </div>
         </div>
