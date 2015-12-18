@@ -8,6 +8,10 @@ const initialState = fromJS({
   entities: indexBy(dialogues, 'id'),
   items: {
     open: false
+  },
+  typewriter: {
+    enabled: true,
+    isRunning: false
   }
 })
 
@@ -25,6 +29,10 @@ export default function dialoguesReducer (state = initialState, action) {
       return state.set('current', action.payload)
     case dialoguesActions.SET_ITEMS_MENU_VISIBLE:
       return state.setIn(['items', 'open'], action.payload)
+    case dialoguesActions.SET_TYPEWRITER_ENABLED:
+      return state.setIn(['typewriter', 'enabled'], action.payload)
+    case dialoguesActions.SET_TYPEWRITER_IS_RUN:
+      return state.setIn(['typewriter', 'isRunning'], action.payload)
   }
 
   return state

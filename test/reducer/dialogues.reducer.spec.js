@@ -13,6 +13,10 @@ describe('dialogues reducer', () => {
     entities: normalizedDialogues,
     items: {
       open: false
+    },
+    typewriter: {
+      enabled: true,
+      isRunning: false
     }
   }
   const expectedInitialState = fromJS(initialStateData)
@@ -73,6 +77,36 @@ describe('dialogues reducer', () => {
       dialoguesReducer(immutableState, dialoguesActions.closeItemsMenu())
     ).to.deep.equal(
       expectedStateAfterCloseItemsMenu
+    )
+  })
+
+  const expectedStateAfterResetTypewriter = immutableState.setIn(['typewriter', 'enabled'], true)
+  const expectedStateAfterFinishTypewriter = immutableState.setIn(['typewriter', 'enabled'], false)
+  it('should handle SET_TYPEWRITER_ENABLED', () => {
+    expect(
+      dialoguesReducer(immutableState, dialoguesActions.resetTypewriter())
+    ).to.deep.equal(
+      expectedStateAfterResetTypewriter
+    )
+    expect(
+      dialoguesReducer(immutableState, dialoguesActions.finishTypewriter())
+    ).to.deep.equal(
+      expectedStateAfterFinishTypewriter
+    )
+  })
+
+  const expectedStateAfterSetTypewriterRunIsTrue = immutableState.setIn(['typewriter', 'isRunning'], true)
+  const expectedStateAfterSetTypewriterRunIsFalse = immutableState.setIn(['typewriter', 'isRunning'], false)
+  it('should handle SET_TYPEWRITER_IS_RUN', () => {
+    expect(
+      dialoguesReducer(immutableState, dialoguesActions.setTypewriterIsRun(true))
+    ).to.deep.equal(
+      expectedStateAfterSetTypewriterRunIsTrue
+    )
+    expect(
+      dialoguesReducer(immutableState, dialoguesActions.setTypewriterIsRun(false))
+    ).to.deep.equal(
+      expectedStateAfterSetTypewriterRunIsFalse
     )
   })
 })

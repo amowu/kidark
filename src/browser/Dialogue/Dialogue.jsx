@@ -6,6 +6,7 @@ import Component from 'react-pure-render/component'
 
 import DialogueBox from './DialogueBox'
 
+// TODO: refactor this shit
 export default class Dialogue extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
@@ -14,13 +15,11 @@ export default class Dialogue extends Component {
   }
   hasItems (dialogueId) {
     const { dialogues } = this.props
-    const itemsKeyPath = ['entities', dialogueId, 'items']
-    return dialogues.hasIn(itemsKeyPath)
+    return dialogues.hasIn(['entities', dialogueId, 'items'])
   }
   getItems (dialogueId) {
     const { dialogues } = this.props
-    const itemsKeyPath = ['entities', dialogueId, 'items']
-    return dialogues.getIn(itemsKeyPath)
+    return dialogues.getIn(['entities', dialogueId, 'items'])
   }
   renderDialogueBox (dialogueId) {
     const {
@@ -29,22 +28,39 @@ export default class Dialogue extends Component {
       pushState
     } = this.props
 
-    const keyPath = ['entities', dialogueId]
-    const dialogue = dialogues.getIn(keyPath)
+    const dialogue = dialogues.getIn(['entities', dialogueId])
     const text = dialogue.get('text')
     const caret = !this.hasItems(dialogueId)
+    const typewriter = dialogues.getIn(['typewriter', 'enabled'])
 
+    const onTypewriterStart = () => {
+      actions.setTypewriterIsRun(true)
+    }
+    const onTypewriterFinish = () => {
+      actions.setTypewriterIsRun(false)
+      actions.openItemsMenu()
+    }
     const onClick = () => {
+      // 1. Stop dialogue typewrite
+      if (dialogues.getIn(['typewriter', 'isRunning'])) actions.finishTypewriter()
+      // 2. Do nothing when dialogue has items
       if (this.hasItems(dialogueId)) return
-      if (dialogue.has('pushState')) {
-        pushState(null, dialogue.get('pushState'))
-      }
+      // 3. Execute this dialogue's action
+      if (dialogue.has('pushState')) pushState(null, dialogue.get('pushState'))
+      // 4. Exit this dialogue
       actions.deleteCurrentDialogue()
     }
-    const onFinish = () => actions.openItemsMenu()
 
-    return <DialogueBox {...{onClick, onFinish, caret, text}} />
+    return <DialogueBox {...{
+      caret,
+      onClick,
+      onTypewriterFinish,
+      onTypewriterStart,
+      text,
+      typewriter
+    }} />
   }
+  // TODO: move to DialogueItemBox.jsx
   renderDialogueItemBox (dialogueId) {
     const {
       actions
@@ -53,12 +69,12 @@ export default class Dialogue extends Component {
     const onItemSelect = (event, dialogueId) => {
       actions.closeItemsMenu()
       if (dialogueId) {
+        actions.resetTypewriter()
         actions.setCurrentDialogue(dialogueId)
       } else {
         actions.deleteCurrentDialogue(dialogueId)
       }
     }
-
     return this.hasItems(dialogueId) ? (
       <Dropdown.Menu>
         {this.getItems(dialogueId).map((item, index) =>
