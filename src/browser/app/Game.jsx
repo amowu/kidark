@@ -1,10 +1,12 @@
-import React, {PropTypes} from 'react'
+import styles from './game.css'
+
+import React, { PropTypes } from 'react'
 import Component from 'react-pure-render/component'
 
 export default class Game extends Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
-    pushState: PropTypes.func.isRequired
+    actions: PropTypes.object,
+    pushState: PropTypes.func
   }
 
   componentDidMount () {
@@ -15,8 +17,9 @@ export default class Game extends Component {
       pushState
     } = this.props
 
-    const PhaserGame = require('../game/Game')
-    const game = new PhaserGame(320, 240, document.getElementById('game'))
+    const PhaserGame = require('../Game/Game.js')
+    const game = new PhaserGame('100%', '100%', document.getElementById('game'))
+
     // TODO: Use better invoke solution
     game.setPushState(pushState)
     game.setCurrentDialogue(setCurrentDialogue)
@@ -24,7 +27,7 @@ export default class Game extends Component {
 
   render () {
     return (
-      <div id='game'></div>
+      <div id='game' className={styles.game}></div>
     )
   }
 }

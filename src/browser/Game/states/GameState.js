@@ -19,6 +19,8 @@ export default class GameState extends Phaser.State {
   }
 
   create () {
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+
     this.map = this.add.tilemap('map')
     this.map.addTilesetImage('pacman-tiles', 'tiles')
     this.layer = this.map.createLayer('Pacman')
