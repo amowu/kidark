@@ -22,6 +22,7 @@ export default function configureStore ({deps, initialState}) {
   const devToolsEnabled =
     process.env.NODE_ENV !== 'production' && process.env.IS_BROWSER
 
+  // FIXME: Chrome Redux DevTools Extension on other browser error
   if (devToolsEnabled) {
     const logger = createLogger({
       collapsed: true,
