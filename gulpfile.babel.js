@@ -1,9 +1,9 @@
 import del from 'del'
 import gulp from 'gulp'
 import bg from 'gulp-bg'
+import eslint from 'gulp-eslint'
 import istanbul from 'gulp-istanbul'
 import mocha from 'gulp-mocha'
-import standard from 'gulp-standard'
 import {Instrumenter} from 'isparta'
 import path from 'path'
 import runSequence from 'run-sequence'
@@ -27,16 +27,15 @@ gulp.task('build', done => {
   runSequence('build:webpack', done)
 })
 
-gulp.task('standard', () => {
+gulp.task('eslint', () => {
   return gulp.src([
     'gulpfile.babel.js',
     'src/**/*.js',
     'test/**/*.js',
     'webpack/*.js'
-  ]).pipe(standard())
-    .pipe(standard.reporter('default', {
-      breakOnError: true
-    }))
+  ]).pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
 })
 
 gulp.task('mocha', () => {
@@ -66,7 +65,7 @@ gulp.task('coverage', done => {
 })
 
 gulp.task('test', done => {
-  runSequence('standard', 'coverage', 'build:webpack', done)
+  runSequence('eslint', 'coverage', 'build:webpack', done)
 })
 
 gulp.task('server-node', bg('node', './src/server'))
