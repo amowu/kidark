@@ -63,7 +63,7 @@ export default class GameState extends Phaser.State {
       return prev
     }, [])
     // setup A*
-    const easystar = new EasyStar.js()
+    const easystar = new EasyStar.js() // eslint-disable-line
     easystar.setGrid(grid)
     easystar.setAcceptableTiles([14])
     // async function
@@ -124,7 +124,6 @@ export default class GameState extends Phaser.State {
       this.player.body.velocity.y = 0
       this.playerNextMovePath = null
     }
-
 
     this.marker.x = this.layer.getTileX(this.input.activePointer.worldX) * 16
     this.marker.y = this.layer.getTileY(this.input.activePointer.worldY) * 16
