@@ -47,11 +47,11 @@ export default function makeConfig (isDevelopment) {
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
         'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.js'),
         'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.js'),
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        path.join(constants.SRC_DIR, 'browser/main.jsx')
       ] : [
         'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.prod.js'),
         'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.prod.js'),
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        path.join(constants.SRC_DIR, 'browser/main.jsx')
       ]
     },
     output: isDevelopment ? {

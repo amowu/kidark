@@ -13,7 +13,7 @@ import createRoutes from '../../browser/createRoutes'
 import configureStore from '../../common/configureStore'
 import config from '../config'
 import getAppAssetFilenamesAsync from './assets'
-import HTML from './HTML.react'
+import HTML from './HTML.jsx'
 
 export default function render (req, res, next) {
   const initialState = {}

@@ -3,7 +3,7 @@ import {IndexRoute, Route} from 'react-router'
 
 import App from './app/App.jsx'
 import Home from './home/Home.react'
-import NotFound from './notfound/NotFound.react'
+import NotFound from './notfound/NotFound.jsx'
 import Resume from './Resume/Resume.jsx'
 
 export default function createRoutes (getState) {
