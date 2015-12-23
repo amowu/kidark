@@ -5,22 +5,15 @@ export default class GameState extends Phaser.State {
   init () {
     this.map = null
     this.layer = null
+
     this.player = null
     this.npc = null
-    this.cursors = null
+
     this.marker = null
-
-    this.playerNextMoveAllPath = null
-    this.playerNextMovePath = null
-    this.playerNextMoveX = 0
-    this.playerNextMoveY = 0
-
-    this.world.setBounds(0, 0, 448, 496)
   }
 
   preload () {
     this.load.baseURL = '/'
-
     this.load.image('star', 'assets/images/star.png')
     this.load.spritesheet('pacman', 'assets/images/pacman.png', 32, 32)
     this.load.image('tiles', 'assets/images/pacman-tiles.png')
@@ -28,30 +21,81 @@ export default class GameState extends Phaser.State {
   }
 
   create () {
-    this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+    // this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+
+    this.world.setBounds(0, 0, 448, 496)
 
     this.map = this.add.tilemap('map')
     this.map.addTilesetImage('pacman-tiles', 'tiles')
     this.layer = this.map.createLayer('Pacman')
-    this.map.setCollisionByExclusion([14], true, this.layer)
+    // this.map.setCollisionByExclusion([14], true, this.layer)
+
+    this.player = this.add.sprite((14 * 16), (17 * 16), 'pacman', 0)
+    // this.player.anchor.set(0.5)
+    this.player.animations.add('munch', [0, 1, 2, 1], 20, true)
+    this.player.animations.play('munch')
+    // this.physics.arcade.enable(this.player)
+    // this.player.body.setSize(16, 16, 0, 0)
+    // this.player.body.collideWorldBounds = true
+    this.camera.follow(this.player)
+    this.player.currentTweens = []
+    this.player.isMoving = false
+    this.player.tweenInProgress = false
+    this.player.followPath = (path) => {
+      this.player.resetCurrentTweens()
+      this.player.prepareMovement(path)
+      this.player.moveInPath()
+    }
+    this.player.resetCurrentTweens = () => {
+      this.player.currentTweens.map(tween => this.tweens.remove(tween))
+      this.player.currentTweens = []
+      this.player.isMoving = false
+    }
+    this.player.prepareMovement = (path) => {
+      path = path || []
+      this.player.currentTweens = []
+      path.map(point => {
+        this.player.currentTweens.push(this.player.getTweenToCoordinate(point.x, point.y))
+      })
+    }
+    this.player.getTweenToCoordinate = (x, y) => {
+      const tween = this.add.tween(this.player.position)
+      tween.to({
+        x: x * 16,
+        y: y * 16
+      }, 100)
+      return tween
+    }
+    this.player.moveInPath = () => {
+      if (this.player.currentTweens.length === 0) return
+
+      let index = 1
+      this.player.isMoving = true
+      const moveToNext = (tween) => {
+        index++
+        const nextTween = this.player.currentTweens[index]
+        if (nextTween) {
+          tween.onComplete.add(() => {
+            this.player.tweenInProgress = false
+            moveToNext(nextTween)
+          })
+        } else {
+          tween.onComplete.add(() => {
+            this.player.onStopMovement()
+          })
+        }
+        tween.start()
+        this.player.tweenInProgress = true
+      }
+      moveToNext(this.player.currentTweens[index])
+    }
+    this.player.onStopMovement = () => {
+      this.player.resetCurrentTweens()
+    }
 
     this.npc = this.add.sprite((14 * 16), (17 * 14), 'star')
     this.npc.anchor.set(0.5)
-    this.physics.arcade.enable(this.npc)
-
-    this.player = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0)
-    this.player.anchor.set(0.5)
-    this.player.animations.add('munch', [0, 1, 2, 1], 20, true)
-    this.player.animations.play('munch')
-    this.physics.arcade.enable(this.player)
-    this.player.body.setSize(16, 16, 0, 0)
-    this.player.body.collideWorldBounds = true
-    this.camera.follow(this.player)
-
-    this.playerNextMoveX = this.player.x
-    this.playerNextMoveY = this.player.y
-
-    this.cursors = this.input.keyboard.createCursorKeys()
+    // this.physics.arcade.enable(this.npc)
 
     this.marker = this.add.graphics()
     this.marker.lineStyle(2, 0xff0000, 1)
@@ -86,44 +130,19 @@ export default class GameState extends Phaser.State {
         x: this.layer.getTileX(this.marker.x),
         y: this.layer.getTileY(this.marker.y)
       }).then(path => {
-        // TODO: this.player.followPath(path)
-        console.log('pathfinding:', path)
         if (path) {
-          this.playerNextMoveAllPath = path
+          this.player.followPath(path)
         }
       })
     })
   }
 
   update () {
-    this.physics.arcade.collide(this.player, this.layer)
-    this.physics.arcade.overlap(this.player, this.npc, (player, npc) => {
-      npc.kill()
-      this.npc = null
-    })
-
-    if (this.playerNextMoveAllPath !== null && this.playerNextMovePath === null) {
-      console.log(this.playerNextMoveAllPath)
-      if (this.playerNextMoveAllPath.length === 0) {
-        this.playerNextMoveAllPath = null
-        this.playerNextMovePath = null
-        return
-      }
-      this.playerNextMovePath = this.playerNextMoveAllPath.shift()
-      console.log(this.playerNextMovePath)
-      this.playerNextMoveX = this.playerNextMovePath.x * 16
-      this.playerNextMoveY = this.playerNextMovePath.y * 16
-      console.log('player:', this.player.x, this.player.y)
-      console.log('next:', this.playerNextMoveX, this.playerNextMoveY)
-      this.physics.arcade.moveToXY(this.player, this.playerNextMoveX, this.playerNextMoveY)
-    }
-
-    if (this.playerNextMovePath !== null && this.physics.arcade.distanceToXY(this.player, this.playerNextMoveX, this.playerNextMoveY) === 0) {
-      console.log('stop')
-      this.player.body.velocity.x = 0
-      this.player.body.velocity.y = 0
-      this.playerNextMovePath = null
-    }
+    // this.physics.arcade.collide(this.player, this.layer)
+    // this.physics.arcade.overlap(this.player, this.npc, (player, npc) => {
+    //   npc.kill()
+    //   this.npc = null
+    // })
 
     this.marker.x = this.layer.getTileX(this.input.activePointer.worldX) * 16
     this.marker.y = this.layer.getTileY(this.input.activePointer.worldY) * 16
