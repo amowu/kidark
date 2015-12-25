@@ -60,12 +60,12 @@ gulp.task('coverage:report', () => {
     .pipe(istanbul.writeReports())
 })
 
-gulp.task('coverage', done => {
+gulp.task('coverage:mocha', done => {
   runSequence('coverage:instrument', 'mocha', 'coverage:report', done)
 })
 
 gulp.task('test', done => {
-  runSequence('eslint', 'coverage', 'build:webpack', done)
+  runSequence('eslint', 'coverage:mocha', 'build:webpack', done)
 })
 
 gulp.task('server-node', bg('node', './src/server'))
