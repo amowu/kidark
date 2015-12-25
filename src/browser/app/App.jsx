@@ -34,7 +34,7 @@ export default class App extends Component {
 
     return (
       <div data-pathname={pathname}>
-        <Game {...{actions, pushState}} />
+        <Game {...{actions}} />
         <Dialogue {...{actions, dialogues, pushState}} />
         <RouterHandler {...this.props} />
       </div>

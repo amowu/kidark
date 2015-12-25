@@ -37,7 +37,9 @@ export default class GameState extends Phaser.State {
     this.player.currentTweens = []
     this.player.isMoving = false
     this.player.tweenInProgress = false
-    this.player.followPath = (path) => {
+    this.player.onFollowComplete = null
+    this.player.followPath = (path, onFollowComplete) => {
+      this.player.onFollowComplete = onFollowComplete
       this.player.resetCurrentTweens()
       this.player.prepareMovement(path)
       this.player.moveInPath()
@@ -80,6 +82,10 @@ export default class GameState extends Phaser.State {
         } else {
           tween.onComplete.add(() => {
             this.player.onStopMovement()
+            // trigger callback
+            if (typeof this.player.onFollowComplete === 'function') {
+              this.player.onFollowComplete()
+            }
           })
         }
         tween.start()
@@ -105,7 +111,10 @@ export default class GameState extends Phaser.State {
       }).then(path => {
         if (path) {
           path.pop()
-          this.player.followPath(path)
+          this.player.followPath(path, () => {
+            // TODO: this.game.actions[setCurrentDialogue, dialoagueId]
+            this.game.actions.setCurrentDialogue('10001')
+          })
         }
       })
     })
