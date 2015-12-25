@@ -28,15 +28,11 @@ export default class GameState extends Phaser.State {
     this.map = this.add.tilemap('map')
     this.map.addTilesetImage('pacman-tiles', 'tiles')
     this.layer = this.map.createLayer('Pacman')
-    // this.map.setCollisionByExclusion([14], true, this.layer)
 
     this.player = this.add.sprite((14 * 16), (17 * 16), 'pacman', 0)
     // this.player.anchor.set(0.5)
     this.player.animations.add('munch', [0, 1, 2, 1], 20, true)
     this.player.animations.play('munch')
-    // this.physics.arcade.enable(this.player)
-    // this.player.body.setSize(16, 16, 0, 0)
-    // this.player.body.collideWorldBounds = true
     this.camera.follow(this.player)
     this.player.currentTweens = []
     this.player.isMoving = false
@@ -95,7 +91,6 @@ export default class GameState extends Phaser.State {
 
     this.npc = this.add.sprite((14 * 16), (17 * 14), 'star')
     this.npc.anchor.set(0.5)
-    // this.physics.arcade.enable(this.npc)
 
     this.marker = this.add.graphics()
     this.marker.lineStyle(2, 0xff0000, 1)
@@ -138,12 +133,6 @@ export default class GameState extends Phaser.State {
   }
 
   update () {
-    // this.physics.arcade.collide(this.player, this.layer)
-    // this.physics.arcade.overlap(this.player, this.npc, (player, npc) => {
-    //   npc.kill()
-    //   this.npc = null
-    // })
-
     this.marker.x = this.layer.getTileX(this.input.activePointer.worldX) * 16
     this.marker.y = this.layer.getTileY(this.input.activePointer.worldY) * 16
   }
