@@ -65,6 +65,8 @@ export default class GameState extends Phaser.State {
     this.player.moveInPath = () => {
       if (this.player.currentTweens.length === 0) return
 
+      // why index is start with 1?
+      // since exclude self position in path
       let index = 1
       this.player.isMoving = true
       const moveToNext = (tween) => {
@@ -89,8 +91,24 @@ export default class GameState extends Phaser.State {
       this.player.resetCurrentTweens()
     }
 
-    this.npc = this.add.sprite((14 * 16), (17 * 14), 'star')
     this.npc.anchor.set(0.5)
+    this.npc = this.add.sprite((13 * 16), (14 * 16), 'star')
+    this.npc.inputEnabled = true
+    this.npc.input.priorityID = 2
+    this.npc.events.onInputDown.add((sprite, pointer) => {
+      this.map.findPath({
+        x: this.layer.getTileX(this.player.x),
+        y: this.layer.getTileY(this.player.y)
+      }, {
+        x: this.layer.getTileX(sprite.x),
+        y: this.layer.getTileY(sprite.y)
+      }).then(path => {
+        if (path) {
+          path.pop()
+          this.player.followPath(path)
+        }
+      })
+    })
 
     this.marker = this.add.graphics()
     this.marker.lineStyle(2, 0xff0000, 1)
@@ -116,8 +134,9 @@ export default class GameState extends Phaser.State {
     }
     this.map.findPath = async (start, end) => await calculatePath(start, end)
     // mouse down
-    this.input.onDown.add(() => {
-      // player follow pathfinding
+    this.layer.inputEnabled = true
+    this.layer.input.priorityID = 1
+    this.layer.events.onInputDown.add(() => {
       this.map.findPath({
         x: this.layer.getTileX(this.player.x),
         y: this.layer.getTileY(this.player.y)
