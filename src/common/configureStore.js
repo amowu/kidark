@@ -4,7 +4,6 @@ import promiseMiddleware from 'redux-promise-middleware'
 
 import appReducer from './app/app.reducer'
 import injectDependencies from './lib/injectDependencies'
-import stateToJS from './lib/stateToJS'
 import fetch from './fetch'
 
 export default function configureStore ({deps, initialState}) {
@@ -23,10 +22,12 @@ export default function configureStore ({deps, initialState}) {
   const devToolsEnabled =
     process.env.NODE_ENV !== 'production' && process.env.IS_BROWSER
 
+  // FIXME: Chrome Redux DevTools Extension on other browser error
   if (devToolsEnabled) {
     const logger = createLogger({
       collapsed: true,
-      transformer: stateToJS
+      // Convert immutablejs to JSON.
+      stateTransformer: state => JSON.parse(JSON.stringify(state))
     })
     // Logger must be the last middleware in chain.
     middleware.push(logger)

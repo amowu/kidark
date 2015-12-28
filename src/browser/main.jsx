@@ -18,9 +18,9 @@ const routes = createRoutes(store.getState)
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider>
-      <Router history={createBrowserHistory()}>
-        {routes}
-      </Router>
+        <Router history={createBrowserHistory()}>
+          {routes}
+        </Router>
     </IntlProvider>
   </Provider>,
   document.getElementById('app')

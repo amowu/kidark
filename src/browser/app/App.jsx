@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import Component from 'react-pure-render/component'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import mapStateToProps from '../../common/app/mapStateToProps'
 import mapDispatchToProps from '../../common/app/mapDispatchToProps'
 import RouterHandler from '../../common/components/RouterHandler.react'
-import Dialogue from '../dialogues/Dialogue.react'
-import Game from './Game.react'
+import Dialogue from '../Dialogue/Dialogue.jsx'
+import Game from './Game.jsx'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
@@ -17,7 +17,7 @@ export default class App extends Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
-    $$users: PropTypes.object.isRequired
+    users: PropTypes.object.isRequired
   }
 
   render () {
@@ -33,8 +33,8 @@ export default class App extends Component {
     } = this.props
 
     return (
-      <div className='page' data-pathname={pathname}>
-        <Game {...{actions, pushState}} />
+      <div data-pathname={pathname}>
+        <Game {...{actions}} />
         <Dialogue {...{actions, dialogues, pushState}} />
         <RouterHandler {...this.props} />
       </div>

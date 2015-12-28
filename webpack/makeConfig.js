@@ -1,4 +1,3 @@
-import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import ip from 'ip'
 import path from 'path'
@@ -15,10 +14,10 @@ const devtools = process.env.CONTINUOUS_INTEGRATION
 
 const loaders = {
   'css': '',
-  'less': '!less-loader',
-  'scss': '!sass-loader',
-  'sass': '!sass-loader?indentedSyntax',
-  'styl': '!stylus-loader'
+  'less': '!less',
+  'scss': '!sass?outputStyle=expanded&sourceMap',
+  'sass': '!sass?indentedSyntax',
+  'styl': '!stylus'
 }
 
 const serverIp = ip.address()
@@ -26,14 +25,14 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css-loader!postcss-loader'
+      const prefix = 'css?modules&importLoaders=2&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
-        ? `style-loader!${extLoaders}`
-        : ExtractTextPlugin.extract('style-loader', extLoaders)
+        ? `style!${extLoaders}`
+        : ExtractTextPlugin.extract('style', extLoaders)
       return {
-        loader: loader,
-        test: new RegExp(`\\.(${ext})$`)
+        test: new RegExp(`\\.(${ext})$`),
+        loader: loader
       }
     })
   }
@@ -46,44 +45,14 @@ export default function makeConfig (isDevelopment) {
     entry: {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.js'),
+        'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.js'),
+        path.join(constants.SRC_DIR, 'browser/main.jsx')
       ] : [
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        'bootstrap-sass!' + path.join(constants.SRC_DIR, 'browser/theme/bootstrap.config.prod.js'),
+        'font-awesome-webpack!' + path.join(constants.SRC_DIR, 'browser/theme/font-awesome.config.prod.js'),
+        path.join(constants.SRC_DIR, 'browser/main.jsx')
       ]
-    },
-    module: {
-      loaders: [{
-        loader: 'url-loader?limit=100000',
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/
-      }, {
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          stage: 0,
-          env: {
-            development: {
-              // react-transform belongs to webpack config only, not to .babelrc
-              plugins: ['react-transform'],
-              extra: {
-                'react-transform': {
-                  transforms: [{
-                    transform: 'react-transform-hmr',
-                    imports: ['react'],
-                    locals: ['module']
-                  }, {
-                    transform: 'react-transform-catch-errors',
-                    imports: ['react', 'redbox-react']
-                  }]
-                }
-              }
-            }
-          }
-        },
-        test: /\.js$/
-      }, {
-        loader: 'script',
-        test: /(pixi|phaser).js/
-      }].concat(stylesLoaders())
     },
     output: isDevelopment ? {
       path: constants.BUILD_DIR,
@@ -95,6 +64,47 @@ export default function makeConfig (isDevelopment) {
       filename: '[name]-[hash].js',
       chunkFilename: '[name]-[chunkhash].js'
     },
+    module: {
+      loaders: [
+        { test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.(ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+        { test: /\.(gif|jpg|png)$/, loader: 'url?limit=100000' },
+        {
+          test: /\.(js|jsx)$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+          query: {
+            stage: 0,
+            env: {
+              development: {
+                // react-transform belongs to webpack config only, not to .babelrc
+                plugins: ['react-transform'],
+                extra: {
+                  'react-transform': {
+                    transforms: [{
+                      transform: 'react-transform-hmr',
+                      imports: ['react'],
+                      locals: ['module']
+                    }, {
+                      transform: 'react-transform-catch-errors',
+                      imports: ['react', 'redbox-react']
+                    }]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ].concat(stylesLoaders())
+    },
+    resolve: {
+      extensions: ['', '.js', '.json', '.jsx'],
+      modulesDirectories: ['src', 'node_modules'],
+      root: constants.ABSOLUTE_BASE,
+      alias: {
+        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
+      }
+    },
     plugins: (() => {
       const plugins = [
         new webpack.DefinePlugin({
@@ -102,6 +112,10 @@ export default function makeConfig (isDevelopment) {
             NODE_ENV: JSON.stringify(isDevelopment ? 'development' : 'production'),
             IS_BROWSER: true
           }
+        }),
+        new webpack.ProvidePlugin({
+          PIXI: 'phaser-shim/dist/pixi.js',
+          Phaser: 'phaser-shim/dist/phaser.js'
         })
       ]
       if (isDevelopment) {
@@ -123,21 +137,13 @@ export default function makeConfig (isDevelopment) {
             compress: {
               screw_ie8: true,
               warnings: false // Because uglify reports irrelevant warnings.
-            }
+            },
+            output: { comments: false }
           })
         )
       }
       return plugins
-    })(),
-    postcss: () => [autoprefixer({browsers: 'last 2 version'})],
-    resolve: {
-      extensions: ['', '.js', '.json'],
-      modulesDirectories: ['src', 'node_modules'],
-      root: constants.ABSOLUTE_BASE,
-      alias: {
-        'react$': require.resolve(path.join(constants.NODE_MODULES_DIR, 'react'))
-      }
-    }
+    })()
   }
 
   return config
