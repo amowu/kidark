@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "standard"
+  ],
+  "globals": {
+    "after": false,
+    "afterEach": false,
+    "before": false,
+    "beforeEach": false,
+    "describe": false,
+    "it": false,
+    "Phaser": false
+  },
+  "parser": "babel-eslint"
+}
