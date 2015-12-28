@@ -72,6 +72,17 @@ export default class GameState extends Phaser.State {
       let index = 1
       this.player.isMoving = true
       const moveToNext = (tween) => {
+        const onComplete = () => {
+          this.player.onStopMovement()
+          // trigger onComplete callback
+          if (typeof this.player.onFollowComplete === 'function') {
+            this.player.onFollowComplete()
+          }
+        }
+        // prevent no progress when path only 1
+        if (!tween) {
+          return onComplete()
+        }
         index++
         const nextTween = this.player.currentTweens[index]
         if (nextTween) {
@@ -80,13 +91,7 @@ export default class GameState extends Phaser.State {
             moveToNext(nextTween)
           })
         } else {
-          tween.onComplete.add(() => {
-            this.player.onStopMovement()
-            // trigger callback
-            if (typeof this.player.onFollowComplete === 'function') {
-              this.player.onFollowComplete()
-            }
-          })
+          tween.onComplete.add(onComplete)
         }
         tween.start()
         this.player.tweenInProgress = true
@@ -97,8 +102,8 @@ export default class GameState extends Phaser.State {
       this.player.resetCurrentTweens()
     }
 
-    this.npc.anchor.set(0.5)
     this.npc = this.add.sprite((13 * 16), (14 * 16), 'star')
+    // this.npc.anchor.set(0.5)
     this.npc.inputEnabled = true
     this.npc.input.priorityID = 2
     this.npc.events.onInputDown.add((sprite, pointer) => {
@@ -110,6 +115,7 @@ export default class GameState extends Phaser.State {
         y: this.layer.getTileY(sprite.y)
       }).then(path => {
         if (path) {
+          // remove npc self position
           path.pop()
           this.player.followPath(path, () => {
             // TODO: this.game.actions[setCurrentDialogue, dialoagueId]
