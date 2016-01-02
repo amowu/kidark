@@ -15,7 +15,7 @@
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v4.2.1, if you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
+- [Node.js](https://nodejs.org/) v5.3.0, if you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
 
 ### Installation
 
