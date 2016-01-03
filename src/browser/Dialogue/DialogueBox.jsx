@@ -9,9 +9,8 @@ import Typewriter from './Typewriter'
 export default class DialogueBox extends Component {
   constructor (props) {
     super(props)
-    this.onClick = this.onClick.bind(this)
-    this.onTypewriterFinish = this.onTypewriterFinish.bind(this)
-    this.onTypewriterStart = this.onTypewriterStart.bind(this)
+    this.onFinish = this.onFinish.bind(this)
+    this.onStart = this.onStart.bind(this)
   }
   static propTypes = {
     caret: PropTypes.bool,
@@ -31,18 +30,14 @@ export default class DialogueBox extends Component {
     // After: <DialogueBox>
     // Call typewriter finished callback function
     if (this.props.typewriter === false) {
-      this.onTypewriterFinish()
+      this.onFinish()
     }
   }
-  onClick () {
-    const { onClick } = this.props
-    if (typeof onClick === 'function') onClick()
-  }
-  onTypewriterFinish () {
+  onFinish () {
     const { onTypewriterFinish } = this.props
     if (typeof onTypewriterFinish === 'function') onTypewriterFinish()
   }
-  onTypewriterStart () {
+  onStart () {
     const { onTypewriterStart } = this.props
     if (typeof onTypewriterStart === 'function') onTypewriterStart()
   }
@@ -54,8 +49,8 @@ export default class DialogueBox extends Component {
 
     return typewriter
       ? <Typewriter
-          onStart={this.onTypewriterStart}
-          onFinish={this.onTypewriterFinish}>
+          onStart={this.onStart}
+          onFinish={this.onFinish}>
           {text}
         </Typewriter>
       : <p>{text}</p>
@@ -70,8 +65,11 @@ export default class DialogueBox extends Component {
     ) : null
   }
   render () {
+    const { onClick } = this.props
     return (
-      <Panel onClick={this.onClick}>
+      <Panel onClick={() => {
+        if (typeof onClick === 'function') onClick()
+      }}>
         {this.renderText()}
         {this.renderCaret()}
       </Panel>

@@ -7,8 +7,7 @@ import Component from 'react-pure-render/component'
 import { fetchUser } from '../../common/users/users.actions.js'
 import fetch from '../components/fetch'
 
-@fetch(fetchUser)
-export default class Resume extends Component {
+class Resume extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired
@@ -125,3 +124,5 @@ export default class Resume extends Component {
     )
   }
 }
+
+export default fetch(fetchUser)(Resume);

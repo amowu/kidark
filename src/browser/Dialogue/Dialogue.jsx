@@ -2,6 +2,7 @@ import styles from './dialogue.css'
 
 import React, {PropTypes} from 'react'
 import { Col, Dropdown, Grid, MenuItem, Row } from 'react-bootstrap'
+import DropdownMenu from 'react-bootstrap/lib/DropdownMenu'
 import Component from 'react-pure-render/component'
 
 import DialogueBox from './DialogueBox'
@@ -76,7 +77,7 @@ export default class Dialogue extends Component {
       }
     }
     return this.hasItems(dialogueId) ? (
-      <Dropdown.Menu>
+      <DropdownMenu>
         {this.getItems(dialogueId).map((item, index) =>
           <MenuItem
             key={index}
@@ -85,7 +86,7 @@ export default class Dialogue extends Component {
             {item.get('text')}
           </MenuItem>
         )}
-      </Dropdown.Menu>
+      </DropdownMenu>
     ) : null
   }
   renderDialogue (dialogueId) {

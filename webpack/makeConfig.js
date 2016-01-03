@@ -5,12 +5,10 @@ import webpack from 'webpack'
 
 import constants from './constants'
 
-const devtools = process.env.CONTINUOUS_INTEGRATION
-  ? 'inline-source-map'
-  // cheap-module-eval-source-map, because we want original source, but we don't
-  // care about columns, which makes this devtool faster than eval-source-map.
-  // http://webpack.github.io/docs/configuration.html#devtool
-  : 'cheap-module-eval-source-map'
+// cheap-module-eval-source-map, because we want original source, but we don't
+// care about columns, which makes this devtool faster than eval-source-map.
+// http://webpack.github.io/docs/configuration.html#devtool
+const devtools = 'cheap-module-eval-source-map'
 
 const loaders = {
   'css': '',
@@ -32,7 +30,7 @@ export default function makeConfig (isDevelopment) {
         : ExtractTextPlugin.extract('style', extLoaders)
       return {
         test: new RegExp(`\\.(${ext})$`),
-        loader: loader
+        loader
       }
     })
   }
@@ -74,23 +72,12 @@ export default function makeConfig (isDevelopment) {
           loader: 'babel',
           exclude: /node_modules/,
           query: {
-            stage: 0,
+            cacheDirectory: true,
+            plugins: ['transform-runtime', 'add-module-exports'],
+            presets: ['es2015', 'react', 'stage-1'],
             env: {
               development: {
-                // react-transform belongs to webpack config only, not to .babelrc
-                plugins: ['react-transform'],
-                extra: {
-                  'react-transform': {
-                    transforms: [{
-                      transform: 'react-transform-hmr',
-                      imports: ['react'],
-                      locals: ['module']
-                    }, {
-                      transform: 'react-transform-catch-errors',
-                      imports: ['react', 'redbox-react']
-                    }]
-                  }
-                }
+                presets: ['react-hmre']
               }
             }
           }

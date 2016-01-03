@@ -9,11 +9,7 @@ require('css-modules-require-hook')({
       file: filename
     }).css
 })
-require('babel/register')({optional: ['es7']})
-
-if (!process.env.NODE_ENV) {
-  throw new Error('Environment variable NODE_ENV isn\'t set. Remember it\'s up your production enviroment to set NODE_ENV and maybe other variables.')
-}
+require('babel-register')
 
 // http://formatjs.io/guides/runtime-environments/#polyfill-node
 if (global.Intl) {

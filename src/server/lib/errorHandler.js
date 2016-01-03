@@ -1,6 +1,6 @@
 import config from '../config'
 
-export default function errorHandler (err, req, res, next) {
+export default function errorHandler (err, req, res) {
   const errorDetails = err.stack || err
 
   console.error(errorDetails)

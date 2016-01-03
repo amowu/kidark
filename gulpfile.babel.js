@@ -57,7 +57,9 @@ gulp.task('coverage:instrument', () => {
 
 gulp.task('coverage:report', () => {
   return gulp.src('src/**/*.js', {read: false})
-    .pipe(istanbul.writeReports())
+    .pipe(istanbul.writeReports({
+      reporters: ['text-summary']
+    }))
 })
 
 gulp.task('coverage:mocha', done => {

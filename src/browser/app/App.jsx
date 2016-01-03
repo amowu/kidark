@@ -8,8 +8,7 @@ import RouterHandler from '../../common/components/RouterHandler.react'
 import Dialogue from '../Dialogue/Dialogue.jsx'
 import Game from './Game.jsx'
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class App extends Component {
+class App extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
@@ -41,3 +40,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

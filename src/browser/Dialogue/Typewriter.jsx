@@ -3,10 +3,6 @@ import React, { PropTypes } from 'react'
 import Component from 'react-pure-render/component'
 
 export default class Typewriter extends Component {
-  constructor (props) {
-    super(props)
-    this.onFinish = this.onFinish.bind(this)
-  }
   static propTypes = {
     children: PropTypes.string,
     deleteSpeed: PropTypes.number,
@@ -33,13 +29,6 @@ export default class Typewriter extends Component {
     this.triggerTypewriter()
   }
   componentWillUnmount () {
-    this.onFinish()
-  }
-  onStart () {
-    const { onStart } = this.props
-    if (typeof onStart === 'function') onStart()
-  }
-  onFinish () {
     const { onFinish } = this.props
     if (typeof onFinish === 'function') onFinish()
   }
@@ -51,18 +40,22 @@ export default class Typewriter extends Component {
       pauseDelay,
       postfix,
       speed,
-      typeSpeed
+      typeSpeed,
+      onStart,
+      onFinish
     } = this.props
 
     const element = this.refs.typewriter
     const options = { deleteSpeed, loop, pauseDelay, postfix, typeSpeed }
 
-    this.onStart()
+    if (typeof onStart === 'function') onStart()
 
     malarkey(element, options)
       .clear()
       .type(children, speed)
-      .call(this.onFinish)
+      .call(() => {
+        if (typeof onFinish === 'function') onFinish()
+      })
   }
   render () {
     return (
