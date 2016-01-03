@@ -58,7 +58,7 @@ gulp.task('coverage:instrument', () => {
 gulp.task('coverage:report', () => {
   return gulp.src('src/**/*.js', {read: false})
     .pipe(istanbul.writeReports({
-      reporters: ['text-summary']
+      reporters: ['lcov', 'json', 'text-summary']
     }))
 })
 
