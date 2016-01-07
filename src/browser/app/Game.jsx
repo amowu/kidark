@@ -6,10 +6,10 @@ import Component from 'react-pure-render/component'
 export default class Game extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired
-  }
+  };
   componentDidMount () {
     const PhaserGame = require('../Game/Game.js')
-    const game = new PhaserGame(320, 240, document.getElementById('game'))
+    const game = new PhaserGame(480, 240, document.getElementById('game'))
     game.actions = this.props.actions
   }
   render () {
