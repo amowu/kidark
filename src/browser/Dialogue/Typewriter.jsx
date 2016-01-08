@@ -13,7 +13,7 @@ export default class Typewriter extends Component {
     postfix: PropTypes.string,
     speed: PropTypes.number,
     typeSpeed: PropTypes.number
-  }
+  };
   static defaultProps = {
     children: '',
     deleteSpeed: 50,
@@ -21,7 +21,7 @@ export default class Typewriter extends Component {
     pauseDelay: 2000,
     postfix: '',
     typeSpeed: 50
-  }
+  };
   componentDidMount () {
     this.triggerTypewriter()
   }

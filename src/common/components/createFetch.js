@@ -5,12 +5,10 @@ export default function createFetch (React, Component) {
         dispatch: React.PropTypes.func,
         location: React.PropTypes.object,
         params: React.PropTypes.object
-      }
-
+      };
       // This enables server side fetching.
       // Check src/server/frontend/render.js fetchComponentData function.
-      static fetchActions = actions
-
+      static fetchActions = actions;
       // This enables client side fetching, method is called only in browser.
       componentDidMount () {
         // Dispatch is injected by react-redux.

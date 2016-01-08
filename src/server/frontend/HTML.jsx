@@ -6,8 +6,7 @@ export default class HTML extends Component {
     bodyHTML: PropTypes.string.isRequired,
     googleAnalyticsId: PropTypes.string.isRequired,
     isProduction: PropTypes.bool.isRequired
-  }
-
+  };
   render () {
     const {
       appCssFilename, bodyHTML, googleAnalyticsId, isProduction

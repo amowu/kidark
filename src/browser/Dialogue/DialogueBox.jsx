@@ -19,12 +19,12 @@ export default class DialogueBox extends Component {
     onTypewriterStart: PropTypes.func,
     text: PropTypes.string,
     typewriter: PropTypes.bool
-  }
+  };
   static defaultProps = {
     caret: false,
     text: '',
     typewriter: true
-  }
+  };
   componentDidUpdate (prevProps, prevState) {
     // Before: <DialogueBox typewriter />
     // After: <DialogueBox>

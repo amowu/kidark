@@ -6,8 +6,7 @@ export default class Header extends Component {
   static propTypes = {
     messages: PropTypes.object.isRequired,
     pathname: PropTypes.string.isRequired
-  }
-
+  };
   render () {
     const {
       messages: {

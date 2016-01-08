@@ -11,7 +11,7 @@ class Resume extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired
-  }
+  };
   close () {
     const {
       history: {
@@ -125,4 +125,4 @@ class Resume extends Component {
   }
 }
 
-export default fetch(fetchUser)(Resume);
+export default fetch(fetchUser)(Resume)

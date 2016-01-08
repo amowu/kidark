@@ -13,7 +13,7 @@ export default class Dialogue extends Component {
     actions: PropTypes.object.isRequired,
     dialogues: PropTypes.object.isRequired,
     pushState: PropTypes.func.isRequired
-  }
+  };
   hasItems (dialogueId) {
     const { dialogues } = this.props
     return dialogues.hasIn(['entities', dialogueId, 'items'])

@@ -17,8 +17,7 @@ class App extends Component {
     location: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired
-  }
-
+  };
   render () {
     const {
       actions,
@@ -41,4 +40,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App)
