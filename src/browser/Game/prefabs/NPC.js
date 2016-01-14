@@ -3,10 +3,10 @@ class NPC extends Phaser.Sprite {
     super(game, x, y, key, frame)
 
     this.anchor.setTo(0.25)
-    this.animations.add('idle_down', [0, 1], 8, true)
-    this.animations.play('idle_down')
     this.inputEnabled = true
     this.input.priorityID = 2
+
+    this._action = null
   }
 
   addOnInputDown (onInputDown) {
@@ -16,9 +16,14 @@ class NPC extends Phaser.Sprite {
     }
   }
 
+  setAction (action) {
+    this._action = action
+  }
+
   triggerAction () {
-    // TODO: this.game.actions[setCurrentDialogue, dialoagueId]
-    this.game.actions.setCurrentDialogue('10001')
+    if (typeof this._action === 'function') {
+      this._action()
+    }
   }
 }
 
