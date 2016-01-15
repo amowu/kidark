@@ -2,8 +2,12 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import ip from 'ip'
 import path from 'path'
 import webpack from 'webpack'
+import webpackIsomorphicAssets from './assets'
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin'
 
 import constants from './constants'
+
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets)
 
 // cheap-module-eval-source-map, because we want original source, but we don't
 // care about columns, which makes this devtool faster than eval-source-map.
@@ -60,7 +64,8 @@ export default function makeConfig (isDevelopment) {
     } : {
       path: constants.BUILD_DIR,
       filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[chunkhash].js'
+      chunkFilename: '[name]-[chunkhash].js',
+      publicPath: '/_assets/'
     },
     module: {
       loaders: [
@@ -109,7 +114,8 @@ export default function makeConfig (isDevelopment) {
         plugins.push(
           new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.HotModuleReplacementPlugin(),
-          new webpack.NoErrorsPlugin()
+          new webpack.NoErrorsPlugin(),
+          webpackIsomorphicToolsPlugin.development()
         )
       } else {
         plugins.push(
@@ -126,7 +132,8 @@ export default function makeConfig (isDevelopment) {
               warnings: false // Because uglify reports irrelevant warnings.
             },
             output: { comments: false }
-          })
+          }),
+          webpackIsomorphicToolsPlugin
         )
       }
       return plugins

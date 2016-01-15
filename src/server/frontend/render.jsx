@@ -8,11 +8,9 @@ import {RoutingContext, match} from 'react-router'
 import serialize from 'serialize-javascript'
 import useragent from 'useragent'
 
-import {HOT_RELOAD_PORT} from '../../../webpack/constants'
 import createRoutes from '../../browser/createRoutes'
 import configureStore from '../../common/configureStore'
 import config from '../config'
-import getAppAssetFilenamesAsync from './assets'
 import HTML from './HTML.jsx'
 
 export default function render (req, res, next) {
@@ -67,10 +65,14 @@ async function renderPageAsync (store, renderProps, req) {
   const {headers, hostname} = req
   const appHTML = getAppHTML(store, renderProps)
   const {
-    css: appCssFilename,
-    js: appJsFilename
-  } = await getAppAssetFilenamesCachedAsync()
+    styles: { app: appCssFilename },
+    javascript: { app: appJsFilename }
+  } = webpackIsomorphicTools.assets()
   const scriptHTML = getScriptHTML(clientState, headers, hostname, appJsFilename)
+
+  if (!config.isProduction) {
+    webpackIsomorphicTools.refresh()
+  }
 
   return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
     <HTML
@@ -92,16 +94,6 @@ function getAppHTML (store, renderProps) {
   )
 }
 
-let appAssetFilenameCache = null
-
-async function getAppAssetFilenamesCachedAsync () {
-  if (appAssetFilenameCache) return appAssetFilenameCache
-
-  appAssetFilenameCache = await getAppAssetFilenamesAsync()
-
-  return appAssetFilenameCache
-}
-
 function getScriptHTML (clientState, headers, hostname, appJsFilename) {
   let scriptHTML = ''
 
@@ -114,16 +106,12 @@ function getScriptHTML (clientState, headers, hostname, appJsFilename) {
     `
   }
 
-  const appScriptSrc = config.isProduction
-    ? `/_assets/${appJsFilename}`
-    : `//${hostname}:${HOT_RELOAD_PORT}/build/app.js`
-
   // Note how clientState is serialized. JSON.stringify is anti-pattern.
   // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
   return scriptHTML + `
     <script>
       window.__INITIAL_STATE__ = ${serialize(clientState)}
     </script>
-    <script src="${appScriptSrc}"></script>
+    <script src="${appJsFilename}"></script>
   `
 }

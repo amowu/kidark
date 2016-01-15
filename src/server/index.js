@@ -11,6 +11,11 @@ require('css-modules-require-hook')({
 })
 require('babel-register')
 
+const serverConfig = require('./config')
+const WebpackIsomorphicTools = require('webpack-isomorphic-tools')
+const webpackIsomorphicAssets = require('../../webpack/assets')
+const rootDir = require('path').resolve(__dirname, '..', '..')
+
 // http://formatjs.io/guides/runtime-environments/#polyfill-node
 if (global.Intl) {
   // We don't have to check whether Node runtime supports specific language,
@@ -22,4 +27,8 @@ if (global.Intl) {
   global.Intl = require('intl')
 }
 
-require('./main')
+global.webpackIsomorphicTools = new WebpackIsomorphicTools(webpackIsomorphicAssets)
+  .development(!serverConfig.isProduction)
+  .server(rootDir, () => {
+    require('./main')
+  })
