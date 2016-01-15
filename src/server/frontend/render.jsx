@@ -13,6 +13,70 @@ import configureStore from '../../common/configureStore'
 import config from '../config'
 import HTML from './HTML.jsx'
 
+const fetchComponentDataAsync = async (dispatch, {components, location, params}) => {
+  const promises = components
+    .reduce((actions, component) => {
+      return actions.concat(component.fetchActions || [])
+    }, [])
+    .map(action => {
+      return dispatch(action({location, params})).payload.promise
+    })
+  await Promise.all(promises)
+}
+
+const getAppHTML = (store, renderProps) => {
+  return ReactDOMServer.renderToString(
+    <Provider store={store}>
+      <IntlProvider>
+        <RoutingContext {...renderProps} />
+      </IntlProvider>
+    </Provider>
+  )
+}
+
+const getScriptHTML = (clientState, headers, hostname, appJsFilename) => {
+  let scriptHTML = ''
+  const ua = useragent.is(headers['user-agent'])
+  const needIntlPolyfill = ua.safari || (ua.ie && ua.version < '11')
+  if (needIntlPolyfill) {
+    scriptHTML += `
+      <script src="/node_modules/intl/dist/Intl.min.js"></script>
+      <script src="/node_modules/intl/locale-data/jsonp/en-US.js"></script>
+    `
+  }
+  // Note how clientState is serialized. JSON.stringify is anti-pattern.
+  // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
+  return scriptHTML + `
+    <script>
+      window.__INITIAL_STATE__ = ${serialize(clientState)}
+    </script>
+    <script src="${appJsFilename}"></script>
+  `
+}
+
+const renderPageAsync = (store, renderProps, req) => {
+  const clientState = store.getState()
+  const {headers, hostname} = req
+  const appHTML = getAppHTML(store, renderProps)
+  const {
+    styles: { app: appCssFilename },
+    javascript: { app: appJsFilename }
+  } = webpackIsomorphicTools.assets()
+  const scriptHTML = getScriptHTML(clientState, headers, hostname, appJsFilename)
+  if (!config.isProduction) {
+    webpackIsomorphicTools.refresh()
+  }
+
+  return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
+    <HTML
+      appCssFilename={appCssFilename}
+      bodyHTML={`<div id="app">${appHTML}</div>${scriptHTML}`}
+      googleAnalyticsId={config.googleAnalyticsId}
+      isProduction={config.isProduction}
+    />
+  )
+}
+
 export default function render (req, res, next) {
   const initialState = {}
   const store = configureStore({initialState})
@@ -47,71 +111,4 @@ export default function render (req, res, next) {
       next(e)
     }
   })
-}
-
-async function fetchComponentDataAsync (dispatch, {components, location, params}) {
-  const fetchActions = components.reduce((actions, component) => {
-    return actions.concat(component.fetchActions || [])
-  }, [])
-  const promises = fetchActions.map(action => dispatch(action(
-    {location, params}
-  )))
-
-  await Promise.all(promises)
-}
-
-async function renderPageAsync (store, renderProps, req) {
-  const clientState = store.getState()
-  const {headers, hostname} = req
-  const appHTML = getAppHTML(store, renderProps)
-  const {
-    styles: { app: appCssFilename },
-    javascript: { app: appJsFilename }
-  } = webpackIsomorphicTools.assets()
-  const scriptHTML = getScriptHTML(clientState, headers, hostname, appJsFilename)
-
-  if (!config.isProduction) {
-    webpackIsomorphicTools.refresh()
-  }
-
-  return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
-    <HTML
-      appCssFilename={appCssFilename}
-      bodyHTML={`<div id="app">${appHTML}</div>${scriptHTML}`}
-      googleAnalyticsId={config.googleAnalyticsId}
-      isProduction={config.isProduction}
-    />
-  )
-}
-
-function getAppHTML (store, renderProps) {
-  return ReactDOMServer.renderToString(
-    <Provider store={store}>
-      <IntlProvider>
-        <RoutingContext {...renderProps} />
-      </IntlProvider>
-    </Provider>
-  )
-}
-
-function getScriptHTML (clientState, headers, hostname, appJsFilename) {
-  let scriptHTML = ''
-
-  const ua = useragent.is(headers['user-agent'])
-  const needIntlPolyfill = ua.safari || (ua.ie && ua.version < '11')
-  if (needIntlPolyfill) {
-    scriptHTML += `
-      <script src="/node_modules/intl/dist/Intl.min.js"></script>
-      <script src="/node_modules/intl/locale-data/jsonp/en-US.js"></script>
-    `
-  }
-
-  // Note how clientState is serialized. JSON.stringify is anti-pattern.
-  // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
-  return scriptHTML + `
-    <script>
-      window.__INITIAL_STATE__ = ${serialize(clientState)}
-    </script>
-    <script src="${appJsFilename}"></script>
-  `
 }
