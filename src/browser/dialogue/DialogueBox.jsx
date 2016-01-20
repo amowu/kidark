@@ -1,4 +1,4 @@
-import styles from './dialogue.css'
+import styles from './dialogue.scss'
 
 import React, { PropTypes } from 'react'
 import { Panel } from 'react-bootstrap'

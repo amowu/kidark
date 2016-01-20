@@ -1,6 +1,6 @@
 import { forEach, get } from 'lodash'
 
-import Map from '../prefabs/Map'
+import Map from '../maps/Map'
 import Player from '../prefabs/Player'
 import NPC from '../prefabs/NPC'
 

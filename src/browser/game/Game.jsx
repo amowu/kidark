@@ -1,4 +1,4 @@
-import styles from './game.css'
+import styles from './game.scss'
 
 import React, { PropTypes } from 'react'
 import Component from 'react-pure-render/component'
@@ -8,8 +8,9 @@ export default class Game extends Component {
     actions: PropTypes.object.isRequired
   };
   componentDidMount () {
-    const PhaserGame = require('../Game/Game.js')
+    const PhaserGame = require('./PhaserGame.js')
     const game = new PhaserGame(480, 240, document.getElementById('game'))
+    // TODO: define this.actions
     game.actions = this.props.actions
   }
   render () {

@@ -1,4 +1,4 @@
-import styles from './resume.css'
+import styles from './resume.scss'
 
 import React, { PropTypes } from 'react'
 import { Image, Modal, Tab, Tabs } from 'react-bootstrap'
