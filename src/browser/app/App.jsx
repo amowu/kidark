@@ -1,4 +1,7 @@
+import styles from './app.scss'
+
 import React, { PropTypes } from 'react'
+import { Col, Grid, Row } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
 import { connect } from 'react-redux'
 
@@ -32,9 +35,21 @@ class App extends Component {
 
     return (
       <div data-pathname={pathname}>
-        <Game {...{actions}} />
-        <Dialogue {...{actions, dialogues, pushState}} />
-        <RouterHandler {...this.props} />
+        <Grid>
+          <Row>
+            <Col xs={12}>
+              <div className={styles.container}>
+                <div className={styles.game}>
+                  <Game {...{actions}} />
+                </div>
+                <div className={styles.dialogue}>
+                  <Dialogue {...{actions, dialogues, pushState}} />
+                </div>
+              </div>
+              <RouterHandler {...this.props} />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

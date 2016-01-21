@@ -59,7 +59,7 @@ export default class DialogueBox extends Component {
     const { caret } = this.props
     return caret ? (
       <span
-        className={styles['flex-center'] + ' glyphicon glyphicon-triangle-bottom'}
+        className={styles.caret + ' glyphicon glyphicon-triangle-bottom'}
         aria-hidden='true'>
       </span>
     ) : null

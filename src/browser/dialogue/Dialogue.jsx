@@ -1,7 +1,7 @@
 import styles from './dialogue.scss'
 
 import React, {PropTypes} from 'react'
-import { Col, Dropdown, Grid, MenuItem, Row } from 'react-bootstrap'
+import { Dropdown, MenuItem } from 'react-bootstrap'
 import DropdownMenu from 'react-bootstrap/lib/DropdownMenu'
 import Component from 'react-pure-render/component'
 
@@ -97,7 +97,7 @@ export default class Dialogue extends Component {
     return this.hasItems(dialogueId) ? (
       <Dropdown
         id='required-dialogue-dropdown'
-        className={styles['dropdown']}
+        className={styles.dropdown}
         open={dialogues.getIn(['items', 'open'])}
         onToggle={(isOpen) => {}}
         dropup
@@ -112,12 +112,8 @@ export default class Dialogue extends Component {
     const dialogueId = dialogues.get('current')
 
     return dialogues.has('current') ? (
-      <div className={styles['fullscreen-flex']}>
-        <Grid>
-          <Row>
-            <Col md={12}>{this.renderDialogue(dialogueId)}</Col>
-          </Row>
-        </Grid>
+      <div className={styles.container}>
+        {this.renderDialogue(dialogueId)}
       </div>
     ) : null
   }
