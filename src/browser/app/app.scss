@@ -1,3 +1,6 @@
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
 .container {
   position: relative;
 }
@@ -7,6 +10,8 @@
 }
 
 .dialogue {
+  @include container-fixed($grid-gutter-width);
+
   position: absolute;
 
   top: 0;

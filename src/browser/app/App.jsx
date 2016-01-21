@@ -45,8 +45,8 @@ class App extends Component {
                 <div className={styles.dialogue}>
                   <Dialogue {...{actions, dialogues, pushState}} />
                 </div>
+                <RouterHandler {...this.props} />
               </div>
-              <RouterHandler {...this.props} />
             </Col>
           </Row>
         </Grid>
