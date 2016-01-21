@@ -1,4 +1,4 @@
-import styles from './dialogue.css'
+import styles from './dialogue.scss'
 
 import React, { PropTypes } from 'react'
 import { Panel } from 'react-bootstrap'
@@ -59,7 +59,7 @@ export default class DialogueBox extends Component {
     const { caret } = this.props
     return caret ? (
       <span
-        className={styles['flex-center'] + ' glyphicon glyphicon-triangle-bottom'}
+        className={styles.caret + ' glyphicon glyphicon-triangle-bottom'}
         aria-hidden='true'>
       </span>
     ) : null
