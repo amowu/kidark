@@ -1,11 +1,16 @@
 import styles from './resume.scss'
 
 import React, { PropTypes } from 'react'
-import { Image, Modal, Tab, Tabs } from 'react-bootstrap'
+import { Modal, Tab, Tabs } from 'react-bootstrap'
 import Component from 'react-pure-render/component'
 
 import { fetchUser } from '../../common/users/users.actions.js'
 import fetch from '../components/fetch'
+
+import Background from './Background'
+import Profile from './Profile'
+import Project from './Project'
+import Skill from './Skill'
 
 class Resume extends Component {
   static propTypes = {
@@ -18,15 +23,15 @@ class Resume extends Component {
         pushState
       }
     } = this.props
-
+    // route to root location
     pushState('/')
   }
   render () {
     const {
-      users: {
-        entities
-      }
+      users
     } = this.props
+
+    const entities = users.get('entities')
 
     // TODO: Use :username or users.current
     if (!entities.has('amowu')) {
@@ -37,72 +42,17 @@ class Resume extends Component {
       )
     }
 
-    const firstName = entities.getIn(['amowu', 'firstName'])
-    const lastName = entities.getIn(['amowu', 'lastName'])
+    const name = entities.getIn(['amowu', 'name'])
+    const info = entities.getIn(['amowu', 'info']).toJS()
+    const contact = entities.getIn(['amowu', 'contact']).toJS()
+    const location = entities.getIn(['amowu', 'location']).toJS()
+    const social = entities.getIn(['amowu', 'social']).toJS()
 
-    // TODO: <Profile />
-    const profile = (
-      <div className={'media ' + styles['profile-media']}>
-        <div className='media-left'>
-          <Image src='http://www.gravatar.com/avatar/778858b33950746e7049bfc33e94ac50?s=120' />
-        </div>
-        <div className={'media-body ' + styles['profile-media-body']}>
-          <h2 className={styles['formatted-name']}>{firstName} {lastName}</h2>
-          <h4 className={styles['headline']}>Front-end Engineer at KidArk</h4>
-          <address className={styles['location']}>
-            <span className='fa fa-map-marker' aria-hidden='true'></span>
-            <span className='sr-only'>Location:</span>
-            New Taipei City, Taiwan
-          </address>
-        </div>
-      </div>
-    )
+    const employment = entities.getIn(['amowu', 'employment']).toJS()
+    const education = entities.getIn(['amowu', 'education']).toJS()
 
-    // TODO: <Experience>
-    const experience = (
-      <div>
-        <h5 className={styles['background-heading']}>Experience</h5>
-        <div className='media'>
-          <div className={'media-left ' + styles['background-media-left']}>
-            <Image src='https://upload.wikimedia.org/wikipedia/zh/7/7f/Gamania_Logo.png' responsive />
-          </div>
-          <div className={'media-body ' + styles['background-media-body']}>
-            <h4 className={styles['background-media-body-heading']}>Gamania Digital Entertainment Co., Ltd.</h4>
-            <h5 className={styles['background-media-body-subheading']}>
-              Senior Programmer
-              <small>April 2011 – August 2014 (3 years 5 months)</small>
-            </h5>
-          </div>
-        </div>
-      </div>
-    )
-
-    // TODO: <Education />
-    const education = (
-      <div>
-        <h5 className={styles['background-heading']}>Education</h5>
-        <div className='media'>
-          <div className={'media-left ' + styles['background-media-left']}>
-            <Image src='https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/005/0a5/02d/015e2ec.png' responsive />
-          </div>
-          <div className={'media-body ' + styles['background-media-body']}>
-            <h4 className={styles['background-media-body-heading']}>National Taipei University of Technology</h4>
-            <h5 className={styles['background-media-body-subheading']}>
-              Bachelor's degree, Computer Science and Information Engineering
-              <small>2005 – 2009</small>
-            </h5>
-          </div>
-        </div>
-      </div>
-    )
-
-    // TODO: <Background />
-    const background = (
-      <div>
-        {experience}
-        {education}
-      </div>
-    )
+    const projects = entities.getIn(['amowu', 'projects']).toJS()
+    const skills = entities.getIn(['amowu', 'skills']).toJS()
 
     return (
       <Modal bsSize='lg' show animation={false} onHide={this.close.bind(this)}>
@@ -111,12 +61,17 @@ class Resume extends Component {
         </div>
         <div className={'panel panel-default ' + styles['panel']}>
           <div className={'panel-body ' + styles['panel-body']}>
-            {profile}
+            <Profile {...{ name, info, contact, location, social }} />
             <Tabs defaultActiveKey={0} animation={false}>
               <Tab eventKey={0} title='Background'>
-                {background}
+                <Background {...{ employment, education }} />
               </Tab>
-              <Tab eventKey={1} title='Skills'>🚧</Tab>
+              <Tab eventKey={1} title='Project'>
+                <Project {...{ projects }} />
+              </Tab>
+              <Tab eventKey={2} title='Skill'>
+                <Skill {...{ skills }} />
+              </Tab>
             </Tabs>
           </div>
         </div>
