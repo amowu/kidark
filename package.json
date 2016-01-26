@@ -9,7 +9,8 @@
     "test": "gulp test",
     "start": "gulp --production",
     "start:dev": "gulp",
-    "test:mocha": "gulp mocha"
+    "test:mocha": "gulp mocha",
+    "test:lint": "gulp eslint"
   },
   "engines": {
     "node": "5.3.0"
