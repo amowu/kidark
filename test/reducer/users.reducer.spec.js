@@ -1,54 +1,55 @@
-import {expect} from 'chai'
+import { expect } from 'chai'
+import { fromJS } from 'immutable'
+import serialize from 'serialize-javascript'
 
 import * as usersAction from '../../src/common/users/users.actions'
-import {Users, User} from '../../src/common/users/user.immutable'
 import usersReducer from '../../src/common/users/users.reducer'
 
 describe('users reducer', () => {
-  const username = 'amowu'
-  const userData = {
-    firstName: 'Amo',
-    lastName: 'Wu',
-    objectId: 'XSGP2D0eAj',
-    username: username
+  const initialStateData = {
+    entities: {}
   }
-  const usersData = {
-    entities: {
-      [username]: userData
-    }
-  }
-  const users = new Users()
-  const user = new User(userData)
-  const state = users.updateIn(['entities'], map => map.set(userData['username'], user))
+  const expectedInitialState = fromJS(initialStateData)
   it('should return the initial state', () => {
     expect(
       usersReducer(undefined, {})
     ).to.deep.equal(
-      users
+      expectedInitialState
     )
   })
+  const immutableState = fromJS(initialStateData)
   it('should return same state when action not match', () => {
     expect(
-      usersReducer(state, {})
+      usersReducer(immutableState, {})
     ).to.deep.equal(
-      state
+      immutableState
     )
   })
+  const initialStateFromServer = JSON.parse(serialize(immutableState))
   it('should return revived state when server rendering', () => {
     expect(
-      usersReducer(usersData, {})
+      usersReducer(initialStateFromServer, {})
     ).to.deep.equal(
-      state
+      expectedInitialState
     )
+  })
+  const payload = {
+    'objectId': 'XSGP2D0eAj',
+    'username': 'amowu'
+  }
+  const expectedStateAfterFetchUserSuccess = fromJS({
+    'entities': {
+      'amowu': payload
+    }
   })
   it('should handle FETCH_USER_SUCCESS', () => {
     expect(
-      usersReducer(users, {
+      usersReducer(immutableState, {
         type: usersAction.FETCH_USER_SUCCESS,
-        payload: userData
+        payload: payload
       })
     ).to.deep.equal(
-      state
+      expectedStateAfterFetchUserSuccess
     )
   })
 })
