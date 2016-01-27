@@ -1,8 +1,8 @@
 {
   "name": "amowu.com",
   "version": "0.4.0",
-  "authors": "Amo Wu",
-  "description": "The best dev stack and starter kit for React universal web apps.",
+  "author": "Amo Wu <amo260@gmail.com>",
+  "description": "KidArk",
   "private": true,
   "scripts": {
     "postinstall": "gulp build --production",
