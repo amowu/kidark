@@ -1,6 +1,6 @@
 {
   "name": "amowu.com",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Amo Wu <amo260@gmail.com>",
   "description": "KidArk",
   "private": true,
@@ -9,7 +9,8 @@
     "test": "gulp test",
     "start": "gulp --production",
     "start:dev": "gulp",
-    "test:mocha": "gulp mocha"
+    "test:mocha": "gulp mocha",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
   },
   "engines": {
     "node": "5.3.0"
