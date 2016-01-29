@@ -1,16 +1,19 @@
+import autoprefixer from 'autoprefixer'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import ip from 'ip'
 import path from 'path'
 import webpack from 'webpack'
+import webpackIsomorphicAssets from './assets'
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin'
 
 import constants from './constants'
 
-const devtools = process.env.CONTINUOUS_INTEGRATION
-  ? 'inline-source-map'
-  // cheap-module-eval-source-map, because we want original source, but we don't
-  // care about columns, which makes this devtool faster than eval-source-map.
-  // http://webpack.github.io/docs/configuration.html#devtool
-  : 'cheap-module-eval-source-map'
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets)
+
+// cheap-module-eval-source-map, because we want original source, but we don't
+// care about columns, which makes this devtool faster than eval-source-map.
+// http://webpack.github.io/docs/configuration.html#devtool
+const devtools = 'cheap-module-eval-source-map'
 
 const loaders = {
   'css': '',
@@ -25,14 +28,14 @@ const serverIp = ip.address()
 export default function makeConfig (isDevelopment) {
   function stylesLoaders () {
     return Object.keys(loaders).map(ext => {
-      const prefix = 'css?modules&importLoaders=2&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]!cssnext'
+      const prefix = 'css?modules&importLoaders=2&sourceMap&localIdentName=[name]__[local]!postcss'
       const extLoaders = prefix + loaders[ext]
       const loader = isDevelopment
         ? `style!${extLoaders}`
         : ExtractTextPlugin.extract('style', extLoaders)
       return {
         test: new RegExp(`\\.(${ext})$`),
-        loader: loader
+        loader
       }
     })
   }
@@ -62,7 +65,8 @@ export default function makeConfig (isDevelopment) {
     } : {
       path: constants.BUILD_DIR,
       filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[chunkhash].js'
+      chunkFilename: '[name]-[chunkhash].js',
+      publicPath: '/_assets/'
     },
     module: {
       loaders: [
@@ -74,23 +78,12 @@ export default function makeConfig (isDevelopment) {
           loader: 'babel',
           exclude: /node_modules/,
           query: {
-            stage: 0,
+            cacheDirectory: true,
+            plugins: ['transform-runtime', 'add-module-exports'],
+            presets: ['es2015', 'react', 'stage-1'],
             env: {
               development: {
-                // react-transform belongs to webpack config only, not to .babelrc
-                plugins: ['react-transform'],
-                extra: {
-                  'react-transform': {
-                    transforms: [{
-                      transform: 'react-transform-hmr',
-                      imports: ['react'],
-                      locals: ['module']
-                    }, {
-                      transform: 'react-transform-catch-errors',
-                      imports: ['react', 'redbox-react']
-                    }]
-                  }
-                }
+                presets: ['react-hmre']
               }
             }
           }
@@ -122,7 +115,8 @@ export default function makeConfig (isDevelopment) {
         plugins.push(
           new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.HotModuleReplacementPlugin(),
-          new webpack.NoErrorsPlugin()
+          new webpack.NoErrorsPlugin(),
+          webpackIsomorphicToolsPlugin.development()
         )
       } else {
         plugins.push(
@@ -139,11 +133,13 @@ export default function makeConfig (isDevelopment) {
               warnings: false // Because uglify reports irrelevant warnings.
             },
             output: { comments: false }
-          })
+          }),
+          webpackIsomorphicToolsPlugin
         )
       }
       return plugins
-    })()
+    })(),
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ]
   }
 
   return config

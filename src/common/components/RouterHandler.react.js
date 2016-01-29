@@ -11,8 +11,7 @@ import Component from 'react-pure-render/component'
 export default class RouterHandler extends Component {
   static propTypes = {
     children: PropTypes.object
-  }
-
+  };
   render () {
     const {
       children

@@ -1,6 +1,19 @@
 machine:
   node:
-    version: 4.2.1
+    version: 5.3.0
+  services:
+    - docker
+dependencies:
+  post:
+    - docker build -t amowu/amowu.com:$CIRCLE_SHA1 .
 test:
   post:
     - cat ./coverage/lcov.info | codecov
+    - docker run -d -p 8000:8000 amowu/amowu.com:$CIRCLE_SHA1; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8000
+deployment:
+  elasticbeanstalk:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - ./deploy.sh $CIRCLE_SHA1

@@ -2,21 +2,19 @@ import React, {Component, PropTypes} from 'react'
 
 export default class HTML extends Component {
   static propTypes = {
-    appCssFilename: PropTypes.string.isRequired,
+    appCssFilename: PropTypes.string,
     bodyHTML: PropTypes.string.isRequired,
     googleAnalyticsId: PropTypes.string.isRequired,
     isProduction: PropTypes.bool.isRequired
-  }
-
+  };
   render () {
     const {
       appCssFilename, bodyHTML, googleAnalyticsId, isProduction
     } = this.props
 
-    // Only for production. For dev, it's handled by webpack with livereload.
-    const linkStyles = isProduction &&
+    const linkStyles = appCssFilename &&
       <link
-        href={`/_assets/${appCssFilename}`}
+        href={appCssFilename}
         rel='stylesheet'
       />
 
@@ -34,7 +32,8 @@ ga('create', '${googleAnalyticsId}', 'auto') ga('send', 'pageview')`}}
       <html lang='en'>
         <head>
           <meta charSet='utf-8' />
-          <meta content='width=device-width, initial-scale=1' name='viewport' />
+          <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport' />
+          <meta content='ie=edge' httpEquiv='x-ua-compatible' />
           <title>KidArk</title>
           {linkStyles}
           {analytics}

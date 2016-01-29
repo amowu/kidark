@@ -30,7 +30,7 @@ gulp.task('build', done => {
 gulp.task('eslint', () => {
   return gulp.src([
     'gulpfile.babel.js',
-    'src/**/*.js',
+    'src/**/*.{js,jsx}',
     'test/**/*.js',
     'webpack/*.js'
   ]).pipe(eslint())
@@ -57,7 +57,9 @@ gulp.task('coverage:instrument', () => {
 
 gulp.task('coverage:report', () => {
   return gulp.src('src/**/*.js', {read: false})
-    .pipe(istanbul.writeReports())
+    .pipe(istanbul.writeReports({
+      reporters: ['lcov', 'json', 'text-summary']
+    }))
 })
 
 gulp.task('coverage:mocha', done => {
@@ -73,7 +75,7 @@ gulp.task('server-hot', bg('node', './webpack/server'))
 // Shell fixes Windows este/issues/522, bg is still needed for server-hot.
 gulp.task('server-nodemon', shell.task(
   // Normalize makes path cross platform.
-  path.normalize('node_modules/.bin/nodemon src/server')
+  path.normalize('node_modules/.bin/nodemon --ignore webpack-assets.json src/server')
 ))
 
 gulp.task('server', ['env'], done => {

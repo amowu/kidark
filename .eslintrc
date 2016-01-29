@@ -1,7 +1,14 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "standard"
   ],
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "react/jsx-uses-react": 1
+  },
   "globals": {
     "after": false,
     "afterEach": false,
@@ -10,6 +17,5 @@
     "describe": false,
     "it": false,
     "Phaser": false
-  },
-  "parser": "babel-eslint"
+  }
 }

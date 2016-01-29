@@ -8,9 +8,6 @@ import Router from 'react-router'
 import configureStore from '../common/configureStore'
 import createRoutes from './createRoutes'
 
-// Enabling ES7 `async/await` in browser:
-if (process.env.IS_BROWSER) require('regenerator/runtime')
-
 const initialState = window.__INITIAL_STATE__
 const store = configureStore({initialState})
 const routes = createRoutes(store.getState)

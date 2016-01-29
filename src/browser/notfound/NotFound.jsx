@@ -5,8 +5,7 @@ import {Link} from 'react-router'
 export default class NotFound extends Component {
   static propTypes = {
     messages: PropTypes.object
-  }
-
+  };
   render () {
     const {
       messages: {

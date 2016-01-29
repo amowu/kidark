@@ -4,7 +4,7 @@
 | --- | --- |
 | Version | [![node](https://img.shields.io/badge/node-4.2.1-brightgreen.svg?style=flat-square)](https://nodejs.org/) |
 | License | [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/amowu/amowu.com/blob/master/LICENSE) |
-| Standard | [![Semantic Versioning](https://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat-square)](http://semver.org/spec/v2.0.0.html) [![Contributing](https://img.shields.io/badge/git-flow-blue.svg?style=flat-square)](https://github.com/nvie/gitflow) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue.svg?style=flat-square)](https://github.com/feross/standard) |
+| Standard | [![Semantic Versioning](https://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat-square)](http://semver.org/spec/v2.0.0.html) [![Contributing](https://img.shields.io/badge/git-flow-blue.svg?style=flat-square)](https://github.com/nvie/gitflow) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue.svg?style=flat-square)](https://github.com/feross/standard) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) |
 | Tool | [![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat-square)](http://stackshare.io/amowu/amowu-com) |
 | Quality | [![Dependency Status](https://img.shields.io/david/amowu/amowu.com.svg?style=flat-square)](https://david-dm.org/amowu/amowu.com) [![Codecov](https://img.shields.io/codecov/c/github/amowu/amowu.com.svg?style=flat-square)](https://codecov.io/github/amowu/amowu.com?branch=master) |
 | Build | [![Circle CI](https://img.shields.io/circleci/project/amowu/amowu.com.svg?style=flat-square)](https://circleci.com/gh/amowu/amowu.com) |
@@ -15,7 +15,7 @@
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v4.2.1, if you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
+- [Node.js](https://nodejs.org/) v5.3.0, if you are using different node versions on your machine, use [NVM](https://github.com/creationix/nvm) to manage them.
 
 ### Installation
 
