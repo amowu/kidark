@@ -9,15 +9,17 @@ import fetch from '../components/fetch'
 
 import Background from './Background'
 import Profile from './Profile'
-import Project from './Project'
-import Skill from './Skill'
 
 class Resume extends Component {
+  constructor (props) {
+    super(props)
+    this.onClose = this.onClose.bind(this)
+  }
   static propTypes = {
     history: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired
   };
-  close () {
+  onClose () {
     const {
       history: {
         pushState
@@ -47,31 +49,20 @@ class Resume extends Component {
     const contact = entities.getIn(['amowu', 'contact']).toJS()
     const location = entities.getIn(['amowu', 'location']).toJS()
     const social = entities.getIn(['amowu', 'social']).toJS()
-
     const employment = entities.getIn(['amowu', 'employment']).toJS()
     const education = entities.getIn(['amowu', 'education']).toJS()
 
-    const projects = entities.getIn(['amowu', 'projects']).toJS()
-    const skills = entities.getIn(['amowu', 'skills']).toJS()
-
     return (
-      <Modal bsSize='lg' show animation={false} onHide={this.close.bind(this)}>
-        <div className={'pull-right ' + styles['icons']}>
-          <i className='fa fa-envelope fa-lg'></i>
-        </div>
-        <div className={'panel panel-default ' + styles['panel']}>
-          <div className={'panel-body ' + styles['panel-body']}>
+      <Modal bsSize='lg' show animation={false} onHide={this.onClose}>
+        <div className='panel panel-default'>
+          <div className='panel-body'>
             <Profile {...{ name, info, contact, location, social }} />
             <Tabs defaultActiveKey={0} animation={false}>
               <Tab eventKey={0} title='Background'>
                 <Background {...{ employment, education }} />
               </Tab>
-              <Tab eventKey={1} title='Project'>
-                <Project {...{ projects }} />
-              </Tab>
-              <Tab eventKey={2} title='Skill'>
-                <Skill {...{ skills }} />
-              </Tab>
+              <Tab eventKey={1} title='Project' disabled></Tab>
+              <Tab eventKey={2} title='Skill' disabled></Tab>
             </Tabs>
           </div>
         </div>
