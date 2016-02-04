@@ -10,6 +10,7 @@
     "start": "gulp --production",
     "start:dev": "gulp",
     "test:mocha": "gulp mocha",
+    "test:lint": "gulp eslint",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
   },
   "engines": {

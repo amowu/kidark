@@ -1,7 +1,7 @@
 import nock from 'nock'
 
 import * as usersActions from '../../src/common/users/users.actions'
-import {createMockStore} from '../helper'
+import { createMockStore } from '../helper'
 
 describe('users actions', () => {
   afterEach(() => {
@@ -9,14 +9,12 @@ describe('users actions', () => {
   })
   it('should create FETCH_USER_SUCCESS action when fetchUser has been done', done => {
     const expectedUserDate = {
-      firstName: 'Amo',
-      lastName: 'Wu',
       objectId: 'XSGP2D0eAj',
       username: 'amowu'
     }
     // Intercept HTTP call
     nock('https://iogtezo43j.execute-api.ap-northeast-1.amazonaws.com')
-      .get('/develop/users/amowu')
+      .get('/dev/users/amowu')
       .reply(200, {
         user: expectedUserDate
       })

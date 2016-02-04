@@ -8,13 +8,7 @@ export function fetchUser () {
     type: FETCH_USER,
     payload: {
       // TODO: Use env config to define api url
-      promise: fetch('https://iogtezo43j.execute-api.ap-northeast-1.amazonaws.com/develop/users/amowu', {
-        // TODO: Move to fetch.js headers and concact it
-        headers: {
-          'X-Parse-Application-Id': 'YzzvDHtGEsb40QFgxpu9paCNWsT6wf4gkVAP4OnI',
-          'X-Parse-REST-API-Key': 'c1GFRAsJ6uI5YLN7innR6sZHtCf4vops6luOEMrC'
-        }
-      }).then(response => response.json())
+      promise: fetch('https://iogtezo43j.execute-api.ap-northeast-1.amazonaws.com/dev/users/amowu').then(response => response.json())
     }
   })
 }
