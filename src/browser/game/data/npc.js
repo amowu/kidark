@@ -1,6 +1,7 @@
 export default {
   'data': [
     {
+      'name': 'Amo Wu',
       'key': 'codeer',
       'position':
       {

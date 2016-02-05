@@ -16,6 +16,16 @@ class NPC extends Phaser.Sprite {
     }
   }
 
+  setName (name) {
+    const text = this.game.add.text(0, 0, name, {
+      font: '2px',
+      fill: '#ffff00'
+    })
+    text.anchor.set(0.5)
+    text.x = Math.floor(this.x + this.width / 2)
+    text.y = this.y - 10
+  }
+
   setAction (action) {
     this._action = action
   }
