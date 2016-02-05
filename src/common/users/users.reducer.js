@@ -1,25 +1,22 @@
-import {Map} from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 import * as usersActions from './users.actions'
-import {Users, User} from './user.immutable'
 
-const initialState = new Users()
+const initialState = fromJS({
+  entities: {}
+})
 
-const revive = ({entities: entities}) => {
-  // TODO: Refactor
-  Object.keys(entities).map((value, index) => entities[value] = new User(entities[value]))
-  return initialState.merge({
-    entities: Map(entities)
-  })
+const revive = (state) => {
+  return initialState.merge(fromJS(state))
 }
 
 export default function usersReducer (state = initialState, action) {
-  if (!(state instanceof Users)) return revive(state)
+  if (!(state instanceof Map)) return revive(state)
 
   switch (action.type) {
     case usersActions.FETCH_USER_SUCCESS:
-      const user = new User(action.payload)
-      return state.updateIn(['entities'], map => map.set(user.get('username'), user))
+      const user = action.payload
+      return state.setIn(['entities', user['username']], fromJS(user))
   }
 
   return state

@@ -61,6 +61,7 @@ class GameState extends Phaser.State {
 
     forEach(data, (npc) => {
       const {
+        name,
         key,
         position: {
           x,
@@ -74,6 +75,7 @@ class GameState extends Phaser.State {
       instance.animations.play('idle_down')
       instance.setAction(() => this.game.actions.setCurrentDialogue(dialogue))
       instance.addOnInputDown(onNPCInputDown)
+      if (name) instance.setName(name)
       this.game.add.existing(instance)
     })
   }

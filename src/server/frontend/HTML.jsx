@@ -34,7 +34,7 @@ ga('create', '${googleAnalyticsId}', 'auto') ga('send', 'pageview')`}}
           <meta charSet='utf-8' />
           <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport' />
           <meta content='ie=edge' httpEquiv='x-ua-compatible' />
-          <title>KidArk</title>
+          <title>Amo Wu</title>
           {linkStyles}
           {analytics}
         </head>
