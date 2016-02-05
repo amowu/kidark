@@ -1,11 +1,13 @@
-<a name="0.5.0"></a>
-# [0.5.0](//compare/0.1.1...v0.5.0) (2016-01-29)
+<a name="0.6.0"></a>
+# [0.6.0](//compare/0.1.1...v0.6.0) (2016-02-05)
 
 
 ### Features
 
 * **game:** add more NPC 0ec7e3f
+* **game:** add NPC name 1681d5d
 * **game:** update to new map f458096
+* **ui:** add Timeline component 7705fa2
 
 
 
