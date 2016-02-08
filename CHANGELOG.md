@@ -1,9 +1,10 @@
-<a name="0.6.0"></a>
-# [0.6.0](//compare/0.1.1...v0.6.0) (2016-02-05)
+<a name="0.7.0"></a>
+# [0.7.0](//compare/0.1.1...v0.7.0) (2016-02-08)
 
 
 ### Features
 
+* **config:** add Google Analytics 60c2f76
 * **game:** add more NPC 0ec7e3f
 * **game:** add NPC name 1681d5d
 * **game:** update to new map f458096
