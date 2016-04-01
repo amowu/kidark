@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import * as AuthActions from '../../actions/auth'
 import * as TodoActions from '../../actions/todos'
 import Header from '../../components/Header'
 import MainSection from '../../components/MainSection'
@@ -16,7 +17,7 @@ class App extends Component {
       <div className={style.normal}>
         <Header addTodo={actions.addTodo} />
         <MainSection todos={todos} actions={actions} />
-        {children}
+        {children && React.cloneElement(children, this.props)}
       </div>
     )
   }
@@ -30,7 +31,10 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: {
+      auth: bindActionCreators(AuthActions, dispatch),
+      todos: bindActionCreators(TodoActions, dispatch)
+    }
   }
 }
 
