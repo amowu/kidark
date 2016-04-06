@@ -2,11 +2,21 @@
 import React, { Component } from 'react'
 
 class SignUp extends Component {
-  handleClick (e) {
-    e.preventDefault()
+  handleClick (event) {
+    event.preventDefault()
 
     this.props.actions.auth.signUp({
-      email: 'xxx@xxx.xxx',
+      email: 'zzz@zzz.zzz',
+      password: 'abc123'
+    })
+  }
+
+  // TODO: 暫時，之後移除
+  handelLoginClick (event) {
+    event.preventDefault()
+
+    this.props.actions.auth.login({
+      email: 'zzz@zzz.zzz',
       password: 'abc123'
     })
   }
@@ -14,8 +24,10 @@ class SignUp extends Component {
   render () {
     return (
       <div>
-        <h1>Sign Up</h1>
+        <h1>SignUp</h1>
         <button onClick={::this.handleClick}>submit</button>
+        <h1>Login</h1>
+        <button onClick={::this.handelLoginClick}>submit</button>
       </div>
     )
   }

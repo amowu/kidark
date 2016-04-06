@@ -1,5 +1,6 @@
 
 import { createStore, applyMiddleware } from 'redux'
+import promise from 'redux-promise'
 
 import { logger } from '../middleware'
 import rootReducer from '../reducers'
@@ -10,7 +11,8 @@ export default function configure(initialState) {
     : createStore
 
   const createStoreWithMiddleware = applyMiddleware(
-    logger
+    logger,
+    promise
   )(create)
 
   const store = createStoreWithMiddleware(rootReducer, initialState)
