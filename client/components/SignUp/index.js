@@ -5,7 +5,7 @@ class SignUp extends Component {
   handleClick (event) {
     event.preventDefault()
 
-    this.props.actions.auth.signUp({
+    this.props.actions.auth.createUser({
       email: 'zzz@zzz.zzz',
       password: 'abc123'
     })

@@ -4,10 +4,14 @@ import  { createAction } from 'redux-actions'
 
 const fb = new Firebase('https://kidark.firebaseio.com/')
 
-export const signUp = createAction('FIREBASE_CREATE_USER', credentials =>
+export const createUser = createAction('FIREBASE_CREATE_USER', credentials =>
   fb.createUser(credentials)
 )
 
-export const login = createAction('FIREBASE_AUTH_WITH_PASSWORD', credentials =>
+export const authWithPassword = createAction('FIREBASE_AUTH_WITH_PASSWORD', credentials =>
   fb.authWithPassword(credentials)
+)
+
+export const authWithCustomToken = createAction('FIREBASE_AUTH_WITH_CUSTOM_TOKEN', authToken =>
+  fb.authWithCustomToken(authToken)
 )
