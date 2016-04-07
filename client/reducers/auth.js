@@ -8,7 +8,9 @@ export default handleActions({
 
   'FIREBASE_AUTH_WITH_PASSWORD': (state, action) => handleAuth(state, action),
 
-  'FIREBASE_AUTH_WITH_CUSTOM_TOKEN': (state, action) => handleAuth(state, action)
+  'FIREBASE_AUTH_WITH_CUSTOM_TOKEN': (state, action) => handleAuth(state, action),
+
+  'FIREBASE_UNAUTH': (state, action) => null
 }, initialState)
 
 function handleError (state, action) {

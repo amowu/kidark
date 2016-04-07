@@ -27,6 +27,12 @@ class App extends Component {
     )
   }
 
+  handleLogoutClick (event) {
+    event.preventDefault()
+
+    this.props.actions.auth.unauth()
+  }
+
   render () {
     console.log('App: render')
 
@@ -50,7 +56,7 @@ class App extends Component {
               <p>Your UID: {auth.uid}</p>
               <p>Your Token: {auth.token}</p>
               <h2>Logout</h2>
-              <button>submit</button>
+              <button onClick={::this.handleLogoutClick}>submit</button>
             </div>
           :
             <div>

@@ -15,3 +15,7 @@ export const authWithPassword = createAction('FIREBASE_AUTH_WITH_PASSWORD', cred
 export const authWithCustomToken = createAction('FIREBASE_AUTH_WITH_CUSTOM_TOKEN', authToken =>
   fb.authWithCustomToken(authToken)
 )
+
+export const unauth = createAction('FIREBASE_UNAUTH', () =>
+  fb.unauth()
+)

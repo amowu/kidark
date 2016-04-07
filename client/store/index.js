@@ -1,9 +1,8 @@
 
 import { compose, createStore, applyMiddleware } from 'redux'
-// import * as storage from 'redux-storage'
 import persistState from 'redux-localstorage'
 
-import { logger, promise/*, storage as storageMiddleware*/ } from '../middleware'
+import { logger, promise } from '../middleware'
 import rootReducer from '../reducers'
 
 export default function configure(initialState) {
@@ -11,20 +10,19 @@ export default function configure(initialState) {
     ? window.devToolsExtension()(createStore)
     : createStore
 
-  // const storageReducer = storage.reducer(rootReducer)
-
   const createPersistentStore = compose(
-    persistState()
+    persistState([
+      'auth'
+    ], {
+      key: 'YOUR_REDUX_LOCALSTORAGE_KEY'
+    })
   )(create)
 
   const createStoreWithMiddleware = applyMiddleware(
     logger,
-    // storageMiddleware,
     promise
-  // )(create)
   )(createPersistentStore)
 
-  // const store = createStoreWithMiddleware(storageReducer, initialState)
   const store = createStoreWithMiddleware(rootReducer, initialState)
 
   if (module.hot) {
