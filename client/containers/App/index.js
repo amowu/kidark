@@ -5,22 +5,65 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import * as AuthActions from '../../actions/auth'
-import * as TodoActions from '../../actions/todos'
+import { AuthActions, TodoActions } from '../../actions'
 import Header from '../../components/Header'
 import MainSection from '../../components/MainSection'
 
 class App extends Component {
-  componentWillMount () {
-    console.log('App: componentWillMount')
-  }
-
   componentDidMount () {
     console.log('App: componentDidMount')
 
-    // TODO: check token and auth
-    this.props.actions.auth.checkAuth()
+    // 一開始先註冊 Firebase 的 onAuth 事件
+    const {
+      actions: {
+        auth: {
+          getAuth: getAuthDispatcher,
+          onAuth: onAuthDispatcher
+        }
+      }
+    } = this.props
+
+    // 當使用者登入，會觸發 getAuth 的 action 來取得資料
+    onAuthDispatcher(getAuthDispatcher)
+
+    // 檢查 state.auth (persists from localStorage) 是否存在
+    // 如果存在，檢查 token 是否過期
+    // 如果 token 沒過期，則使用 token 登入，反之則清空  state.auth
+    // const { auth } = this.props
+    //
+    // if (auth) {
+    //   const { expires } = auth
+    //   const now = Math.floor(Date.now() / 1000)
+    //   const tokenIsExpired = (now >= expires)
+    //
+    //   if (!tokenIsExpired) {
+    //     const {
+    //       actions: {
+    //         auth: {
+    //           authWithCustomToken: authWithCustomTokenDispatcher
+    //         }
+    //       },
+    //       auth: {
+    //         token
+    //       }
+    //     } = this.props
+    //
+    //     authWithCustomTokenDispatcher(token)
+    //   } else {
+    //     const {
+    //       actions: {
+    //         auth: {
+    //           cleanAuth: cleanAuthDispatcher
+    //         }
+    //       }
+    //     } = this.props
+    //
+    //     cleanAuthDispatcher()
+    //   }
+    // }
   }
+
+  // TODO: component unMount offAuth
 
   handleLogoutClick (event) {
     event.preventDefault()
@@ -41,14 +84,6 @@ class App extends Component {
     console.log('App: render')
 
     const { auth, todos, actions, children } = this.props
-
-    // return (
-    //   <div className={style.normal}>
-    //     <Header addTodo={actions.todos.addTodo} />
-    //     <MainSection todos={todos} actions={actions.todos} />
-    //     {children}
-    //   </div>
-    // )
 
     return (
       <div>
