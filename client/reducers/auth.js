@@ -4,16 +4,6 @@ import { handleActions } from 'redux-actions'
 const initialState = null
 
 export default handleActions({
-  'CLEAN_AUTH': (state, action) => null,
-
-  'FIREBASE_AUTH_WITH_CUSTOM_TOKEN': (state, action) => {
-    if (action.error) {
-      return handleError(state, action)
-    } else {
-      return state
-    }
-  },
-
   'FIREBASE_AUTH_WITH_PASSWORD': (state, action) => {
     if (action.error) {
       return handleError(state, action)
