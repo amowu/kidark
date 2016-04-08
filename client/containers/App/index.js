@@ -17,20 +17,24 @@ class App extends Component {
 
   componentDidMount () {
     console.log('App: componentDidMount')
-  }
 
-  handleClick (event) {
-    event.preventDefault()
-
-    this.props.actions.auth.authWithCustomToken(
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJhYjdjZmUxZC02NDYzLTQ1ZTUtOTc0YS0zMTFkYzBhNWFmZTYifSwiaWF0IjoxNDYwMDA3OTkxfQ.M_qjwHb6MiwJ5xpoB0ure9DcIZljc3pzC9_PvRBwX_4'
-    )
+    // TODO: check token and auth
+    this.props.actions.auth.checkAuth()
   }
 
   handleLogoutClick (event) {
     event.preventDefault()
 
     this.props.actions.auth.unauth()
+  }
+
+  handleLoginClick (event) {
+    event.preventDefault()
+
+    this.props.actions.auth.authWithPassword({
+      email: 'zzz@zzz.zzz',
+      password: 'abc123'
+    })
   }
 
   render () {
@@ -60,12 +64,8 @@ class App extends Component {
             </div>
           :
             <div>
-              <h2>Auth With Custom Token</h2>
-              <button onClick={::this.handleClick}>submit</button>
               <h2>Auth With Password</h2>
-              <button>submit</button>
-              <h2>Create User</h2>
-              <button>submit</button>
+              <button onClick={::this.handleLoginClick}>submit</button>
             </div>
         }
         {children && React.cloneElement(children, this.props)}
