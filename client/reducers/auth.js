@@ -1,10 +1,12 @@
 
 import { handleActions } from 'redux-actions'
 
+import * as TYPE from '../constants/actions'
+
 const initialState = null
 
 export default handleActions({
-  'FIREBASE_AUTH_WITH_PASSWORD': (state, action) => {
+  [TYPE.FIREBASE_AUTH_WITH_PASSWORD]: (state, action) => {
     if (action.error) {
       return handleError(state, action)
     } else {
@@ -12,7 +14,15 @@ export default handleActions({
     }
   },
 
-  'FIREBASE_GET_AUTH': (state, action) => {
+  [TYPE.FIREBASE_CREATE_USER_AND_AUTH_WITH_PASSWORD]: (state, action) => {
+    if (action.error) {
+      return handleError(state, action)
+    } else {
+      return state
+    }
+  },
+
+  [TYPE.FIREBASE_GET_AUTH]: (state, action) => {
     const {
       payload: {
         expires,
@@ -25,9 +35,7 @@ export default handleActions({
     return { expires, provider, token, uid }
   },
 
-  'FIREBASE_ON_AUTH': (state, action) => state,
-
-  'FIREBASE_UNAUTH': (state, action) => null
+  [TYPE.FIREBASE_UNAUTH]: (state, action) => null
 }, initialState)
 
 function handleError (state, action) {

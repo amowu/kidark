@@ -11,35 +11,65 @@ import MainSection from '../../components/MainSection'
 
 class App extends Component {
   componentDidMount () {
-    console.log('App: componentDidMount')
-
-    // 一開始先註冊 Firebase 的 onAuth 事件
     const {
       actions: {
         auth: {
-          getAuth: getAuthDispatcher,
-          onAuth: onAuthDispatcher
+          getAuth,
+          onAuth
         }
       }
     } = this.props
 
-    // 當使用者登入，會觸發 getAuth 的 action 來取得資料
-    onAuthDispatcher(getAuthDispatcher)
+    // App 一開始先註冊 Firebase 的 onAuth 事件
+    // 當使用者登入，會 dispatch getAuth 的 action creator 來取得資料
+    onAuth(getAuth)
   }
-
-  // TODO: component unMount offAuth
 
   handleLogoutClick (event) {
     event.preventDefault()
 
-    this.props.actions.auth.unauth()
+    const {
+      actions: {
+        auth: {
+          unauth
+        }
+      }
+    } = this.props
+
+    // logout Firebase
+    unauth()
   }
 
   handleLoginClick (event) {
     event.preventDefault()
 
-    this.props.actions.auth.authWithPassword({
+    const {
+      actions: {
+        auth: {
+          authWithPassword
+        }
+      }
+    } = this.props
+
+    authWithPassword({
       email: 'zzz@zzz.zzz',
+      password: 'abc123'
+    })
+  }
+
+  handleSignUpClick (event) {
+    event.preventDefault()
+
+    const {
+      actions: {
+        auth: {
+          createUserAndAuthWithPassword
+        }
+      }
+    } = this.props
+
+    createUserAndAuthWithPassword({
+      email: 'yyy2232@yyy.yyy',
       password: 'abc123'
     })
   }
@@ -65,6 +95,8 @@ class App extends Component {
             <div>
               <h2>Auth With Password</h2>
               <button onClick={::this.handleLoginClick}>submit</button>
+              <h2>Create User</h2>
+              <button onClick={::this.handleSignUpClick}>submit</button>
             </div>
         }
         {children && React.cloneElement(children, this.props)}
