@@ -1,5 +1,5 @@
 
-import Firebase from 'Firebase'
+import Firebase from 'firebase'
 import  { createAction } from 'redux-actions'
 
 import * as TYPE from '../constants/actions'
