@@ -5,12 +5,27 @@ import { createAction } from 'redux-actions'
 
 import * as TYPE from '../constants/actions'
 
+/**
+ * Flux Standard Action for auth actions
+ * @typedef {Object} AuthFSA
+ * @property {string} type
+ * @property {Object} payload
+ */
+
+ /**
+  * Error Flux Standard Action for auth actions
+  * @typedef {Object} ErrorAuthFSA
+  * @property {string} type
+  * @property {Error} payload
+  * @property {boolean} error
+  */
+
 // TODO: firebaseURL 不該出現在這裡
 const fb = new Firebase('https://kidark.firebaseio.com/')
 
 /**
  * 使用匿名訪客的身份登入 Firebase
- * @returns
+ * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const authAnonymously = createAction(
   TYPE.FIREBASE_AUTH_ANONYMOUSLY,
@@ -22,7 +37,7 @@ export const authAnonymously = createAction(
  * @param {Object} credentials - 一個包含信箱和密碼的物件
  * @param {string} credentials.email - 信箱
  * @param {string} credentials.password - 密碼
- * @returns
+ * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const authWithPassword = createAction(
   TYPE.FIREBASE_AUTH_WITH_PASSWORD,
@@ -34,7 +49,7 @@ export const authWithPassword = createAction(
  * @param {Object} credentials - 一個包含信箱和密碼的物件
  * @param {string} credentials.email - 信箱
  * @param {string} credentials.password - 密碼
- * @returns
+ * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const createUserAndAuthWithPassword = createAction(
   TYPE.FIREBASE_CREATE_USER_AND_AUTH_WITH_PASSWORD,

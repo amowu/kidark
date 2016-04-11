@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 
 import { AuthActions, TodoActions } from '../../actions'
@@ -25,14 +26,30 @@ class App extends Component {
     onAuth(getAuth)
   }
 
+  handleLogoutClick (event) {
+    this.props.actions.auth.unauth()
+  }
+
   render () {
     console.log('App: render')
 
-    const { children } = this.props
+    const { auth, children } = this.props
 
     // TODO: 建立 Login container
     return (
       <div>
+        <h1>Home</h1>
+          {
+            auth ?
+              <div>
+                <p>Your UID: {auth.uid}</p>
+                <button onClick={::this.handleLogoutClick}>logout</button>
+              </div>
+            :
+              <div>
+                <Link to="/login">Login</Link>
+              </div>
+          }
         {children}
       </div>
     )

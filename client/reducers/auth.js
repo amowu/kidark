@@ -1,3 +1,4 @@
+/** @module reducers/auth */
 
 import { handleActions } from 'redux-actions'
 
