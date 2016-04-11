@@ -25,81 +25,15 @@ class App extends Component {
     onAuth(getAuth)
   }
 
-  handleLogoutClick (event) {
-    event.preventDefault()
-
-    const {
-      actions: {
-        auth: {
-          unauth
-        }
-      }
-    } = this.props
-
-    // logout Firebase
-    unauth()
-  }
-
-  handleLoginClick (event) {
-    event.preventDefault()
-
-    const {
-      actions: {
-        auth: {
-          authWithPassword
-        }
-      }
-    } = this.props
-
-    authWithPassword({
-      email: 'zzz@zzz.zzz',
-      password: 'abc123'
-    })
-  }
-
-  handleSignUpClick (event) {
-    event.preventDefault()
-
-    const {
-      actions: {
-        auth: {
-          createUserAndAuthWithPassword
-        }
-      }
-    } = this.props
-
-    createUserAndAuthWithPassword({
-      email: 'yyy2232@yyy.yyy',
-      password: 'abc123'
-    })
-  }
-
   render () {
     console.log('App: render')
 
-    const { auth, todos, actions, children } = this.props
+    const { children } = this.props
 
+    // TODO: 建立 Login container
     return (
       <div>
-        <h1>Home</h1>
-        {
-          auth ?
-            <div>
-              <h2>Auth User Data</h2>
-              <p>Your UID: {auth.uid}</p>
-              <p>Your Token: {auth.token}</p>
-              <h2>Logout</h2>
-              <button onClick={::this.handleLogoutClick}>submit</button>
-            </div>
-          :
-            <div>
-              <h2>Auth With Password</h2>
-              <button onClick={::this.handleLoginClick}>submit</button>
-              <h2>Create User</h2>
-              <button onClick={::this.handleSignUpClick}>submit</button>
-            </div>
-        }
-        {children && React.cloneElement(children, this.props)}
+        {children}
       </div>
     )
   }
