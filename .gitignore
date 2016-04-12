@@ -1,9 +1,6 @@
-build
-coverage
+.DS_STORE
 node_modules
-.DS_Store
-.idea
-*.log
-*.sublime-workspace
-*.sublime-project
-webpack-assets.json
+static
+.module-cache
+*.log*
+
