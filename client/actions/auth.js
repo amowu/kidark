@@ -25,7 +25,7 @@ const fb = new Firebase('https://kidark.firebaseio.com/')
 
 /**
  * 使用匿名訪客的身份登入 Firebase
- * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
+ * @return {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const authAnonymously = createAction(
   TYPE.FIREBASE_AUTH_ANONYMOUSLY,
@@ -37,7 +37,7 @@ export const authAnonymously = createAction(
  * @param {Object} credentials - 一個包含信箱和密碼的物件
  * @param {string} credentials.email - 信箱
  * @param {string} credentials.password - 密碼
- * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
+ * @return {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const authWithPassword = createAction(
   TYPE.FIREBASE_AUTH_WITH_PASSWORD,
@@ -49,7 +49,7 @@ export const authWithPassword = createAction(
  * @param {Object} credentials - 一個包含信箱和密碼的物件
  * @param {string} credentials.email - 信箱
  * @param {string} credentials.password - 密碼
- * @returns {Promise.<AuthFSA, ErrorAuthFSA>}
+ * @return {Promise.<AuthFSA, ErrorAuthFSA>}
  */
 export const createUserAndAuthWithPassword = createAction(
   TYPE.FIREBASE_CREATE_USER_AND_AUTH_WITH_PASSWORD,
@@ -59,7 +59,7 @@ export const createUserAndAuthWithPassword = createAction(
 
 /**
  * 取得 Firebase 的登入資料
- * @returns
+ * @return {AuthFSA}
  */
 export const getAuth = createAction(
   TYPE.FIREBASE_GET_AUTH,
@@ -68,8 +68,8 @@ export const getAuth = createAction(
 
 /**
  * 訂閱 Firebase 的所有 auth 相關事件
- * @param callback
- * @returns
+ * @param {function} callback
+ * @return {Promise}
  */
 export const onAuth = createAction(
   TYPE.FIREBASE_ON_AUTH,
@@ -83,7 +83,6 @@ export const onAuth = createAction(
 
 /**
  * 登出 Firebase
- * @returns
  */
 export const unauth = createAction(
   TYPE.FIREBASE_UNAUTH,
