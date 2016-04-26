@@ -46,10 +46,27 @@ module.exports = {
           'react-hot',
           'babel'
         ]
+      },
+      {
+        test: /p2\.js/,
+        loader: 'expose?p2'
+      },
+      {
+        test: /phaser-split\.js/,
+        loader: 'expose?Phaser'
+      },
+      {
+        test: /pixi\.js/,
+        loader: 'expose?PIXI'
       }
     ]
   },
   resolve: {
+    alias: {
+      'p2': path.join(__dirname, '/node_modules/phaser/build/custom/p2.js'),
+      'phaser': path.join(__dirname, '/node_modules/phaser/build/custom/phaser-split.js'),
+      'pixi.js': path.join(__dirname, '/node_modules/phaser/build/custom/pixi.js')
+    },
     extensions: ['', '.js', '.jsx']
   },
   devServer: {
