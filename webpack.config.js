@@ -16,28 +16,30 @@ module.exports = {
     loaders: [
       {
         test: /\.html$/,
-        loader: 'file-loader?name=[name].[ext]'
+        loader: 'file?name=[name].[ext]'
       },
       {
         test: /\.css$/,
         include: /client/,
         loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'postcss-loader'
+          'style',
+          'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'postcss'
         ]
       },
       {
         test: /\.css$/,
         exclude: /client/,
-        loader: 'style-loader!css-loader'
+        loader: 'style!css'
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
-          'react-hot-loader',
-          'babel-loader'
+          'react-hot',
+          'babel'
+        ]
+      }
         ]
       },
     ],
