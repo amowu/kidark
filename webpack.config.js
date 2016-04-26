@@ -40,9 +40,7 @@ module.exports = {
           'babel'
         ]
       }
-        ]
-      },
-    ],
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
