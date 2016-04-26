@@ -6,7 +6,14 @@ module.exports = {
   entry: {
     jsx: './index.js',
     html: './index.html',
-    vendor: ['react']
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux'
+    ]
   },
   output: {
     filename: 'bundle.js',
