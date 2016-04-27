@@ -1,5 +1,5 @@
-var webpack = require('webpack')
 var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   context: path.join(__dirname, './client'),
@@ -7,12 +7,17 @@ module.exports = {
     jsx: './index.js',
     html: './index.html',
     vendor: [
+      'classnames',
+      'firebase',
       'react',
       'react-dom',
       'react-redux',
       'react-router',
       'react-router-redux',
-      'redux'
+      'redux',
+      'redux-actions',
+      'redux-logger',
+      'redux-promise'
     ]
   },
   output: {
