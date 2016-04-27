@@ -7,8 +7,7 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 
 import { AuthActions, TodoActions } from '../../actions'
-import Header from '../../components/Header'
-import MainSection from '../../components/MainSection'
+import Game from '../../components/Game'
 
 /**
  * App container component
@@ -68,6 +67,7 @@ class App extends Component {
       <div>
         <h1>Home</h1>
         { auth ? this.renderAuth() : this.renderLogin() }
+        <Game />
         { children }
       </div>
     )
